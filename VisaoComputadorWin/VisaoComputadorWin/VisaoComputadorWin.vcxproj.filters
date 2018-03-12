@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Images">
+      <UniqueIdentifier>{ea184785-db4f-4e7c-aab4-bd96ef245864}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Results">
+      <UniqueIdentifier>{f3882716-36e9-424c-847d-368bcd446fcb}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\VisaoComputador\Entities\Image.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\VisaoComputador\Engine\Engine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\VisaoComputador\Engine\MorphologicalOperators.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\VisaoComputador\main.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\VisaoComputador\Engine\Segmentators.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\VisaoComputador\Engine\Utils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\VisaoComputador\Engine\Filters.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\VisaoComputador\Engine\Conversors\Conversors.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\VisaoComputador\Images\flir-01.pgm">
+      <Filter>Images</Filter>
+    </None>
+    <None Include="..\..\VisaoComputador\Images\flir-02.pgm">
+      <Filter>Images</Filter>
+    </None>
+    <None Include="..\..\VisaoComputador\Images\flir-03.pgm">
+      <Filter>Images</Filter>
+    </None>
+    <None Include="..\..\VisaoComputador\Images\flir-04.pgm">
+      <Filter>Images</Filter>
+    </None>
+    <None Include="..\..\VisaoComputador\Images\flir-05.pgm">
+      <Filter>Images</Filter>
+    </None>
+    <None Include="..\..\VisaoComputador\Images\flir-06.pgm">
+      <Filter>Images</Filter>
+    </None>
+    <None Include="..\..\VisaoComputador\Images\flir-07.pgm">
+      <Filter>Images</Filter>
+    </None>
+    <None Include="..\..\VisaoComputador\Images\flir-08.pgm">
+      <Filter>Images</Filter>
+    </None>
+    <None Include="..\..\VisaoComputador\Images\hell.ppm">
+      <Filter>Images</Filter>
+    </None>
+    <None Include="..\..\VisaoComputador\Images\HSVTestImage01.ppm">
+      <Filter>Images</Filter>
+    </None>
+    <None Include="..\..\VisaoComputador\Images\HSVTestImage02.ppm">
+      <Filter>Images</Filter>
+    </None>
+    <None Include="..\..\VisaoComputador\Images\P1.pbm">
+      <Filter>Images</Filter>
+    </None>
+    <None Include="..\..\VisaoComputador\Images\P2.pgm">
+      <Filter>Images</Filter>
+    </None>
+    <None Include="..\..\VisaoComputador\Images\P3.ppm">
+      <Filter>Images</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\VisaoComputador\main.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\VisaoComputador\Engine\Segmentators.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\VisaoComputador\Engine\MorphologicalOperators.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\VisaoComputador\Engine\Utils.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\VisaoComputador\Engine\Filters.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\VisaoComputador\Engine\Engine.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\VisaoComputador\Engine\Conversors\Conversors.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
