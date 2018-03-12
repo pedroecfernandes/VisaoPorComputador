@@ -12,6 +12,7 @@
 #include <stdbool.h>
 #include "main.h"
 #include "Conversors.h"
+#include "Segmentators.h"
 
 int main(int argc, const char * argv[]) {
     
@@ -21,9 +22,153 @@ int main(int argc, const char * argv[]) {
     
     InvertGrayScale();*/
     
-    RGBToHSV();
+    //RGBToHSV();
+    
+    //RGBToGrayScaleBasedOnRedChannel();
+    
+    //RGBToBGR();
+    
+    //ApplyGrayBinarySegmentation();
+    
+    //ApplyGrayBinaryMidpointSegmentation();
+    
+    //ApplyGrayBinaryErode();
+    
+    ApplyGrayBinaryDilate();
     
     return 0;
+}
+
+void ApplyGrayBinaryErode()
+{
+    Image *image = vc_read_image("Images/flir-04.pgm");
+    if (image == NULL)
+    {
+        printf("ERROR!");
+        getchar();
+    }
+    
+    Image *output = vc_image_new(image->width, image->height, image->channels, image->channels);
+    
+    if (ApplyBinaryErode(image, output, 10))
+    {
+        vc_write_image("output.pgm", output);
+        
+        vc_image_free(image);
+        vc_image_free(output);
+        
+        printf("press any key...");
+        getchar();
+    }
+}
+
+void ApplyGrayBinaryDilate()
+{
+    Image *image = vc_read_image("Images/flir-04.pgm");
+    if (image == NULL)
+    {
+        printf("ERROR!");
+        getchar();
+    }
+    
+    Image *output = vc_image_new(image->width, image->height, image->channels, image->channels);
+    
+    if (ApplyBinaryDilate(image, output, 15))
+    {
+        vc_write_image("output.pgm", output);
+        
+        vc_image_free(image);
+        vc_image_free(output);
+        
+        printf("press any key...");
+        getchar();
+    }
+}
+
+void ApplyGrayBinaryMidpointSegmentation()
+{
+    Image *image = vc_read_image("Images/flir-04.pgm");
+    if (image == NULL)
+    {
+        printf("ERROR!");
+        getchar();
+    }
+    
+    Image *output = vc_image_new(image->width, image->height, image->channels, image->channels);
+    
+    if (ApplyGrayScaleBinaryMidpoint(image, output, 160))
+    {
+        vc_write_image("output.pgm", output);
+        
+        vc_image_free(image);
+        vc_image_free(output);
+        
+        printf("press any key...");
+        getchar();
+    }
+}
+
+void ApplyGrayBinarySegmentation()
+{
+    Image *image = vc_read_image("Images/flir-04.pgm");
+    if (image == NULL)
+    {
+        printf("ERROR!");
+        getchar();
+    }
+    
+    if (ApplyGrayScaleBinaryThreshold(image, 160))
+    {
+        vc_write_image("output.pgm", image);
+        
+        vc_image_free(image);
+        
+        printf("press any key...");
+        getchar();
+    }
+}
+
+void RGBToBGR()
+{
+    Image *image = vc_read_image("Images/HSVTestImage01.ppm");
+    if (image == NULL)
+    {
+        printf("ERROR!");
+        getchar();
+    }
+    
+    if (ConvertRGBToBGR(image))
+    {
+        vc_write_image("output.ppm", image);
+        
+        vc_image_free(image);
+        
+        printf("press any key...");
+        getchar();
+    }
+}
+
+void RGBToGrayScaleBasedOnRedChannel()
+{
+    Image *image = vc_read_image("Images/HSVTestImage01.ppm");
+    if (image == NULL)
+    {
+        printf("ERROR!");
+        getchar();
+    }
+    
+    Image *output = vc_image_new(image->width, image->height, 1, 255);
+    
+    if (ConvertRGBToGrayScaleBasedOnChannel(image, output, false, false, true))
+    {
+        vc_write_image("output.pbm", output);
+    }
+    
+    vc_image_free(image);
+    vc_image_free(output);
+    
+    printf("press any key...");
+    getchar();
 }
 
 void RGBToHSV()

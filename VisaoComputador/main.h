@@ -14,7 +14,14 @@
 
 
 int main(int argc, const char * argv[]) ;
+
+void RGBToBGR();
+void RGBToGrayScaleBasedOnRedChannel();
 void InvertRGB();
 void InvertGrayScale();
 int ChessPattern();
 void RGBToHSV();
+void ApplyGrayBinarySegmentation();
+void ApplyGrayBinaryMidpointSegmentation();
+void ApplyGrayBinaryErode();
+void ApplyGrayBinaryDilate();

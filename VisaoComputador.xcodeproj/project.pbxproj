@@ -26,6 +26,8 @@
 		0429B01F2044A247004F687E /* Utils.c in Sources */ = {isa = PBXBuildFile; fileRef = 0429B01E2044A247004F687E /* Utils.c */; };
 		0429B02820475BDC004F687E /* HSVTestImage01.ppm in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0429B02620475BC9004F687E /* HSVTestImage01.ppm */; };
 		0429B02920475BDC004F687E /* HSVTestImage02.ppm in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0429B02720475BC9004F687E /* HSVTestImage02.ppm */; };
+		04D5D0392050974A00D68F05 /* Segmentators.c in Sources */ = {isa = PBXBuildFile; fileRef = 04D5D0382050974A00D68F05 /* Segmentators.c */; };
+		04D5D03C2050A1FA00D68F05 /* MorphologicalOperators.c in Sources */ = {isa = PBXBuildFile; fileRef = 04D5D03B2050A1FA00D68F05 /* MorphologicalOperators.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -81,6 +83,10 @@
 		0429B0202044A2DC004F687E /* Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
 		0429B02620475BC9004F687E /* HSVTestImage01.ppm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = HSVTestImage01.ppm; sourceTree = "<group>"; };
 		0429B02720475BC9004F687E /* HSVTestImage02.ppm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = HSVTestImage02.ppm; sourceTree = "<group>"; };
+		04D5D0372050974A00D68F05 /* Segmentators.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Segmentators.h; sourceTree = "<group>"; };
+		04D5D0382050974A00D68F05 /* Segmentators.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Segmentators.c; sourceTree = "<group>"; };
+		04D5D03A2050A1FA00D68F05 /* MorphologicalOperators.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MorphologicalOperators.h; sourceTree = "<group>"; };
+		04D5D03B2050A1FA00D68F05 /* MorphologicalOperators.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = MorphologicalOperators.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -168,6 +174,10 @@
 			children = (
 				0429B01420449714004F687E /* Filters.h */,
 				0429B01520449714004F687E /* Filters.c */,
+				04D5D0372050974A00D68F05 /* Segmentators.h */,
+				04D5D0382050974A00D68F05 /* Segmentators.c */,
+				04D5D03A2050A1FA00D68F05 /* MorphologicalOperators.h */,
+				04D5D03B2050A1FA00D68F05 /* MorphologicalOperators.c */,
 			);
 			name = Filters;
 			sourceTree = "<group>";
@@ -247,11 +257,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04D5D03C2050A1FA00D68F05 /* MorphologicalOperators.c in Sources */,
 				0429AFF4203E1ABD004F687E /* Engine.c in Sources */,
 				0429B01D2044A0DA004F687E /* Conversors.c in Sources */,
 				0429B01620449714004F687E /* Filters.c in Sources */,
 				0429B01F2044A247004F687E /* Utils.c in Sources */,
 				0429AFE9203E1A9A004F687E /* main.c in Sources */,
+				04D5D0392050974A00D68F05 /* Segmentators.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
