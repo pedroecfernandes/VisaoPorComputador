@@ -6,8 +6,14 @@
 //  Copyright © 2018 Pedro C. Fernandes. All rights reserved.
 //
 
+
+
+#ifdef OSX
 #include "MorphologicalOperators.h"
 #include "Segmentators.h"
+#else
+// TODO: Márcio
+#endif
 
 bool ApplyBinaryOpen(Image *input, Image *output, int kernelErode, int kernelDilate)
 {

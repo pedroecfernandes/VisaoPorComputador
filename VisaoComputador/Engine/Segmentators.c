@@ -6,8 +6,14 @@
 //  Copyright © 2018 Pedro C. Fernandes. All rights reserved.
 //
 
+
+#ifdef OSX
+
 #include "Segmentators.h"
 
+#else
+// TODO: Márcio
+#endif
 
 
 bool ApplyGrayScaleBinaryThreshold(Image *image, int threshold)

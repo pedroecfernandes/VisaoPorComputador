@@ -6,9 +6,15 @@
 //  Copyright © 2018 Pedro C. Fernandes. All rights reserved.
 //
 
+
+
+#ifdef OSX
 #include <stdio.h>
 #include "Image.h"
 #include <stdbool.h>
+#else
+// TODO: Márcio
+#endif
 
 bool ApplyGrayScaleBinaryThreshold(Image *image, int threshold);
 bool ApplyGrayScaleBinaryMidpoint(Image *input, Image *output, int kernel);

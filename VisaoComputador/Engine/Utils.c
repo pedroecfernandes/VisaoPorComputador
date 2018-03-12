@@ -6,7 +6,11 @@
 //  Copyright © 2018 Pedro C. Fernandes. All rights reserved.
 //
 
+#ifdef OSX
 #include <stdio.h>
+#else
+// TODO: Márcio
+#endif
 
 float Max3(float a, float b, float c) {
     
