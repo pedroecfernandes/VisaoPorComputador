@@ -13,7 +13,9 @@
 #include "Image.h"
 #include <stdbool.h>
 #else
-// TODO: Márcio
+#include <stdio.h>
+#include "../Entities/Image.h"
+#include <stdbool.h>
 #endif
 
 bool ApplyGrayScaleBinaryThreshold(Image *image, int threshold);

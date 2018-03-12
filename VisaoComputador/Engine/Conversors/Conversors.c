@@ -15,7 +15,11 @@
 #include <string.h>
 #include "Utils.h"
 #else
-// TODO: Márcio
+#include "Conversors.h"
+#include <math.h>
+#include <ctype.h>
+#include <string.h>
+#include "../Utils.h"
 #endif
 
 

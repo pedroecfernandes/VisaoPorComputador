@@ -17,8 +17,16 @@
 #include "Conversors.h"
 #include "Segmentators.h"
 #else
-// TODO: Márcio
+#include <stdio.h>
+#include "../VisaoComputador/Engine/Engine.h"
+#include "../VisaoComputador/Engine/Filters.h"
+#include <stdbool.h>
+#include "main.h"
+#include "../VisaoComputador/Engine/Conversors/Conversors.h"
+#include "../VisaoComputador/Engine/Segmentators.h"
 #endif
+
+
 
 int main(int argc, const char * argv[]) {
     

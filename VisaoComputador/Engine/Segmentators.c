@@ -12,7 +12,8 @@
 #include "Segmentators.h"
 
 #else
-// TODO: Márcio
+
+#include "Segmentators.h"
 #endif
 
 

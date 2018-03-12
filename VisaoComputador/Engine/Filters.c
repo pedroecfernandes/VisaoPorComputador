@@ -13,8 +13,12 @@
 #include "Engine.h"
 #include <stdbool.h>
 #else
-// TODO: Márcio
+#include "Filters.h"
+#include "Engine.h"
+#include <stdbool.h>
+#include <stddef.h>
 #endif
+
 
 bool ApplyInvertRGB(Image *image)
 {

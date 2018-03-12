@@ -17,8 +17,15 @@
 #include "Engine.h"
 #include <stdlib.h>
 #else
-// TODO: M‡rcio
+#include <stdio.h>
+#include <ctype.h>
+#include <string.h>
+//#include <malloc.h>
+#include "Engine.h"
+#include <stdlib.h>
+#include "../Entities/Image.h"
 #endif
+
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //            FUNÇÕES: ALOCAR E LIBERTAR UMA IMAGEM

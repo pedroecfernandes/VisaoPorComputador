@@ -13,9 +13,10 @@
 #include "Image.h"
 #include <stdbool.h>
 #else
-// TODO: Márcio
+#include "../Entities/Image.h"
+#include <stdio.h>
+#include <stdbool.h>
 #endif
-
 
 bool ApplyBinaryOpen(Image *input, Image *dst, int kernelErode, int kernelDilate);
 bool ApplyBinaryClose(Image *input, Image *output, int kernelErodeinput, int kernelDilate);

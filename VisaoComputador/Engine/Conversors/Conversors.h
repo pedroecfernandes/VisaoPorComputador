@@ -9,18 +9,18 @@
 #ifndef Conversors_h
 #define Conversors_h
 
+#ifdef OSX
 #include <stdio.h>
 #include "Image.h"
 
-#endif /* Conversors_h */
-
 #include <stdbool.h>
-
-#ifdef OSX
-
 #else
-// TODO: Márcio
+#include <stdio.h>
+#include "../../Entities/Image.h"
+#include <stdbool.h>
 #endif
+
+#endif /* Conversors_h */
 
 bool ConvertRGBToBGR(Image *image);
 bool ConvertRGBToGrayScaleBasedOnChannel(Image *image, Image *output, bool RChannel, bool GChannel, bool BChannel);

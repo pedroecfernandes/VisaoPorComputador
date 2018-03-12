@@ -12,8 +12,11 @@
 #include "MorphologicalOperators.h"
 #include "Segmentators.h"
 #else
-// TODO: Márcio
+#include "MorphologicalOperators.h"
+#include "Segmentators.h"
+#include "Engine.h"
 #endif
+
 
 bool ApplyBinaryOpen(Image *input, Image *output, int kernelErode, int kernelDilate)
 {

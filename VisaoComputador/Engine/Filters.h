@@ -11,7 +11,8 @@
 #include "Image.h"
 #include <stdbool.h>
 #else
-//TODO: Márcio
+#include <stdbool.h>
+#include "../Entities/Image.h"
 #endif
 
 bool ApplyInvertRGB(Image *image);

@@ -13,8 +13,9 @@
 #ifdef OSX
 #include "Image.h"
 #else
-// TODO: M‡rcio
+#include "../Entities/Image.h"
 #endif
+
 
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
