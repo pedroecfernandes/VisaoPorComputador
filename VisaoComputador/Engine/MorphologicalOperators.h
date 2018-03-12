@@ -12,4 +12,4 @@
 
 
 bool ApplyBinaryOpen(Image *input, Image *dst, int kernelErode, int kernelDilate);
-bool ApplyBinaryClose(Image *input, Image *output, int kernelErodeinput, int kernelDilate);
+bool ApplyBinaryClose(Image *input, Image *output, int kernelErodeinput, int kernelDilate);;
