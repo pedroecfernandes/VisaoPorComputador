@@ -16,4 +16,6 @@
 
 #include <stdbool.h>
 
+bool ConvertRGBToBGR(Image *image);
+bool ConvertRGBToGrayScaleBasedOnChannel(Image *image, Image *output, bool RChannel, bool GChannel, bool BChannel);
 bool ConvertRBGToHSV(Image *image);
