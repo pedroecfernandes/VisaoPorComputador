@@ -8,12 +8,17 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 #define _CRT_SECURE_NO_WARNINGS 
+
+#ifdef OSX
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
 //#include <malloc.h>
 #include "Engine.h"
 #include <stdlib.h>
+#else
+// TODO: M‡rcio
+#endif
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //            FUNÇÕES: ALOCAR E LIBERTAR UMA IMAGEM

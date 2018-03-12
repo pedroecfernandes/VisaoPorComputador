@@ -10,7 +10,11 @@
 
 #define VC_DEBUG
 
+#ifdef OSX
 #include "Image.h"
+#else
+// TODO: M‡rcio
+#endif
 
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

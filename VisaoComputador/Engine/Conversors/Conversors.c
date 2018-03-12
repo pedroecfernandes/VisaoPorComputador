@@ -7,11 +7,16 @@
 //
 
 #define _CRT_SECURE_NO_WARNINGS 
+
+#ifdef OSX
 #include "Conversors.h"
 #include <math.h>
 #include <ctype.h>
 #include <string.h>
 #include "Utils.h"
+#else
+// TODO: Márcio
+#endif
 
 
 bool ConvertRGBToBGR(Image *image)

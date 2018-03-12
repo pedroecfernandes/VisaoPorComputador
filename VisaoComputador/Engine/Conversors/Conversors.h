@@ -16,6 +16,12 @@
 
 #include <stdbool.h>
 
+#ifdef OSX
+
+#else
+// TODO: Márcio
+#endif
+
 bool ConvertRGBToBGR(Image *image);
 bool ConvertRGBToGrayScaleBasedOnChannel(Image *image, Image *output, bool RChannel, bool GChannel, bool BChannel);
 bool ConvertRBGToHSV(Image *image);

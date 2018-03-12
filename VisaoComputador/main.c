@@ -6,6 +6,9 @@
 //  Copyright © 2018 Pedro C. Fernandes. All rights reserved.
 //
 #define _CRT_SECURE_NO_WARNINGS 
+
+
+#ifdef OSX
 #include <stdio.h>
 #include "Engine.h"
 #include "Filters.h"
@@ -13,6 +16,9 @@
 #include "main.h"
 #include "Conversors.h"
 #include "Segmentators.h"
+#else
+// TODO: Márcio
+#endif
 
 int main(int argc, const char * argv[]) {
     
