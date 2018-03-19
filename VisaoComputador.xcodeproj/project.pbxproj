@@ -23,9 +23,9 @@
 		0429B013203E2BD8004F687E /* hell.ppm in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0429B012203E2BB4004F687E /* hell.ppm */; };
 		0429B01620449714004F687E /* Filters.c in Sources */ = {isa = PBXBuildFile; fileRef = 0429B01520449714004F687E /* Filters.c */; };
 		0429B01D2044A0DA004F687E /* Conversors.c in Sources */ = {isa = PBXBuildFile; fileRef = 0429B01C2044A0DA004F687E /* Conversors.c */; };
-		0429B01F2044A247004F687E /* Utils.c in Sources */ = {isa = PBXBuildFile; fileRef = 0429B01E2044A247004F687E /* Utils.c */; };
 		0429B02820475BDC004F687E /* HSVTestImage01.ppm in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0429B02620475BC9004F687E /* HSVTestImage01.ppm */; };
 		0429B02920475BDC004F687E /* HSVTestImage02.ppm in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0429B02720475BC9004F687E /* HSVTestImage02.ppm */; };
+		0433BDA02060427800D6D51D /* Labeling.c in Sources */ = {isa = PBXBuildFile; fileRef = 0433BD9F2060427800D6D51D /* Labeling.c */; };
 		04D5D0392050974A00D68F05 /* Segmentators.c in Sources */ = {isa = PBXBuildFile; fileRef = 04D5D0382050974A00D68F05 /* Segmentators.c */; };
 		04D5D03C2050A1FA00D68F05 /* MorphologicalOperators.c in Sources */ = {isa = PBXBuildFile; fileRef = 04D5D03B2050A1FA00D68F05 /* MorphologicalOperators.c */; };
 /* End PBXBuildFile section */
@@ -79,10 +79,12 @@
 		0429B01A20449E6E004F687E /* main.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = main.h; sourceTree = "<group>"; };
 		0429B01B2044A0DA004F687E /* Conversors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Conversors.h; sourceTree = "<group>"; };
 		0429B01C2044A0DA004F687E /* Conversors.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Conversors.c; sourceTree = "<group>"; };
-		0429B01E2044A247004F687E /* Utils.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Utils.c; sourceTree = "<group>"; };
 		0429B0202044A2DC004F687E /* Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
 		0429B02620475BC9004F687E /* HSVTestImage01.ppm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = HSVTestImage01.ppm; sourceTree = "<group>"; };
 		0429B02720475BC9004F687E /* HSVTestImage02.ppm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = HSVTestImage02.ppm; sourceTree = "<group>"; };
+		0433BD9E2060427800D6D51D /* Labeling.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Labeling.h; sourceTree = "<group>"; };
+		0433BD9F2060427800D6D51D /* Labeling.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Labeling.c; sourceTree = "<group>"; };
+		0433BDA1206042E100D6D51D /* Blob.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Blob.h; sourceTree = "<group>"; };
 		04D5D0372050974A00D68F05 /* Segmentators.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Segmentators.h; sourceTree = "<group>"; };
 		04D5D0382050974A00D68F05 /* Segmentators.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Segmentators.c; sourceTree = "<group>"; };
 		04D5D03A2050A1FA00D68F05 /* MorphologicalOperators.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MorphologicalOperators.h; sourceTree = "<group>"; };
@@ -153,6 +155,7 @@
 			isa = PBXGroup;
 			children = (
 				0429B01720449880004F687E /* Image.h */,
+				0433BDA1206042E100D6D51D /* Blob.h */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -160,6 +163,7 @@
 		0429B01920449BAE004F687E /* Engine */ = {
 			isa = PBXGroup;
 			children = (
+				0433BD9D2060426500D6D51D /* Labeling */,
 				0429AFF3203E1ABD004F687E /* Engine.h */,
 				0429AFF2203E1ABD004F687E /* Engine.c */,
 				0429B0252044A40C004F687E /* Utils */,
@@ -195,9 +199,17 @@
 			isa = PBXGroup;
 			children = (
 				0429B0202044A2DC004F687E /* Utils.h */,
-				0429B01E2044A247004F687E /* Utils.c */,
 			);
 			name = Utils;
+			sourceTree = "<group>";
+		};
+		0433BD9D2060426500D6D51D /* Labeling */ = {
+			isa = PBXGroup;
+			children = (
+				0433BD9E2060427800D6D51D /* Labeling.h */,
+				0433BD9F2060427800D6D51D /* Labeling.c */,
+			);
+			path = Labeling;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -258,10 +270,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				04D5D03C2050A1FA00D68F05 /* MorphologicalOperators.c in Sources */,
+				0433BDA02060427800D6D51D /* Labeling.c in Sources */,
 				0429AFF4203E1ABD004F687E /* Engine.c in Sources */,
 				0429B01D2044A0DA004F687E /* Conversors.c in Sources */,
 				0429B01620449714004F687E /* Filters.c in Sources */,
-				0429B01F2044A247004F687E /* Utils.c in Sources */,
 				0429AFE9203E1A9A004F687E /* main.c in Sources */,
 				04D5D0392050974A00D68F05 /* Segmentators.c in Sources */,
 			);

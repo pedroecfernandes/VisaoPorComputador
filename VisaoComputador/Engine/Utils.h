@@ -12,6 +12,6 @@
 
 #endif /* Utils_h */
 
-
-float Max3(float a, float b, float c);
-float Min3(float x, float y, float z);
+#define Max3(a,b,c) (a>b ? (a>c ? a:c):(b>c ?b:c))
+#define Min3(a,b,c) (a<b ? (a<c ? a:c):(b<c ?b:c))
+#define Max(a,b) ((a>b) ? a : b)
