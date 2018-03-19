@@ -18,8 +18,8 @@
 #include "Blob.h"
 #include "Image.h"
 #else
-#include "../Entities/Image.h"
-#include "../Entities/Blob.h"
+#include "../../Entities/Image.h"
+#include "../../Entities/Blob.h"
 #endif
 
 

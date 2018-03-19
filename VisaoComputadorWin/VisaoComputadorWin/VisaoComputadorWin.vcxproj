@@ -118,6 +118,7 @@
     <ClInclude Include="..\..\VisaoComputador\Engine\Conversors\Conversors.h" />
     <ClInclude Include="..\..\VisaoComputador\Engine\Engine.h" />
     <ClInclude Include="..\..\VisaoComputador\Engine\Filters.h" />
+    <ClInclude Include="..\..\VisaoComputador\Engine\Labeling\Labeling.h" />
     <ClInclude Include="..\..\VisaoComputador\Engine\MorphologicalOperators.h" />
     <ClInclude Include="..\..\VisaoComputador\Engine\Segmentators.h" />
     <ClInclude Include="..\..\VisaoComputador\Engine\Utils.h" />
@@ -147,9 +148,9 @@
     <ClCompile Include="..\..\VisaoComputador\Engine\Conversors\Conversors.c" />
     <ClCompile Include="..\..\VisaoComputador\Engine\Engine.c" />
     <ClCompile Include="..\..\VisaoComputador\Engine\Filters.c" />
+    <ClCompile Include="..\..\VisaoComputador\Engine\Labeling\Labeling.c" />
     <ClCompile Include="..\..\VisaoComputador\Engine\MorphologicalOperators.c" />
     <ClCompile Include="..\..\VisaoComputador\Engine\Segmentators.c" />
-    <ClCompile Include="..\..\VisaoComputador\Engine\Utils.c" />
     <ClCompile Include="..\..\VisaoComputador\main.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

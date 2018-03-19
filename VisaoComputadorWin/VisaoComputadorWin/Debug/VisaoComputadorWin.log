@@ -7,9 +7,9 @@ d:\visual studio projects\visaocomputadorlib\visaocomputador\engine\conversors\c
 d:\visual studio projects\visaocomputadorlib\visaocomputador\engine\conversors\conversors.c(174): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
   Engine.c
   Filters.c
+  Labeling.c
   MorphologicalOperators.c
   Segmentators.c
-  Utils.c
   main.c
 d:\visual studio projects\visaocomputadorlib\visaocomputador\main.c(260): warning C4013: 'CreateChessPattern' undefined; assuming extern returning int
   Generating Code...
