@@ -16,6 +16,7 @@
 #include "main.h"
 #include "Conversors.h"
 #include "Segmentators.h"
+#include "Engine/Labeling/Labeling.h"
 #else
 #include <stdio.h>
 #include "../VisaoComputador/Engine/Engine.h"
@@ -24,6 +25,7 @@
 #include "main.h"
 #include "../VisaoComputador/Engine/Conversors/Conversors.h"
 #include "../VisaoComputador/Engine/Segmentators.h"
+#include "../VisaoComputador/Engine/Labeling/Labeling.h" //TODO: Márcio
 #endif
 
 
@@ -48,9 +50,36 @@ int main(int argc, const char * argv[]) {
     
     //ApplyGrayBinaryErode();
     
-    ApplyGrayBinaryDilate();
+    //ApplyGrayBinaryDilate();
+    
+    Labeling();
     
     return 0;
+}
+
+void Labeling()
+{
+    Image *image = vc_read_image("Images/flir-01.pgm");
+    if (image == NULL)
+    {
+        printf("ERROR!");
+        getchar();
+    }
+    
+    Image *output = vc_image_new(image->width, image->height, image->channels, image->channels);
+    
+    int* labelCount = malloc(sizeof(int));
+    
+    Blob* x = GetBlobArrayFromImage(image, output, labelCount);
+    
+    
+    vc_write_image("output.pgm", output);
+    
+    vc_image_free(image);
+    vc_image_free(output);
+    
+    printf("press any key...");
+    getchar();
 }
 
 void ApplyGrayBinaryErode()

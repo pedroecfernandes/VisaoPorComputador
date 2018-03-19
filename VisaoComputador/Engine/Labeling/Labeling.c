@@ -48,9 +48,9 @@ Blob* GetBlobArrayFromImage(Image *src, Image *dst, int *nlabels)
     // Copia dados da imagem binaria para imagem grayscale
     memcpy(datadst, datasrc, bytesperline * height);
     
-    // Todos os pixÈis de plano de fundo devem obrigatoriamente ter valor 0
-    // Todos os pixÈis de primeiro plano devem obrigatoriamente ter valor 255
-    // Ser„o atribuÌdas etiquetas no intervalo [1,254]
+    // Todos os pixéis de plano de fundo devem obrigatoriamente ter valor 0
+    // Todos os pixéis de primeiro plano devem obrigatoriamente ter valor 255
+    // Serão atribuídas etiquetas no intervalo [1,254]
     // Este algoritmo esta assim limitado a 255 labels
     for (i = 0, size = bytesperline * height; i<size; i++)
     {
@@ -99,11 +99,11 @@ Blob* GetBlobArrayFromImage(Image *src, Image *dst, int *nlabels)
                     
                     // Se A esta marcado
                     if (datadst[posA] != 0) num = labeltable[datadst[posA]];
-                    // Se B esta marcado, e È menor que a etiqueta "num"
+                    // Se B esta marcado, e é menor que a etiqueta "num"
                     if ((datadst[posB] != 0) && (labeltable[datadst[posB]] < num)) num = labeltable[datadst[posB]];
-                    // Se C esta marcado, e È menor que a etiqueta "num"
+                    // Se C esta marcado, e é menor que a etiqueta "num"
                     if ((datadst[posC] != 0) && (labeltable[datadst[posC]] < num)) num = labeltable[datadst[posC]];
-                    // Se D esta marcado, e È menor que a etiqueta "num"
+                    // Se D esta marcado, e é menor que a etiqueta "num"
                     if ((datadst[posD] != 0) && (labeltable[datadst[posD]] < num)) num = labeltable[datadst[posD]];
                     
                     // Atribui a etiqueta ao pixel
@@ -193,7 +193,7 @@ Blob* GetBlobArrayFromImage(Image *src, Image *dst, int *nlabels)
             if (labeltable[a] == labeltable[b]) labeltable[b] = 0;
         }
     }
-    // Passo 2: Conta etiquetas e organiza a tabela de etiquetas, para que n„o hajam valores vazios (zero) entre etiquetas
+    // Passo 2: Conta etiquetas e organiza a tabela de etiquetas, para que não hajam valores vazios (zero) entre etiquetas
     *nlabels = 0;
     for (a = 1; a<label; a++)
     {
@@ -204,7 +204,7 @@ Blob* GetBlobArrayFromImage(Image *src, Image *dst, int *nlabels)
         }
     }
     
-    // Se n„o ha blobs
+    // Se não ha blobs
     if (*nlabels == 0) return NULL;
     
     // Cria lista de blobs (objectos) e preenche a etiqueta
@@ -231,7 +231,7 @@ int FillBlobsInfoFromImage(Image *src, Blob *blobs, int nblobs)
     int xmin, ymin, xmax, ymax;
     long int sumx, sumy;
     
-    // VerificaÁ„o de erros
+    // VerificaÁão de erros
     if ((src->width <= 0) || (src->height <= 0) || (src->data == NULL)) return 0;
     if (channels != 1) return 0;
     
@@ -269,8 +269,8 @@ int FillBlobsInfoFromImage(Image *src, Blob *blobs, int nblobs)
                     if (xmax < x) xmax = x;
                     if (ymax < y) ymax = y;
                     
-                    // PerÌmetro
-                    // Se pelo menos um dos quatro vizinhos n„o pertence ao mesmo label, ent„o È um pixel de contorno
+                    // Perímetro
+                    // Se pelo menos um dos quatro vizinhos não pertence ao mesmo label, então é um pixel de contorno
                     if ((data[pos - 1] != blobs[i].label) || (data[pos + 1] != blobs[i].label) || (data[pos - bytesperline] != blobs[i].label) || (data[pos + bytesperline] != blobs[i].label))
                     {
                         blobs[i].perimeter++;
