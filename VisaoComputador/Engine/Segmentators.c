@@ -17,7 +17,7 @@
 #endif
 
 
-bool ApplyGrayScaleBinaryThreshold(Image *image, int threshold)
+bool ApplyGrayScaleToBinary(Image *image, int threshold)
 {
     unsigned char *data = (unsigned char *)image->data;
     int width = image->width;

@@ -18,7 +18,7 @@
 #include <stdbool.h>
 #endif
 
-bool ApplyGrayScaleBinaryThreshold(Image *image, int threshold);
+bool ApplyGrayScaleToBinary(Image *image, int threshold);
 bool ApplyGrayScaleBinaryMidpoint(Image *input, Image *output, int kernel);
 bool ApplyBinaryDilate(Image *input, Image *output, int kernel);
 bool ApplyBinaryErode(Image *input, Image *output, int kernel);
