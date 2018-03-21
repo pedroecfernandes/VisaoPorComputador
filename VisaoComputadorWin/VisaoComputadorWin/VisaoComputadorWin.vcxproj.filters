@@ -45,6 +45,9 @@
     <ClInclude Include="..\..\VisaoComputador\Engine\Conversors\Conversors.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\VisaoComputador\Engine\Labeling\Labeling.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\VisaoComputador\Images\flir-01.pgm">
@@ -100,9 +103,6 @@
     <ClCompile Include="..\..\VisaoComputador\Engine\MorphologicalOperators.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\VisaoComputador\Engine\Utils.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\VisaoComputador\Engine\Filters.c">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -110,6 +110,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\VisaoComputador\Engine\Conversors\Conversors.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\VisaoComputador\Engine\Labeling\Labeling.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -12,9 +12,12 @@
 #include "Labeling.h"
 #include "Utils.h"
 #else
-#include "../Entities/Image.h"
-#include "../Entities/Blob.h"
-#include "../Engine/Labeling.h" //TODO: Márcio Validate
+#include "../../Entities/Image.h"
+#include "../../Entities/Blob.h"
+#include "../../Engine/Labeling/Labeling.h"
+#include "../../Engine/Utils.h"
+#include <stdlib.h>
+#include <string.h>
 #endif
 
 
