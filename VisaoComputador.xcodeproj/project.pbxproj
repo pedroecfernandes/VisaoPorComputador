@@ -88,6 +88,7 @@
 		0433BD9F2060427800D6D51D /* Labeling.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Labeling.c; sourceTree = "<group>"; };
 		0433BDA1206042E100D6D51D /* Blob.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Blob.h; sourceTree = "<group>"; };
 		0433BDA22060523F00D6D51D /* coins.pgm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = coins.pgm; sourceTree = "<group>"; };
+		0433BDA42067FDE100D6D51D /* Dados.ppm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Dados.ppm; sourceTree = "<group>"; };
 		04D5D0372050974A00D68F05 /* Segmentators.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Segmentators.h; sourceTree = "<group>"; };
 		04D5D0382050974A00D68F05 /* Segmentators.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Segmentators.c; sourceTree = "<group>"; };
 		04D5D03A2050A1FA00D68F05 /* MorphologicalOperators.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MorphologicalOperators.h; sourceTree = "<group>"; };
@@ -136,6 +137,7 @@
 		0429AFF6203E1B99004F687E /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				0433BDA42067FDE100D6D51D /* Dados.ppm */,
 				0433BDA22060523F00D6D51D /* coins.pgm */,
 				0429B02620475BC9004F687E /* HSVTestImage01.ppm */,
 				0429B02720475BC9004F687E /* HSVTestImage02.ppm */,
