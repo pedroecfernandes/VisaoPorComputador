@@ -34,6 +34,7 @@ int main(int argc, const char * argv[])
 {
 	setlocale(LC_ALL, "pt_PT");
 	Image *originalImage = vc_read_image("../../VisaoComputador/Images/PecasDeMadeira.ppm");
+	Image *hsvImage = vc_read_image("../../VisaoComputador/Images/PecasDeMadeira.ppm");
 	Image *grayImage = NULL;
 	Image *binaryImage = NULL;
 
@@ -43,16 +44,20 @@ int main(int argc, const char * argv[])
 		getchar();
 		return 0;
 	}
+
+	ConvertRGBToBGR(hsvImage);
+	ConvertRBGToHSV(hsvImage);
+	//vc_write_image("../../VisaoComputador/Results/hsv.pgm", hsvImage);
     
-	grayImage = vc_image_new(originalImage->width, originalImage->height, 1, originalImage->levels);
+	grayImage = vc_image_new(hsvImage->width, hsvImage->height, 1, hsvImage->levels);
 	
-	if (ConvertRGBToGrayScaleBasedOnChannel(originalImage, grayImage, false, true, false))
+	if (ConvertRGBToGrayScaleBasedOnChannel(hsvImage, grayImage, false, true, false))
 	{
 		vc_write_image("../../VisaoComputador/Results/grayImage.pgm", grayImage);
 
 		binaryImage = vc_read_image("../../VisaoComputador/Results/grayImage.pgm");
 
-		ApplyGrayScaleToBinary(binaryImage, 85);
+		ApplyGrayScaleToBinary(binaryImage, 50);
 		vc_write_image("../../VisaoComputador/Results/binary.pgm", binaryImage);
 	}
     
