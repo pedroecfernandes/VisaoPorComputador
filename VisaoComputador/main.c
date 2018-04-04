@@ -97,11 +97,20 @@ void TP1Dados()
             FillBlobsInfoFromImage(blobsOutputImage, blobs, nblobs);
             
             printf("\nNumber of segmented objects: %d\n", nblobs);
+            
             for(i=0; i<nblobs; i++)
             {
-                if(blobs[i].area > 700) {
-                    printf("\n-> Label %d:\n", blobs[i].label);
-                    printf("   Area=%-5d Perimetro=%-5d x=%-5d y=%-5d w=%-5d h=%-5d xc=%-5d yc=%-5d\n", blobs[i].area, blobs[i].perimeter, blobs[i].x, blobs[i].y, blobs[i].width, blobs[i].height, blobs[i].xc, blobs[i].yc);
+                if(blobs[i].area > 700)
+                {
+                    Image *blobImage = vc_image_new(blobs[i].width, blobs[i].height, image->channels, image->levels);
+                    
+                    CreateImageFromBlob(blobs[i], image, blobImage);
+                    
+                    vc_write_image("blob.pgm", blobImage);
+                    vc_image_free(blobImage);
+                    
+                    //printf("\n-> Label %d:\n", blobs[i].label);
+                    //printf("   Area=%-5d Perimetro=%-5d x=%-5d y=%-5d w=%-5d h=%-5d xc=%-5d yc=%-5d\n", blobs[i].area, blobs[i].perimeter, blobs[i].x, blobs[i].y, blobs[i].width, blobs[i].height, blobs[i].xc, blobs[i].yc);
                 }
             }
         }

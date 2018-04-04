@@ -17,11 +17,14 @@
 #ifdef OSX
 #include "Blob.h"
 #include "Image.h"
+#include <stdbool.h>
 #else
 #include "../../Entities/Image.h"
 #include "../../Entities/Blob.h"
+#include <stdbool.h>
 #endif
 
 
 Blob* GetBlobArrayFromImage(Image *src, Image *dst, int *nlabels);
 int FillBlobsInfoFromImage(Image *src, Blob *blobs, int nblobs);
+bool CreateImageFromBlob(Blob blob, Image *blobSrcImage, Image *blobDstImage);
