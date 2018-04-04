@@ -10,6 +10,7 @@
 #include "Blob.h"
 #include "Image.h"
 #include "Labeling.h"
+#include <stdbool.h>
 #include "Utils.h"
 #else
 #include "../../Entities/Image.h"
@@ -19,6 +20,44 @@
 #include <stdlib.h>
 #include <string.h>
 #endif
+
+//  Usage:
+//      Image *blobImage = vc_image_new(blobs[i].width, blobs[i].height, image->channels, image->levels);
+//      CreateImageFromBlob(blobs[i], image, blobImage);
+//      vc_image_free(blobImage);
+bool CreateImageFromBlob(Blob blob, Image *blobSrcImage, Image *blobDstImage)
+{    
+    int posblobOnSrcImage = 0;
+    int posDiceImage = 0;
+    int blobDiceImageX = 0, blobDiceImageY = 0;
+    
+    for (int x = blob.x; x < blob.x + blob.width; x++)
+    {
+        blobDiceImageY = 0;
+        
+        for (int y = blob.y; y < blob.y + blob.height; y++)
+        {
+            posblobOnSrcImage = y * blobSrcImage->bytesperline + x * blobSrcImage->channels;
+            posDiceImage = blobDiceImageY * blobDstImage->bytesperline + blobDiceImageX * blobDstImage->channels;
+            
+            // Copy color value
+            blobDstImage->data[posDiceImage] = blobSrcImage->data[posblobOnSrcImage];
+            
+            // RGB Treatment
+            if (blobSrcImage->channels == 3)
+            {
+                blobDstImage->data[posDiceImage + 1] = blobSrcImage->data[posblobOnSrcImage + 1];
+                blobDstImage->data[posDiceImage + 2] = blobSrcImage->data[posblobOnSrcImage + 2];
+            }
+            
+            blobDiceImageY++;
+        }
+        
+        blobDiceImageX++;
+    }
+    
+    return true;
+}
 
 // Etiquetagem de blobs
 // src        : Imagem bin·ria

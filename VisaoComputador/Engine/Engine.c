@@ -240,7 +240,7 @@ Image *vc_read_image(char *filename)
 				return NULL;
 			}
 
-			// Aloca memória para imagem
+			// Aloca mem—ria para imagem
 			image = vc_image_new(width, height, channels, levels);
 			if(image == NULL) return NULL;
 
