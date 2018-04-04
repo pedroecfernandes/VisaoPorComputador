@@ -21,6 +21,39 @@
 #include <string.h>
 #endif
 
+bool CleanBinaryImageBorders(Image *blobImage)
+{
+    int pos = 0;
+    
+    for (int y = 0; y < blobImage->height; y++)
+    {
+        for (int x = 0; x < blobImage->width; x++)
+        {
+            pos = y * blobImage->bytesperline + x * blobImage->channels;
+            
+            if (blobImage->data[pos] == 0)
+                blobImage->data[pos] = 1;
+            else
+                break;
+        }
+    }
+    
+    for (int y = 0; y < blobImage->height; y++)
+    {
+        for (int x = blobImage->width - 1; x > 0; x--)
+        {
+            pos = y * blobImage->bytesperline + x * blobImage->channels;
+            
+            if (blobImage->data[pos] == 0)
+                blobImage->data[pos] = 1;
+            else
+                break;
+        }
+    }
+    
+    return true;
+}
+
 //  Usage:
 //      Image *blobImage = vc_image_new(blobs[i].width, blobs[i].height, image->channels, image->levels);
 //      CreateImageFromBlob(blobs[i], image, blobImage);

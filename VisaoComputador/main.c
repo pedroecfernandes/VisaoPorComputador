@@ -77,7 +77,7 @@ void TP1Dados()
         
         Image *binaryImage = vc_read_image("grayImage.pgm");
         
-        ApplyGrayScaleToBinary(binaryImage, 193);
+        ApplyGrayScaleToBinary(binaryImage, 192);
         vc_write_image("binary.pgm", binaryImage);
         
         int i, nblobs;
@@ -106,11 +106,30 @@ void TP1Dados()
                     
                     CreateImageFromBlob(blobs[i], binaryImage, blobImage);
                     
-                    Image *blobImage2 = vc_image_new(blobs[i].width, blobs[i].height, binaryImage->channels, binaryImage->levels);
+                    vc_write_image("blobImage.pgm", blobImage);
                     
-                    ApplyGrayScaleBinaryMidpoint(blobImage, blobImage2, 3);
+                    //Image *blobImageErodedNoise = vc_image_new(blobs[i].width, blobs[i].height, binaryImage->channels, binaryImage->levels);
                     
-                    vc_write_image("blob.pgm", blobImage2);
+                    //ApplyBinaryErode(blobImage, blobImageErodedNoise, 3);
+                    
+                    CleanBinaryImageBorders(blobImage);
+                    
+                    
+                    //TODO: Count blobs inside blob
+                    Image *blobImageCounter = vc_image_new(blobs[i].width, blobs[i].height, binaryImage->channels, 255);
+                    int blobMatch = 0, blobCount = 0;
+                    
+                    Blob* blobsInsideImage = GetBlobArrayFromImage(blobImage, blobImageCounter, &blobMatch);
+                    FillBlobsInfoFromImage(blobImageCounter, blobsInsideImage, blobMatch);
+                    
+                    for (int k = 0; k<blobMatch; k++)
+                    {
+                        if (blobsInsideImage[k].area > 20)
+                            blobCount++;
+                    }
+                    
+                    vc_write_image("blobImageCleaned.pgm", blobImage);
+                    
                     vc_image_free(blobImage);
                     
                     //printf("\n-> Label %d:\n", blobs[i].label);
