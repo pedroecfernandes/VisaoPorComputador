@@ -129,6 +129,50 @@ bool ConvertRGBToGrayScaleBasedOnChannel(Image *image, Image *output, bool RChan
     return true;
 }
 
+bool ConvertRGBToGrayScale(Image *image, Image *output)
+{
+	unsigned char *data = (unsigned char *)image->data;
+	int width = image->width;
+	int height = image->height;
+	int bytesperlineRGB = image->width*image->channels;
+	int bytesperlineGray = output->width*output->channels;
+	int channels = image->channels;
+	int x, y;
+	float r = 0.0, g = 0.0, b = 0.0;
+	long int posRGB;
+	long int posGray;
+
+	if ((width <= 0) || (height <= 0) || (image->data == NULL))
+		return false;
+	if (channels != 3)
+		return false;
+
+	if (image == NULL)
+	{
+		printf("ERROR!");
+		getchar();
+
+		return false;
+	}
+
+	for (y = 0; y < height; y++)
+	{
+		for (x = 0; x < width; x++)
+		{
+			posRGB = y * bytesperlineRGB + x * channels;
+			posGray = y * bytesperlineGray + x * output->channels;
+
+			r = (float)data[posRGB];
+			g = (float)data[posRGB + 1];
+			b = (float)data[posRGB + 2];
+
+			output->data[posGray] = (r + g + b) / 3;
+		}
+	}
+
+	return true;
+}
+
 bool ConvertRBGToHSV(Image *image)
 {
     unsigned char *data = (unsigned char *)image->data;

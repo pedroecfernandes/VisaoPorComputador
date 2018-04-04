@@ -7,21 +7,21 @@
 //
 #define _CRT_SECURE_NO_WARNINGS 
 
+#include <stdio.h>
+#include <stdbool.h>
+#include <locale.h>
 
 #ifdef OSX
-#include <stdio.h>
 #include "Engine.h"
 #include "Filters.h"
-#include <stdbool.h>
 #include "main.h"
 #include "Conversors.h"
 #include "Segmentators.h"
 #include "Engine/Labeling/Labeling.h"
 #else
-#include <stdio.h>
 #include "../VisaoComputador/Engine/Engine.h"
 #include "../VisaoComputador/Engine/Filters.h"
-#include <stdbool.h>
+#include <stdlib.h>
 #include "main.h"
 #include "../VisaoComputador/Engine/Conversors/Conversors.h"
 #include "../VisaoComputador/Engine/Segmentators.h"
@@ -30,33 +30,36 @@
 
 
 
-int main(int argc, const char * argv[]) {
+int main(int argc, const char * argv[]) 
+{
+	setlocale(LC_ALL, "pt_PT");
+	Image *originalImage = vc_read_image("../../VisaoComputador/Images/PecasDeMadeira.ppm");
+	Image *grayImage = NULL;
+	Image *binaryImage = NULL;
+
+	if(originalImage == NULL)
+	{
+		printf("ERRO -> IMAGEM NAO ENCONTRADA");
+		getchar();
+		return 0;
+	}
     
-    /*ChessPattern();
+	grayImage = vc_image_new(originalImage->width, originalImage->height, 1, originalImage->levels);
+	
+	if (ConvertRGBToGrayScaleBasedOnChannel(originalImage, grayImage, false, true, false))
+	{
+		vc_write_image("../../VisaoComputador/Results/grayImage.pgm", grayImage);
+
+		binaryImage = vc_read_image("../../VisaoComputador/Results/grayImage.pgm");
+
+		ApplyGrayScaleToBinary(binaryImage, 85);
+		vc_write_image("../../VisaoComputador/Results/binary.pgm", binaryImage);
+	}
     
-    InvertRGB();
-    
-    InvertGrayScale();*/
-    
-    //RGBToHSV();
-    
-    //RGBToGrayScaleBasedOnRedChannel();
-    
-    //RGBToBGR();
-    
-    //ApplyGrayBinarySegmentation();
-    
-    //ApplyGrayBinaryMidpointSegmentation();
-    
-    //ApplyGrayBinaryErode();
-    
-    //ApplyGrayBinaryDilate();
-    
-    //Labeling();
-    
-    TP1Dados();
-    
-    return 0;
+	vc_image_free(originalImage);
+
+	/*printf("Pressione enter para continuar...\n");
+	getchar();*/
 }
 
 void TP1Dados()
@@ -454,7 +457,7 @@ int ChessPattern()
         return 0;
     }
     
-    CreateChessPattern(image);
+    //CreateChessPattern(image);
     
     vc_write_image("output.pbm", image);
     vc_image_free(image);

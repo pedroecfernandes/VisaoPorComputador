@@ -1,4 +1,2 @@
 ﻿  main.c
-d:\visual studio projects\visaocomputadorlib\visaocomputador\main.c(290): warning C4013: 'CreateChessPattern' undefined; assuming extern returning int
-d:\visual studio projects\visaocomputadorlib\visaocomputador\main.c(299): warning C4028: formal parameter 2 different from declaration
   VisaoComputadorWin.vcxproj -> D:\Visual Studio Projects\VisaoComputadorLib\VisaoComputadorWin\Debug\VisaoComputadorWin.exe
