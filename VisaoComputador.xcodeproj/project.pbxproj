@@ -27,6 +27,7 @@
 		0429B02920475BDC004F687E /* HSVTestImage02.ppm in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0429B02720475BC9004F687E /* HSVTestImage02.ppm */; };
 		0433BDA02060427800D6D51D /* Labeling.c in Sources */ = {isa = PBXBuildFile; fileRef = 0433BD9F2060427800D6D51D /* Labeling.c */; };
 		0433BDA32060524A00D6D51D /* coins.pgm in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0433BDA22060523F00D6D51D /* coins.pgm */; };
+		0433BDA52067FE7100D6D51D /* Dados.ppm in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0433BDA42067FDE100D6D51D /* Dados.ppm */; };
 		04D5D0392050974A00D68F05 /* Segmentators.c in Sources */ = {isa = PBXBuildFile; fileRef = 04D5D0382050974A00D68F05 /* Segmentators.c */; };
 		04D5D03C2050A1FA00D68F05 /* MorphologicalOperators.c in Sources */ = {isa = PBXBuildFile; fileRef = 04D5D03B2050A1FA00D68F05 /* MorphologicalOperators.c */; };
 /* End PBXBuildFile section */
@@ -38,6 +39,7 @@
 			dstPath = Images;
 			dstSubfolderSpec = 16;
 			files = (
+				0433BDA52067FE7100D6D51D /* Dados.ppm in CopyFiles */,
 				0433BDA32060524A00D6D51D /* coins.pgm in CopyFiles */,
 				0429B02820475BDC004F687E /* HSVTestImage01.ppm in CopyFiles */,
 				0429B02920475BDC004F687E /* HSVTestImage02.ppm in CopyFiles */,

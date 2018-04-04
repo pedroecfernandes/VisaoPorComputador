@@ -25,7 +25,7 @@
 #include "main.h"
 #include "../VisaoComputador/Engine/Conversors/Conversors.h"
 #include "../VisaoComputador/Engine/Segmentators.h"
-#include "../VisaoComputador/Engine/Labeling/Labeling.h" //TODO: Márcio
+#include "../VisaoComputador/Engine/Labeling/Labeling.h"
 #endif
 
 
@@ -52,9 +52,151 @@ int main(int argc, const char * argv[]) {
     
     //ApplyGrayBinaryDilate();
     
-    Labeling();
+    //Labeling();
+    
+    TP1Dados();
     
     return 0;
+}
+
+void TP1Dados()
+{
+    Image *image = vc_read_image("Images/Dados.ppm");
+    if (image == NULL)
+    {
+        printf("ERROR!");
+        getchar();
+    }
+    
+    Image *grayImage = vc_image_new(image->width, image->height, 1, image->levels);
+    
+    if (ConvertRGBToGrayScaleBasedOnChannel(image, grayImage, false, true, false))
+    {
+        //First Pass 2 Pieces (White)
+        vc_write_image("grayImage.pgm", grayImage);
+        
+        Image *binaryImage = vc_read_image("grayImage.pgm");
+        
+        ApplyGrayScaleToBinary(binaryImage, 193);
+        vc_write_image("binary.pgm", binaryImage);
+        
+        int i, nblobs;
+        Blob *blobs;
+        
+        Image *blobsOutputImage = vc_image_new(binaryImage->width, binaryImage->height, 1, 255);
+        if(blobsOutputImage == NULL)
+        {
+            printf("ERROR -> vc_image_new():\n\tOut of memory!\n");
+            getchar();
+        }
+        
+        blobs = GetBlobArrayFromImage(binaryImage, blobsOutputImage, &nblobs);
+        
+        if(blobs != NULL)
+        {
+            FillBlobsInfoFromImage(blobsOutputImage, blobs, nblobs);
+            
+            printf("\nNumber of segmented objects: %d\n", nblobs);
+            for(i=0; i<nblobs; i++)
+            {
+                if(blobs[i].area > 700) {
+                    printf("\n-> Label %d:\n", blobs[i].label);
+                    printf("   Area=%-5d Perimetro=%-5d x=%-5d y=%-5d w=%-5d h=%-5d xc=%-5d yc=%-5d\n", blobs[i].area, blobs[i].perimeter, blobs[i].x, blobs[i].y, blobs[i].width, blobs[i].height, blobs[i].xc, blobs[i].yc);
+                }
+            }
+        }
+        
+        vc_write_image("blobsOutputImage.pgm", blobsOutputImage);
+        
+        vc_image_free(blobsOutputImage);
+        
+        
+        /*Image *morphImage = vc_image_new(image->width, image->height, 1, image->levels);
+        if (ApplyBinaryErode(grayImage, morphImage, 10))
+        {
+            Image *morphImage2 = vc_image_new(image->width, image->height, 1, image->levels);
+            ApplyBinaryDilate(morphImage, morphImage2, 30);
+            vc_write_image("morphImage.pgm", morphImage);
+            vc_write_image("morphImageComplete.pgm", morphImage2);
+            vc_image_free(morphImage);
+            vc_image_free(morphImage2);
+        }*/
+        
+        /*
+        //Second Pass 1 Piece (Black)
+        ApplyInvertGrayScale(grayImage);
+        
+        vc_write_image("grayImage2.pgm", grayImage);
+        
+        ApplyGrayScaleToBinary(grayImage, 10);
+        
+        vc_write_image("binary2.pgm", grayImage);
+        
+        LabelingTP1();
+         */
+        
+        vc_image_free(grayImage);
+    }
+    
+    vc_image_free(image);
+    
+    /*if (ApplyBinaryErode(image, output, 10))
+    {
+        vc_write_image("output.pgm", output);
+        
+        vc_image_free(image);
+        vc_image_free(output);
+        
+        printf("press any key...");
+        getchar();
+    }*/
+}
+
+void LabelingTP1()
+{
+    Image *image[2];
+    int i, nblobs;
+    Blob *blobs;
+    
+    image[0] = vc_read_image("binary.pgm");
+    
+    if(image[0] == NULL)
+    {
+        printf("ERROR -> vc_read_image():\n\tFile not found!\n");
+        getchar();
+    }
+    
+    image[1] = vc_image_new(image[0]->width, image[0]->height, 1, 255);
+    if(image[1] == NULL)
+    {
+        printf("ERROR -> vc_image_new():\n\tOut of memory!\n");
+        getchar();
+    }
+    
+    blobs = GetBlobArrayFromImage(image[0], image[1], &nblobs);
+    
+    if(blobs != NULL)
+    {
+        FillBlobsInfoFromImage(image[1], blobs, nblobs);
+        
+        printf("\nNumber of segmented objects: %d\n", nblobs);
+        for(i=0; i<nblobs; i++)
+        {
+            if(blobs[i].area > 700) {
+                printf("\n-> Label %d:\n", blobs[i].label);
+                printf("   Area=%-5d Perimetro=%-5d x=%-5d y=%-5d w=%-5d h=%-5d xc=%-5d yc=%-5d\n", blobs[i].area, blobs[i].perimeter, blobs[i].x, blobs[i].y, blobs[i].width, blobs[i].height, blobs[i].xc, blobs[i].yc);
+            }
+        }
+    }
+    
+    vc_write_image("vc0023.pgm", image[1]);
+    
+    vc_image_free(image[1]);
+    
+    //system("FilterGear vc0023.pgm");
+    
+    printf("Press any key to exit...\n");
+    getchar();
 }
 
 void Labeling()

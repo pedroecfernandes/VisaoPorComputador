@@ -25,5 +25,6 @@ void ApplyGrayBinarySegmentation();
 void ApplyGrayBinaryMidpointSegmentation();
 void ApplyGrayBinaryErode();
 void ApplyGrayBinaryDilate();
-
 void Labeling();
+void TP1Dados();
+void LabelingTP1();

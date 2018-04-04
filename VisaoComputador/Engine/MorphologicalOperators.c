@@ -23,7 +23,7 @@ bool ApplyBinaryOpen(Image *input, Image *output, int kernelErode, int kernelDil
     Image *aux = vc_image_new(input->width, input->height, 1, input->levels);
     
     ApplyBinaryErode(input, aux, kernelErode);
-    ApplyBinaryDilate(input, output, kernelDilate);
+    ApplyBinaryDilate(aux, output, kernelDilate);
     
     vc_image_free(aux);
     
