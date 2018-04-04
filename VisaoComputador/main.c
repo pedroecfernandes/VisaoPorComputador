@@ -102,11 +102,15 @@ void TP1Dados()
             {
                 if(blobs[i].area > 700)
                 {
-                    Image *blobImage = vc_image_new(blobs[i].width, blobs[i].height, image->channels, image->levels);
+                    Image *blobImage = vc_image_new(blobs[i].width, blobs[i].height, binaryImage->channels, binaryImage->levels);
                     
-                    CreateImageFromBlob(blobs[i], image, blobImage);
+                    CreateImageFromBlob(blobs[i], binaryImage, blobImage);
                     
-                    vc_write_image("blob.pgm", blobImage);
+                    Image *blobImage2 = vc_image_new(blobs[i].width, blobs[i].height, binaryImage->channels, binaryImage->levels);
+                    
+                    ApplyGrayScaleBinaryMidpoint(blobImage, blobImage2, 3);
+                    
+                    vc_write_image("blob.pgm", blobImage2);
                     vc_image_free(blobImage);
                     
                     //printf("\n-> Label %d:\n", blobs[i].label);
