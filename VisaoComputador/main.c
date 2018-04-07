@@ -45,8 +45,7 @@ int main(int argc, const char * argv[])
 		return 0;
 	}
 
-	ConvertRGBToBGR(hsvImage);
-	ConvertRBGToHSV(hsvImage);
+	ConvertRBGToHSVWithSaturation(hsvImage);
 	//vc_write_image("../../VisaoComputador/Results/hsv.pgm", hsvImage);
     
 	grayImage = vc_image_new(hsvImage->width, hsvImage->height, 1, hsvImage->levels);
@@ -63,8 +62,8 @@ int main(int argc, const char * argv[])
     
 	vc_image_free(originalImage);
 
-	/*printf("Pressione enter para continuar...\n");
-	getchar();*/
+	printf("Pressione enter para continuar...\n");
+	getchar();
 }
 
 void TP1Dados()
