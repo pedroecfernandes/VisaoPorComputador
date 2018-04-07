@@ -116,8 +116,18 @@ void TP1Dados()
                     
                     
                     //TODO: Count blobs inside blob
-                    Image *blobImageCounter = vc_image_new(blobs[i].width, blobs[i].height, binaryImage->channels, 255);
+                    /*
+                    Image *blobsInsideImageOutputImg = vc_image_new(binaryImage->width, binaryImage->height, 1, 255);5);
                     int blobMatch = 0, blobCount = 0;
+                    
+                    
+                    if(blobsInsideImageOutputImg == NULL)
+                    {
+                        printf("ERROR -> vc_image_new():\n\tOut of memory!\n");
+                        getchar();
+                    }
+                    
+                    blobs = GetBlobArrayFromImage(binaryImage, blobsInsideImageOutputImg, &blobMatch);
                     
                     Blob* blobsInsideImage = GetBlobArrayFromImage(blobImage, blobImageCounter, &blobMatch);
                     FillBlobsInfoFromImage(blobImageCounter, blobsInsideImage, blobMatch);
@@ -131,6 +141,7 @@ void TP1Dados()
                     vc_write_image("blobImageCleaned.pgm", blobImage);
                     
                     vc_image_free(blobImage);
+                    */
                     
                     //printf("\n-> Label %d:\n", blobs[i].label);
                     //printf("   Area=%-5d Perimetro=%-5d x=%-5d y=%-5d w=%-5d h=%-5d xc=%-5d yc=%-5d\n", blobs[i].area, blobs[i].perimeter, blobs[i].x, blobs[i].y, blobs[i].width, blobs[i].height, blobs[i].xc, blobs[i].yc);
