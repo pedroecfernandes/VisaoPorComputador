@@ -45,10 +45,11 @@ int main(int argc, const char * argv[])
 		return 0;
 	}
 
-	ConvertRBGToHSVWithSaturation(hsvImage);
-	//vc_write_image("../../VisaoComputador/Results/hsv.pgm", hsvImage);
+	ConvertRBGToHSV(hsvImage);
+	ConvertHSVToRGB(hsvImage);
+	vc_write_image("../../VisaoComputador/Results/hsv.pgm", hsvImage);
     
-	grayImage = vc_image_new(hsvImage->width, hsvImage->height, 1, hsvImage->levels);
+	/*grayImage = vc_image_new(hsvImage->width, hsvImage->height, 1, hsvImage->levels);
 	
 	if (ConvertRGBToGrayScaleBasedOnChannel(hsvImage, grayImage, false, true, false))
 	{
@@ -58,12 +59,12 @@ int main(int argc, const char * argv[])
 
 		ApplyGrayScaleToBinary(binaryImage, 50);
 		vc_write_image("../../VisaoComputador/Results/binary.pgm", binaryImage);
-	}
+	}*/
     
 	vc_image_free(originalImage);
 
-	printf("Pressione enter para continuar...\n");
-	getchar();
+	/*printf("Pressione enter para continuar...\n");
+	getchar();*/
 }
 
 void TP1Dados()

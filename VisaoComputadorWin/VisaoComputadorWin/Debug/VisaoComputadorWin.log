@@ -1,9 +1,0 @@
-﻿  Conversors.c
-d:\visual studio projects\visaocomputadorlib\visaocomputador\engine\conversors\conversors.c(64): warning C4244: '=': conversion from 'float' to 'unsigned char', possible loss of data
-d:\visual studio projects\visaocomputadorlib\visaocomputador\engine\conversors\conversors.c(65): warning C4244: '=': conversion from 'float' to 'unsigned char', possible loss of data
-d:\visual studio projects\visaocomputadorlib\visaocomputador\engine\conversors\conversors.c(121): warning C4244: '=': conversion from 'float' to 'unsigned char', possible loss of data
-d:\visual studio projects\visaocomputadorlib\visaocomputador\engine\conversors\conversors.c(123): warning C4244: '=': conversion from 'float' to 'unsigned char', possible loss of data
-d:\visual studio projects\visaocomputadorlib\visaocomputador\engine\conversors\conversors.c(125): warning C4244: '=': conversion from 'float' to 'unsigned char', possible loss of data
-d:\visual studio projects\visaocomputadorlib\visaocomputador\engine\conversors\conversors.c(169): warning C4244: '=': conversion from 'float' to 'unsigned char', possible loss of data
-d:\visual studio projects\visaocomputadorlib\visaocomputador\engine\conversors\conversors.c(218): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-  VisaoComputadorWin.vcxproj -> D:\Visual Studio Projects\VisaoComputadorLib\VisaoComputadorWin\Debug\VisaoComputadorWin.exe

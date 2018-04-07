@@ -223,17 +223,28 @@ bool ConvertRBGToHSV(Image *image)
                 s = 0.0;
                 h = 0.0;
             }
+
             
             data[pos] = (unsigned char)h;
-            data[pos + 1] = (unsigned char)s;
-            data[pos + 2] = (unsigned char)max;
+			if (s < 64)
+			{
+				data[pos + 1] = (unsigned char)0.0f;
+				data[pos + 2] = (unsigned char)0.0f;
+			}
+			else
+			{
+				data[pos + 1] = (unsigned char)255.0f;
+				data[pos + 2] = (unsigned char)255.0f;
+			}
+
+            
         }
     }
     
     return true;
 }
 
-bool ConvertRBGToHSVWithSaturation(Image *image)
+bool ConvertHSVToRGB(Image *image)
 {
 	unsigned char *data = (unsigned char *)image->data;
 	int width = image->width;
@@ -243,8 +254,9 @@ bool ConvertRBGToHSVWithSaturation(Image *image)
 	int x, y;
 	long int pos;
 	float max = 0, min = 255;
-	float s = 0.0, h = 0.0;
+	unsigned char s = 0.0, h = 0.0, v = 0.0;
 	float r = 0.0, g = 0.0, b = 0.0;
+	unsigned char region, remainder, p, q, t;
 
 	if ((width <= 0) || (height <= 0) || (image->data == NULL)) return false;
 	if (channels != 3) return 0;
@@ -254,40 +266,55 @@ bool ConvertRBGToHSVWithSaturation(Image *image)
 		for (x = 0; x < width; x++)
 		{
 			pos = y * bytesperline + x * channels;
-			r = (float)data[pos];
-			g = (float)data[pos + 1];
-			b = (float)data[pos + 2];
+			h = (float)data[pos];
+			s = (float)data[pos + 1];
+			v = (float)data[pos + 2];
 
-			max = Max3(r, g, b);
-			if (max != 0.0)
+			r = v;
+			g = v;
+			b = v;
+
+			/*if (s == 0)
 			{
-				min = Min3(r, g, b);
-
-				s = (max - min) / max;
-
-				s = s * 255.0f;
-
-				if (max == 0.0)
-					h = 0.0;
-				else
-				{
-					if ((max == r) && (g >= b)) h = 60.0f * (g - b) / (max - min);
-					else if ((max == g) && (b > g)) h = 360.0f + 60.0f * (g - b) / (max - min);
-					else if (max == g) h = 120.0f + 60.0f * (b - r) / (max - min);
-					else h = 240.0f + 60.0f * (r - g) / (max - min);
-
-					h = (h / 360.0) * 255.0;
-				}
+				r = v;
+				g = v;
+				b = v;
 			}
 			else
 			{
-				s = 0.0;
-				h = 0.0;
-			}
+				region = h / 43;
+				remainder = (h - (region * 43)) * 6;
 
-			data[pos] = (unsigned char)h;
-			data[pos + 1] = (unsigned char)s;
-			data[pos + 2] = (unsigned char)max;
+				p = (v * (255 - s)) >> 8;
+				q = (v * (255 - ((s * remainder) >> 8))) >> 8;
+				t = (v * (255 - ((s * (255 - remainder)) >> 8))) >> 8;
+
+				switch (region)
+				{
+				case 0:
+					r = v; g = t; b = p;
+					break;
+				case 1:
+					r = q; g = v; b = p;
+					break;
+				case 2:
+					r = p; g = v; b = t;
+					break;
+				case 3:
+					r = p; g = q; b = v;
+					break;
+				case 4:
+					r = t; g = p; b = v;
+					break;
+				default:
+					r = v; g = p; b = q;
+					break;
+				}
+			}*/
+
+			data[pos] = (unsigned char)r;
+			data[pos + 1] = (unsigned char)g;
+			data[pos + 2] = (unsigned char)b;
 		}
 	}
 
