@@ -34,9 +34,9 @@ int main(int argc, const char * argv[])
 {
 	setlocale(LC_ALL, "pt_PT");
 	Image *originalImage = vc_read_image("../../VisaoComputador/Images/PecasDeMadeira.ppm");
-	Image *hsvImage = vc_read_image("../../VisaoComputador/Images/PecasDeMadeira.ppm");
-	Image *grayImage = NULL;
-	Image *binaryImage = NULL;
+	Image *editedImage = vc_read_image("../../VisaoComputador/Images/PecasDeMadeira.ppm");
+	int nblobs = 0, i = 0, count = 0;
+	Blob *allBlobs, *blobs;
 
 	if(originalImage == NULL)
 	{
@@ -45,26 +45,52 @@ int main(int argc, const char * argv[])
 		return 0;
 	}
 
-	ConvertRBGToHSV(hsvImage);
-	ConvertHSVToRGB(hsvImage);
-	vc_write_image("../../VisaoComputador/Results/hsv.pgm", hsvImage);
-    
-	/*grayImage = vc_image_new(hsvImage->width, hsvImage->height, 1, hsvImage->levels);
-	
-	if (ConvertRGBToGrayScaleBasedOnChannel(hsvImage, grayImage, false, true, false))
+	ConvertRBGToHSV(editedImage);
+	ConvertHSVToBinary(editedImage);
+	vc_write_image("../../VisaoComputador/Results/edited.pgm", editedImage);
+
+	Image *outputImage = vc_image_new(editedImage->width, editedImage->height, 1, 255);
+
+	ConvertRGBToGrayScale(editedImage, outputImage);
+	vc_image_free(editedImage);
+
+	ApplyGrayScaleToBinary(outputImage, 5);
+
+	Image *blobOutputImage = vc_image_new(outputImage->width, outputImage->height, 1, 255);
+
+	if (outputImage == NULL)
 	{
-		vc_write_image("../../VisaoComputador/Results/grayImage.pgm", grayImage);
+		printf("ERROR -> vc_image_new():\n\tOut of memory!\n");
+		getchar();
+		return 0;
+	}
 
-		binaryImage = vc_read_image("../../VisaoComputador/Results/grayImage.pgm");
+	allBlobs = GetBlobArrayFromImage(outputImage, blobOutputImage, &nblobs);
 
-		ApplyGrayScaleToBinary(binaryImage, 50);
-		vc_write_image("../../VisaoComputador/Results/binary.pgm", binaryImage);
-	}*/
+	if (allBlobs != NULL)
+	{
+		FillBlobsInfoFromImage(blobOutputImage, allBlobs, nblobs);
+
+		for (i = 0; i<nblobs; i++)
+		{
+			if (allBlobs[i].area > 50) {
+				blobs[count] = allBlobs[i];
+				count++;
+			}
+		}
+
+		printf("\nNumber of segmented objects: %d\n", count);
+		for (i = 0; i<nblobs; i++)
+		{
+			printf("\n-> Label %d:\n", blobs[i].label);
+			printf("   Area=%-5d Perimetro=%-5d x=%-5d y=%-5d w=%-5d h=%-5d xc=%-5d yc=%-5d\n", blobs[i].area, blobs[i].perimeter, blobs[i].x, blobs[i].y, blobs[i].width, blobs[i].height, blobs[i].xc, blobs[i].yc);
+		}
+	}
     
 	vc_image_free(originalImage);
 
-	/*printf("Pressione enter para continuar...\n");
-	getchar();*/
+	printf("Pressione enter para continuar...\n");
+	getchar();
 }
 
 void TP1Dados()
