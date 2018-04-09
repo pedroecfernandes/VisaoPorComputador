@@ -27,5 +27,5 @@
 
 Blob* GetBlobArrayFromImage(Image *src, Image *dst, int *nlabels);
 int FillBlobsInfoFromImage(Image *src, Blob *blobs, int nblobs);
-bool CreateImageFromBlob(Blob blob, Image *blobSrcImage, Image *blobDstImage);
+bool ExtractImageFromBlob(Blob blob, Image *blobSrcImage, Image *blobDstImage);
 bool CleanBinaryImageBorders(Image *blobImage);

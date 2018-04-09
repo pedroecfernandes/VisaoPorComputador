@@ -336,7 +336,9 @@ int vc_write_image(char *filename, Image *image)
 			fprintf(file, "%s %d %d\n", "P4", image->width, image->height);
 			
 			totalbytes = unsigned_char_to_bit(image->data, tmp, image->width, image->height);
+            #ifdef VC_DEBUG
 			printf("Total = %ld\n", totalbytes);
+            #endif
 			if(fwrite(tmp, sizeof(unsigned char), totalbytes, file) != totalbytes)
 			{
 				#ifdef VC_DEBUG

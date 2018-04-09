@@ -56,9 +56,9 @@ bool CleanBinaryImageBorders(Image *blobImage)
 
 //  Usage:
 //      Image *blobImage = vc_image_new(blobs[i].width, blobs[i].height, image->channels, image->levels);
-//      CreateImageFromBlob(blobs[i], image, blobImage);
+//      ExtractImageFromBlob(blobs[i], image, blobImage);
 //      vc_image_free(blobImage);
-bool CreateImageFromBlob(Blob blob, Image *blobSrcImage, Image *blobDstImage)
+bool ExtractImageFromBlob(Blob blob, Image *blobSrcImage, Image *blobDstImage)
 {    
     int posblobOnSrcImage = 0;
     int posDiceImage = 0;

@@ -6,7 +6,7 @@
 //  Copyright © 2018 Pedro C. Fernandes. All rights reserved.
 //
 #define _CRT_SECURE_NO_WARNINGS 
-
+//#define DebugProcess
 
 #ifdef OSX
 #include <stdio.h>
@@ -72,123 +72,138 @@ void TP1Dados()
     
     if (ConvertRGBToGrayScaleBasedOnChannel(image, grayImage, false, true, false))
     {
-        //First Pass 2 Pieces (White)
+        //  Begin 1st Pass -> White Dices
         vc_write_image("grayImage.pgm", grayImage);
         
         Image *binaryImage = vc_read_image("grayImage.pgm");
-        
         ApplyGrayScaleToBinary(binaryImage, 192);
-        vc_write_image("binary.pgm", binaryImage);
         
-        int i, nblobs;
-        Blob *blobs;
+        #ifdef DebugProcess
+            vc_write_image("binary.pgm", binaryImage);
+        #endif
         
-        Image *blobsOutputImage = vc_image_new(binaryImage->width, binaryImage->height, 1, 255);
-        if(blobsOutputImage == NULL)
-        {
-            printf("ERROR -> vc_image_new():\n\tOut of memory!\n");
-            getchar();
-        }
-        
-        blobs = GetBlobArrayFromImage(binaryImage, blobsOutputImage, &nblobs);
-        
-        if(blobs != NULL)
-        {
-            FillBlobsInfoFromImage(blobsOutputImage, blobs, nblobs);
-            
-            printf("\nNumber of segmented objects: %d\n", nblobs);
-            
-            for(i=0; i<nblobs; i++)
-            {
-                if(blobs[i].area > 700)
-                {
-                    Image *blobImage = vc_image_new(blobs[i].width, blobs[i].height, binaryImage->channels, binaryImage->levels);
-                    
-                    CreateImageFromBlob(blobs[i], binaryImage, blobImage);
-                    
-                    vc_write_image("blobImage.pgm", blobImage);
-                    
-                    //Image *blobImageErodedNoise = vc_image_new(blobs[i].width, blobs[i].height, binaryImage->channels, binaryImage->levels);
-                    
-                    //ApplyBinaryErode(blobImage, blobImageErodedNoise, 3);
-                    
-                    CleanBinaryImageBorders(blobImage);
-                    vc_write_image("blobImageCleaned.pgm", blobImage);
-                    Image *imageCleaned = vc_read_image("blobImageCleaned.pgm");
-                    ApplyInvertBinary(imageCleaned);
-                    
-                    vc_write_image("blobImageCleaned2.pgm", imageCleaned);
-                    
-                    //TODO: Count blobs inside blob
-                    Image *blobImageCounter = vc_image_new(blobImage->width, blobImage->height, blobImage->levels, blobImage->channels);
-                    int blobMatch = 0, blobCount = 0;
-                
-                    Blob *insideBlobs;
-                    insideBlobs = GetBlobArrayFromImage(imageCleaned, blobImageCounter, &blobMatch);
-                    
-                    FillBlobsInfoFromImage(blobImageCounter, insideBlobs, blobMatch);
-                    
-                    for (int k = 0; k<blobMatch; k++)
-                    {
-                        if (insideBlobs[k].area > 20)
-                            blobCount++;
-                    }
-                    
-                    
-                    
-                    vc_image_free(blobImage);
-                    
-                    
-                    //printf("\n-> Label %d:\n", blobs[i].label);
-                    //printf("   Area=%-5d Perimetro=%-5d x=%-5d y=%-5d w=%-5d h=%-5d xc=%-5d yc=%-5d\n", blobs[i].area, blobs[i].perimeter, blobs[i].x, blobs[i].y, blobs[i].width, blobs[i].height, blobs[i].xc, blobs[i].yc);
-                }
-            }
-        }
-        
-        vc_write_image("blobsOutputImage.pgm", blobsOutputImage);
-        
-        vc_image_free(blobsOutputImage);
-        
-        
-        /*Image *morphImage = vc_image_new(image->width, image->height, 1, image->levels);
-        if (ApplyBinaryErode(grayImage, morphImage, 10))
-        {
-            Image *morphImage2 = vc_image_new(image->width, image->height, 1, image->levels);
-            ApplyBinaryDilate(morphImage, morphImage2, 30);
-            vc_write_image("morphImage.pgm", morphImage);
-            vc_write_image("morphImageComplete.pgm", morphImage2);
-            vc_image_free(morphImage);
-            vc_image_free(morphImage2);
-        }*/
-        
-        /*
-        //Second Pass 1 Piece (Black)
-        ApplyInvertGrayScale(grayImage);
-        
-        vc_write_image("grayImage2.pgm", grayImage);
-        
-        ApplyGrayScaleToBinary(grayImage, 10);
-        
-        vc_write_image("binary2.pgm", grayImage);
-        
-        LabelingTP1();
-         */
+        IdentifyDices(binaryImage);
         
         vc_image_free(grayImage);
+        //  End 1st Pass -> White Dices
+        
+        
+        //  Begin 2nd Pass -> Black Dices
+        grayImage = vc_read_image("grayImage.pgm");
+        ApplyInvertGrayScale(grayImage);
+        vc_write_image("grayImage.pgm", grayImage);
+        
+        binaryImage = vc_read_image("grayImage.pgm");
+        ApplyGrayScaleToBinary(binaryImage, 192);
+        
+        #ifdef DebugProcess
+                vc_write_image("binary.pgm", binaryImage);
+        #endif
+        
+        IdentifyDices(binaryImage);
+        
+        vc_image_free(grayImage);
+        //  End 2nd Pass -> Black Dices
     }
     
     vc_image_free(image);
-    
-    /*if (ApplyBinaryErode(image, output, 10))
+}
+
+void ProcessDice(Image *binaryImage, Blob *blobs, int nblobs)
+{
+    for(int i = 0; i < nblobs; i++)
     {
-        vc_write_image("output.pgm", output);
-        
-        vc_image_free(image);
-        vc_image_free(output);
-        
-        printf("press any key...");
+        if(blobs[i].area > 700)
+        {
+            Image *blobImage = vc_image_new(blobs[i].width, blobs[i].height, binaryImage->channels, binaryImage->levels);
+            
+            ExtractImageFromBlob(blobs[i], binaryImage, blobImage);
+            
+#ifdef DebugProcess
+            vc_write_image("1_ExtractedBlob.pgm", blobImage);
+#endif
+            
+            CleanBinaryImageBorders(blobImage);
+            vc_write_image("2_NoBorder.pgm", blobImage);
+            
+            Image *imageCleaned = vc_read_image("2_NoBorder.pgm");
+            ApplyInvertBinary(imageCleaned);
+            
+#ifdef DebugProcess
+            vc_write_image("3_Inverted.pgm", imageCleaned);
+#endif
+            
+            Image *blobImageCounter = vc_image_new(blobImage->width, blobImage->height, blobImage->levels, blobImage->channels);
+            int blobMatch = 0, blobCount = 0;
+            
+            Image *imageEroded = vc_image_new(blobImage->width, blobImage->height, blobImage->levels, blobImage->channels);
+            
+            // Clean any possible noise
+            ApplyBinaryErode(imageCleaned, imageEroded, 3);
+            
+#ifdef DebugProcess
+            vc_write_image("4_Eroded.pgm", imageEroded);
+#endif
+            
+            Blob *insideBlobs;
+            insideBlobs = GetBlobArrayFromImage(imageEroded, blobImageCounter, &blobMatch);
+            
+            FillBlobsInfoFromImage(blobImageCounter, insideBlobs, blobMatch);
+            
+            for (int k = 0; k<blobMatch; k++)
+            {
+#ifdef DebugProcess
+                
+                printf("\n-> Label %d:\n", blobs[i].label);
+                printf("   Area=%-5d Perimetro=%-5d x=%-5d y=%-5d w=%-5d h=%-5d xc=%-5d yc=%-5d\n", blobs[i].area, blobs[i].perimeter, blobs[i].x, blobs[i].y, blobs[i].width, blobs[i].height, blobs[i].xc, blobs[i].yc);
+#endif
+                
+                if (insideBlobs[k].area > 50)
+                {
+                    blobCount++;
+                }
+            }
+            
+            if (blobCount > 0)
+            {
+                printf("\nFound Dice!\n");
+                printf("Value: %d\n", blobCount);
+                printf("Center of Mass: x=%d;y=%d\n\n", blobs[i].xc, blobs[i].yc);
+            }
+            
+            vc_image_free(blobImage);
+        }
+    }
+}
+
+void IdentifyDices(Image *binaryImage)
+{
+    Image *blobsFullImage = vc_image_new(binaryImage->width, binaryImage->height, 1, 255);
+    if(blobsFullImage == NULL)
+    {
+        printf("ERROR -> vc_image_new():\n\tOut of memory!\n");
         getchar();
-    }*/
+    }
+    
+    Blob *blobsWhite;
+    int nblobsWhite;
+    blobsWhite = GetBlobArrayFromImage(binaryImage, blobsFullImage, &nblobsWhite);
+    
+#ifdef DebugProcess
+    vc_write_image("GetBlobArrayFromImage_Result.pgm", blobsFullImage);
+#endif
+    
+    if(blobsWhite != NULL)
+    {
+        FillBlobsInfoFromImage(blobsFullImage, blobsWhite, nblobsWhite);
+#ifdef DebugProcess
+        printf("\nNumber of blobs found in whole image: %d\n", nblobsWhite);
+#endif
+        
+        ProcessDice(binaryImage, blobsWhite, nblobsWhite);
+    }
+    
+    vc_image_free(blobsFullImage);
 }
 
 void LabelingTP1()
@@ -230,57 +245,6 @@ void LabelingTP1()
     
     vc_write_image("vc0023.pgm", image[1]);
     
-    vc_image_free(image[1]);
-    
-    //system("FilterGear vc0023.pgm");
-    
-    printf("Press any key to exit...\n");
-    getchar();
-}
-
-void Labeling()
-{
-    Image *image[2];
-    int i, nblobs;
-    Blob *blobs;
-    
-    image[0] = vc_read_image("Images/coins.pgm");
-    
-    if(image[0] == NULL)
-    {
-        printf("ERROR -> vc_read_image():\n\tFile not found!\n");
-        getchar();
-    }
-    
-    image[1] = vc_image_new(image[0]->width, image[0]->height, 1, 255);
-    if(image[1] == NULL)
-    {
-        printf("ERROR -> vc_image_new():\n\tOut of memory!\n");
-        getchar();
-    }
-    
-    ApplyInvertGrayScale(image[0]);
-    ApplyGrayScaleToBinary(image[0], 127);
-    blobs = GetBlobArrayFromImage(image[0], image[1], &nblobs);
-    
-    if(blobs != NULL)
-    {
-        FillBlobsInfoFromImage(image[1], blobs, nblobs);
-        
-        printf("\nNumber of segmented objects: %d\n", nblobs);
-        for(i=0; i<nblobs; i++)
-        {
-            if(blobs[i].area > 700) {
-                printf("\n-> Label %d:\n", blobs[i].label);
-                printf("   Area=%-5d Perimetro=%-5d x=%-5d y=%-5d w=%-5d h=%-5d xc=%-5d yc=%-5d\n", blobs[i].area, blobs[i].perimeter, blobs[i].x, blobs[i].y, blobs[i].width, blobs[i].height, blobs[i].xc, blobs[i].yc);
-            }
-        }
-    }
-    
-    vc_write_image("vc0023.pgm", image[1]);
-    vc_write_image("vc0021.pgm", image[0]);
-    
-    vc_image_free(image[0]);
     vc_image_free(image[1]);
     
     //system("FilterGear vc0023.pgm");
