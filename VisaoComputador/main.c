@@ -6,7 +6,7 @@
 //  Copyright © 2018 Pedro C. Fernandes. All rights reserved.
 //
 #define _CRT_SECURE_NO_WARNINGS 
-//#define DebugProcess
+#define DebugProcess
 
 #ifdef OSX
 #include <stdio.h>
@@ -82,7 +82,7 @@ void TP1Dados()
             vc_write_image("binary.pgm", binaryImage);
         #endif
         
-        IdentifyDices(binaryImage);
+        IdentifyDices(image, binaryImage);
         
         vc_image_free(grayImage);
         //  End 1st Pass -> White Dices
@@ -100,16 +100,18 @@ void TP1Dados()
                 vc_write_image("binary.pgm", binaryImage);
         #endif
         
-        IdentifyDices(binaryImage);
+        IdentifyDices(image, binaryImage);
         
         vc_image_free(grayImage);
         //  End 2nd Pass -> Black Dices
     }
     
+    vc_write_image("IdentifiedDices.ppm", image);
+    
     vc_image_free(image);
 }
 
-void ProcessDice(Image *binaryImage, Blob *blobs, int nblobs)
+void ProcessDice(Image *originalImage, Image *binaryImage, Blob *blobs, int nblobs)
 {
     for(int i = 0; i < nblobs; i++)
     {
@@ -169,6 +171,8 @@ void ProcessDice(Image *binaryImage, Blob *blobs, int nblobs)
                 printf("\nFound Dice!\n");
                 printf("Value: %d\n", blobCount);
                 printf("Center of Mass: x=%d;y=%d\n\n", blobs[i].xc, blobs[i].yc);
+                
+                HighlightBlobInRGBImage(originalImage, &blobs[i], 255, 70, 70);
             }
             
             vc_image_free(blobImage);
@@ -176,7 +180,7 @@ void ProcessDice(Image *binaryImage, Blob *blobs, int nblobs)
     }
 }
 
-void IdentifyDices(Image *binaryImage)
+void IdentifyDices(Image *originalImage, Image *binaryImage)
 {
     Image *blobsFullImage = vc_image_new(binaryImage->width, binaryImage->height, 1, 255);
     if(blobsFullImage == NULL)
@@ -200,7 +204,7 @@ void IdentifyDices(Image *binaryImage)
         printf("\nNumber of blobs found in whole image: %d\n", nblobsWhite);
 #endif
         
-        ProcessDice(binaryImage, blobsWhite, nblobsWhite);
+        ProcessDice(originalImage, binaryImage, blobsWhite, nblobsWhite);
     }
     
     vc_image_free(blobsFullImage);

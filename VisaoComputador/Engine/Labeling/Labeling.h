@@ -29,3 +29,4 @@ Blob* GetBlobArrayFromImage(Image *src, Image *dst, int *nlabels);
 int FillBlobsInfoFromImage(Image *src, Blob *blobs, int nblobs);
 bool ExtractImageFromBlob(Blob blob, Image *blobSrcImage, Image *blobDstImage);
 bool CleanBinaryImageBorders(Image *blobImage);
+void HighlightBlobInRGBImage(Image *image, Blob *blob, int hR, int hG, int hB);

@@ -28,6 +28,6 @@ void ApplyGrayBinaryErode();
 void ApplyGrayBinaryDilate();
 void Labeling();
 void TP1Dados();
-void IdentifyDices(Image *binaryImage);
-void ProcessDice(Image *binaryImage, Blob *blobs, int nblobs);
+void IdentifyDices(Image *originalImage, Image *binaryImage);
+void ProcessDice(Image *originalImage, Image *binaryImage, Blob *blobs, int nblobs);
 

@@ -54,6 +54,48 @@ bool CleanBinaryImageBorders(Image *blobImage)
     return true;
 }
 
+// Creates an highlighted box arround the blob
+void HighlightBlobInRGBImage(Image *image, Blob *blob, int hR, int hG, int hB)
+{
+    int pos = 0;
+    
+    for (int y = blob->y; y < blob->height + blob->y; y++)
+    {
+        pos = y * image->bytesperline + blob->x * image->channels;
+    
+        image->data[pos] = hR;
+        image->data[pos + 1] = hG;
+        image->data[pos + 2] = hB;
+    }
+    
+    for (int x = blob->x; x < blob->width + blob->x; x++)
+    {
+        pos = blob->y * image->bytesperline + x * image->channels;
+        
+        image->data[pos] = hR;
+        image->data[pos + 1] = hG;
+        image->data[pos + 2] = hB;
+    }
+    
+    for (int y = blob->height + blob->y; y > blob->y; y--)
+    {
+        pos = y * image->bytesperline + (blob->width + blob->x) * image->channels;
+        
+        image->data[pos] = hR;
+        image->data[pos + 1] = hG;
+        image->data[pos + 2] = hB;
+    }
+    
+    for (int x = blob->width + blob->x; x > blob->x; x--)
+    {
+        pos = (blob->height + blob->y) * image->bytesperline + x * image->channels;
+        
+        image->data[pos] = hR;
+        image->data[pos + 1] = hG;
+        image->data[pos + 2] = hB;
+    }
+}
+
 //  Usage:
 //      Image *blobImage = vc_image_new(blobs[i].width, blobs[i].height, image->channels, image->levels);
 //      ExtractImageFromBlob(blobs[i], image, blobImage);
