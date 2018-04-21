@@ -48,6 +48,12 @@
     <ClInclude Include="..\..\VisaoComputador\Engine\Labeling\Labeling.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\VisaoComputador\Engine\Pieces.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\VisaoComputador\Engine\Colors.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\VisaoComputador\Images\flir-01.pgm">
@@ -113,6 +119,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\VisaoComputador\Engine\Labeling\Labeling.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Pieces.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

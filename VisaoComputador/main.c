@@ -20,6 +20,7 @@
 #include "Engine/Labeling/Labeling.h"
 #else
 #include "../VisaoComputador/Engine/Engine.h"
+#include "../VisaoComputador/Engine/Pieces.h"
 #include "../VisaoComputador/Engine/Filters.h"
 #include <stdlib.h>
 #include "main.h"
@@ -34,9 +35,10 @@ int main(int argc, const char * argv[])
 {
 	setlocale(LC_ALL, "pt_PT");
 	Image *originalImage = vc_read_image("../../VisaoComputador/Images/PecasDeMadeira.ppm");
-	Image *editedImage = vc_read_image("../../VisaoComputador/Images/PecasDeMadeira.ppm");
-	int nblobs = 0, i = 0, count = 0;
-	Blob *allBlobs, *blobs;
+	Image *hsvImage = vc_read_image("../../VisaoComputador/Images/PecasDeMadeira.ppm");
+	int nblobs = 0, i = 0, count = 0, countPieces = 0;
+	Blob *blobs;
+	Piece *pieces;
 
 	if(originalImage == NULL)
 	{
@@ -45,52 +47,67 @@ int main(int argc, const char * argv[])
 		return 0;
 	}
 
-	ConvertRBGToHSV(editedImage);
-	ConvertHSVToBinary(editedImage);
-	vc_write_image("../../VisaoComputador/Results/edited.pgm", editedImage);
+	Image *binaryImage = vc_image_new(hsvImage->width, hsvImage->height, 1, hsvImage->levels);
 
-	Image *outputImage = vc_image_new(editedImage->width, editedImage->height, 1, 255);
+	ConvertRBGToHSV(hsvImage);
+	ConvertHSVToBinary(hsvImage, binaryImage);
+	vc_write_image("../../VisaoComputador/Results/binary.pgm", binaryImage);
 
-	ConvertRGBToGrayScale(editedImage, outputImage);
-	vc_image_free(editedImage);
+	Image *blobOutputImage = vc_image_new(binaryImage->width, binaryImage->height, 1, 255);
 
-	ApplyGrayScaleToBinary(outputImage, 5);
-
-	Image *blobOutputImage = vc_image_new(outputImage->width, outputImage->height, 1, 255);
-
-	if (outputImage == NULL)
+	if (binaryImage == NULL)
 	{
 		printf("ERROR -> vc_image_new():\n\tOut of memory!\n");
 		getchar();
 		return 0;
 	}
 
-	allBlobs = GetBlobArrayFromImage(outputImage, blobOutputImage, &nblobs);
+	blobs = GetBlobArrayFromImage(binaryImage, blobOutputImage, &nblobs);
 
-	if (allBlobs != NULL)
+	if (blobs != NULL)
 	{
-		FillBlobsInfoFromImage(blobOutputImage, allBlobs, nblobs);
+		FillBlobsInfoFromImage(blobOutputImage, blobs, nblobs);
 
 		for (i = 0; i<nblobs; i++)
 		{
-			if (allBlobs[i].area > 50) {
-				blobs[count] = allBlobs[i];
+			// count blobs with shapes
+			if (blobs[i].area > 200) {
 				count++;
 			}
 		}
 
+		pieces = (Piece*)calloc(count, sizeof(Piece));
+
 		printf("\nNumber of segmented objects: %d\n", count);
 		for (i = 0; i<nblobs; i++)
 		{
-			printf("\n-> Label %d:\n", blobs[i].label);
-			printf("   Area=%-5d Perimetro=%-5d x=%-5d y=%-5d w=%-5d h=%-5d xc=%-5d yc=%-5d\n", blobs[i].area, blobs[i].perimeter, blobs[i].x, blobs[i].y, blobs[i].width, blobs[i].height, blobs[i].xc, blobs[i].yc);
+			if (blobs[i].area > 200)
+			{
+				pieces[countPieces].blob = blobs[i];
+				pieces[countPieces].color = GetColorFromHSV(hsvImage, pieces[countPieces].blob.xc, pieces[countPieces].blob.yc);
+
+				printf("\n-> Label %d:\n", pieces[countPieces].blob.label);
+				printf("   Area=%-5d Perimetro=%-5d x=%-5d y=%-5d w=%-5d h=%-5d xc=%-5d yc=%-5d\n", 
+					pieces[countPieces].blob.area, 
+					pieces[countPieces].blob.perimeter, 
+					pieces[countPieces].blob.x, 
+					pieces[countPieces].blob.y, 
+					pieces[countPieces].blob.width, 
+					pieces[countPieces].blob.height, 
+					pieces[countPieces].blob.xc,
+					pieces[countPieces].blob.yc);
+				printf("   Color=%s\n", COLOR_STRING[pieces[countPieces].color]);
+
+				countPieces++;
+			}
 		}
 	}
     
-	vc_image_free(originalImage);
+	//vc_image_free(hsvImage);
 
 	printf("Pressione enter para continuar...\n");
 	getchar();
+	return 0;
 }
 
 void TP1Dados()

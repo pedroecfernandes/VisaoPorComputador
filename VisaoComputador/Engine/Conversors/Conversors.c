@@ -184,18 +184,28 @@ bool ConvertRBGToHSV(Image *image)
     int channels = image->channels;
     int x, y;
     long int pos;
+	
     float max = 0, min = 255;
     float s = 0.0, h = 0.0;
     float r = 0.0, g = 0.0, b = 0.0;
     
     if ((width <= 0) || (height <= 0) || (image->data == NULL)) return false;
     if (channels != 3) return 0;
+
+	if (image == NULL)
+	{
+		printf("ERROR!");
+		getchar();
+
+		return false;
+	}
     
     for (y = 0; y < height; y++)
     {
         for (x = 0; x < width; x++)
         {
             pos = y * bytesperline + x * channels;
+			
             r = (float)data[pos];
             g = (float)data[pos + 1];
             b = (float)data[pos + 2];
@@ -246,30 +256,40 @@ bool ConvertRBGToHSV(Image *image)
     return true;
 }
 
-bool ConvertHSVToBinary(Image *image)
+bool ConvertHSVToBinary(Image *image, Image *binaryImage)
 {
 	unsigned char *data = (unsigned char *)image->data;
 	int width = image->width;
 	int height = image->height;
 	int bytesperline = image->width*image->channels;
+	int bytesperlineGray = binaryImage->width*binaryImage->channels;
 	int channels = image->channels;
 	int x, y;
 	long int pos;
+	long int posBinary;
 	unsigned char v = 0.0;
 
 	if ((width <= 0) || (height <= 0) || (image->data == NULL)) return false;
 	if (channels != 3) return 0;
+
+	if (image == NULL)
+	{
+		printf("ERROR!");
+		getchar();
+
+		return false;
+	}
 
 	for (y = 0; y < height; y++)
 	{
 		for (x = 0; x < width; x++)
 		{
 			pos = y * bytesperline + x * channels;
+			posBinary = y * bytesperlineGray + x * binaryImage->channels;
+
 			v = (float)data[pos + 2];
 
-			data[pos] = (unsigned char)v;
-			data[pos + 1] = (unsigned char)v;
-			data[pos + 2] = (unsigned char)v;
+			binaryImage->data[posBinary] = v;
 		}
 	}
 

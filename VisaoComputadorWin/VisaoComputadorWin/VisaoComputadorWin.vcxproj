@@ -115,11 +115,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\VisaoComputador\Engine\Colors.h" />
     <ClInclude Include="..\..\VisaoComputador\Engine\Conversors\Conversors.h" />
     <ClInclude Include="..\..\VisaoComputador\Engine\Engine.h" />
     <ClInclude Include="..\..\VisaoComputador\Engine\Filters.h" />
     <ClInclude Include="..\..\VisaoComputador\Engine\Labeling\Labeling.h" />
     <ClInclude Include="..\..\VisaoComputador\Engine\MorphologicalOperators.h" />
+    <ClInclude Include="..\..\VisaoComputador\Engine\Pieces.h" />
     <ClInclude Include="..\..\VisaoComputador\Engine\Segmentators.h" />
     <ClInclude Include="..\..\VisaoComputador\Engine\Utils.h" />
     <ClInclude Include="..\..\VisaoComputador\Entities\Image.h" />
@@ -152,6 +154,7 @@
     <ClCompile Include="..\..\VisaoComputador\Engine\MorphologicalOperators.c" />
     <ClCompile Include="..\..\VisaoComputador\Engine\Segmentators.c" />
     <ClCompile Include="..\..\VisaoComputador\main.c" />
+    <ClCompile Include="Pieces.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
