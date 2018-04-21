@@ -66,6 +66,11 @@ void HighlightBlobInRGBImage(Image *image, Blob *blob, int hR, int hG, int hB)
         image->data[pos] = hR;
         image->data[pos + 1] = hG;
         image->data[pos + 2] = hB;
+        
+        pos = y * image->bytesperline + (blob->x + blob->width - 1) * image->channels;
+        image->data[pos] = hR;
+        image->data[pos + 1] = hG;
+        image->data[pos + 2] = hB;
     }
     
     for (int x = blob->x; x < blob->width + blob->x; x++)
@@ -75,20 +80,8 @@ void HighlightBlobInRGBImage(Image *image, Blob *blob, int hR, int hG, int hB)
         image->data[pos] = hR;
         image->data[pos + 1] = hG;
         image->data[pos + 2] = hB;
-    }
-    
-    for (int y = blob->height + blob->y; y > blob->y; y--)
-    {
-        pos = y * image->bytesperline + (blob->width + blob->x) * image->channels;
         
-        image->data[pos] = hR;
-        image->data[pos + 1] = hG;
-        image->data[pos + 2] = hB;
-    }
-    
-    for (int x = blob->width + blob->x; x > blob->x; x--)
-    {
-        pos = (blob->height + blob->y) * image->bytesperline + x * image->channels;
+        pos = (blob->y + blob->height -1 ) * image->bytesperline + x * image->channels;
         
         image->data[pos] = hR;
         image->data[pos + 1] = hG;
