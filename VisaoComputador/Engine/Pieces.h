@@ -12,4 +12,4 @@ typedef struct {
 	//Shape shape;
 } Piece;
 
-enum Color GetColorFromHSV(Image *image, int xc, int yx);
+enum Color GetColorFromHSV(Image *hsvImage, int xc, int yc);

@@ -186,7 +186,7 @@ bool ConvertRBGToHSV(Image *image)
     long int pos;
 	
     float max = 0, min = 255;
-    float s = 0.0, h = 0.0;
+    float s = 0.0, h = 0.0, v = 0.0;
     float r = 0.0, g = 0.0, b = 0.0;
     
     if ((width <= 0) || (height <= 0) || (image->data == NULL)) return false;
@@ -211,30 +211,33 @@ bool ConvertRBGToHSV(Image *image)
             b = (float)data[pos + 2];
             
             max = Max3(r, g, b);
-            if (max != 0.0)
-            {
-                min = Min3(r, g, b);
-                
-                s = (max - min) / max;
-                
-                s = s * 255.0f;
-                if (max == 0.0)
-                    h = 0.0;
-                else
-                {
-                    if ((max == r) && (g >= b)) h = 60.0f * (g - b) / (max - min);
-                    else if ((max == g) && (b > g)) h = 360.0f + 60.0f * (g - b) / (max - min);
-                    else if (max == g) h = 120.0f + 60.0f * (b - r) / (max - min);
-                    else h = 240.0f + 60.0f * (r - g) / (max - min);
-                    
-                    h = (h / 360.0) * 255.0;
-                }
-            }
-            else
-            {
-                s = 0.0;
-                h = 0.0;
-            }
+			min = Min3(r, g, b);
+
+			v = max;
+			if (v == 0)
+			{
+				h = 0;
+				s = 0;
+			}
+			else
+			{
+
+				s = 255 * (max - min) / v;
+				if (s == 0)
+				{
+					h = 0;
+				}
+				else
+				{
+
+					if (max == r)
+						h = 0 + 43 * (g - b) / (max - min);
+					else if (max == g)
+						h = 85 + 43 * (b - r) / (max - min);
+					else
+						h = 171 + 43 * (r - g) / (max - min);
+				}
+			}
 
             
             data[pos] = (unsigned char)h;

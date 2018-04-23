@@ -47,22 +47,23 @@ int main(int argc, const char * argv[])
 		return 0;
 	}
 
-	Image *binaryImage = vc_image_new(hsvImage->width, hsvImage->height, 1, hsvImage->levels);
+	Image *editedImage = vc_image_new(originalImage->width, originalImage->height, 1, originalImage->levels);
 
 	ConvertRBGToHSV(hsvImage);
-	ConvertHSVToBinary(hsvImage, binaryImage);
-	vc_write_image("../../VisaoComputador/Results/binary.pgm", binaryImage);
+	ConvertRGBToGrayScale(hsvImage, editedImage);
+	ApplyGrayScaleToBinary(editedImage, 100);
+	vc_write_image("../../VisaoComputador/Results/binary.pgm", editedImage);
 
-	Image *blobOutputImage = vc_image_new(binaryImage->width, binaryImage->height, 1, 255);
+	Image *blobOutputImage = vc_image_new(editedImage->width, editedImage->height, 1, 255);
 
-	if (binaryImage == NULL)
+	if (editedImage == NULL)
 	{
 		printf("ERROR -> vc_image_new():\n\tOut of memory!\n");
 		getchar();
 		return 0;
 	}
 
-	blobs = GetBlobArrayFromImage(binaryImage, blobOutputImage, &nblobs);
+	blobs = GetBlobArrayFromImage(editedImage, blobOutputImage, &nblobs);
 
 	if (blobs != NULL)
 	{
@@ -103,7 +104,7 @@ int main(int argc, const char * argv[])
 		}
 	}
     
-	//vc_image_free(hsvImage);
+	vc_image_free(hsvImage);
 
 	printf("Pressione enter para continuar...\n");
 	getchar();
