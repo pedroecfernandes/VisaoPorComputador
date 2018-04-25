@@ -45,6 +45,8 @@ bool ApplyGrayScaleToBinary(Image *image, int threshold)
             }
         }
     }
+    
+    image->levels = 1;
     return true;
 }
 

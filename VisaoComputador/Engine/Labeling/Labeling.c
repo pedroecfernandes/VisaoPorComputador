@@ -10,6 +10,7 @@
 #include "Blob.h"
 #include "Image.h"
 #include "Labeling.h"
+#include <stdbool.h>
 #include "Utils.h"
 #else
 #include "../../Entities/Image.h"
@@ -21,6 +22,114 @@
 #include <string.h>
 #endif
 
+<<<<<<< HEAD
+=======
+bool CleanBinaryImageBorders(Image *blobImage)
+{
+    int pos = 0;
+    
+    for (int y = 0; y < blobImage->height; y++)
+    {
+        for (int x = 0; x < blobImage->width; x++)
+        {
+            pos = y * blobImage->bytesperline + x * blobImage->channels;
+            
+            if (blobImage->data[pos] == 0)
+                blobImage->data[pos] = 1;
+            else
+                break;
+        }
+    }
+    
+    for (int y = 0; y < blobImage->height; y++)
+    {
+        for (int x = blobImage->width - 1; x > 0; x--)
+        {
+            pos = y * blobImage->bytesperline + x * blobImage->channels;
+            
+            if (blobImage->data[pos] == 0)
+                blobImage->data[pos] = 1;
+            else
+                break;
+        }
+    }
+    
+    return true;
+}
+
+// Creates an highlighted box arround the blob
+void HighlightBlobInRGBImage(Image *image, Blob *blob, int hR, int hG, int hB)
+{
+    int pos = 0;
+    
+    for (int y = blob->y; y < blob->height + blob->y; y++)
+    {
+        pos = y * image->bytesperline + blob->x * image->channels;
+    
+        image->data[pos] = hR;
+        image->data[pos + 1] = hG;
+        image->data[pos + 2] = hB;
+        
+        pos = y * image->bytesperline + (blob->x + blob->width - 1) * image->channels;
+        image->data[pos] = hR;
+        image->data[pos + 1] = hG;
+        image->data[pos + 2] = hB;
+    }
+    
+    for (int x = blob->x; x < blob->width + blob->x; x++)
+    {
+        pos = blob->y * image->bytesperline + x * image->channels;
+        
+        image->data[pos] = hR;
+        image->data[pos + 1] = hG;
+        image->data[pos + 2] = hB;
+        
+        pos = (blob->y + blob->height -1 ) * image->bytesperline + x * image->channels;
+        
+        image->data[pos] = hR;
+        image->data[pos + 1] = hG;
+        image->data[pos + 2] = hB;
+    }
+}
+
+//  Usage:
+//      Image *blobImage = vc_image_new(blobs[i].width, blobs[i].height, image->channels, image->levels);
+//      ExtractImageFromBlob(blobs[i], image, blobImage);
+//      vc_image_free(blobImage);
+bool ExtractImageFromBlob(Blob blob, Image *blobSrcImage, Image *blobDstImage)
+{    
+    int posblobOnSrcImage = 0;
+    int posDiceImage = 0;
+    int blobDiceImageX = 0, blobDiceImageY = 0;
+    
+    for (int x = blob.x; x < blob.x + blob.width; x++)
+    {
+        blobDiceImageY = 0;
+        
+        for (int y = blob.y; y < blob.y + blob.height; y++)
+        {
+            posblobOnSrcImage = y * blobSrcImage->bytesperline + x * blobSrcImage->channels;
+            posDiceImage = blobDiceImageY * blobDstImage->bytesperline + blobDiceImageX * blobDstImage->channels;
+            
+            // Copy color value
+            blobDstImage->data[posDiceImage] = blobSrcImage->data[posblobOnSrcImage];
+            
+            // RGB Treatment
+            if (blobSrcImage->channels == 3)
+            {
+                blobDstImage->data[posDiceImage + 1] = blobSrcImage->data[posblobOnSrcImage + 1];
+                blobDstImage->data[posDiceImage + 2] = blobSrcImage->data[posblobOnSrcImage + 2];
+            }
+            
+            blobDiceImageY++;
+        }
+        
+        blobDiceImageX++;
+    }
+    
+    return true;
+}
+>>>>>>> 995d97458ee33e719337384e750cdc876242d693
 
 // Etiquetagem de blobs
 // src        : Imagem bin·ria
