@@ -10,6 +10,7 @@
 #define Labeling_h
 
 #include <stdio.h>
+#include "../Pieces.h"
 
 #endif /* Labeling_h */
 
@@ -25,3 +26,6 @@
 
 Blob* GetBlobArrayFromImage(Image *src, Image *dst, int *nlabels);
 int FillBlobsInfoFromImage(Image *src, Blob *blobs, int nblobs);
+void HighlightBlobInRGBImage(Image *image, Blob *blob, int hR, int hG, int hB);
+void HighlightMassCenterInRGBImage(Image *image, int xc, int yc, int radius, int hR, int hG, int hB);
+Contour* GetContourBlobsFromImage(Image *src, Blob *blobs, int nblobs);

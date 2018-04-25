@@ -241,25 +241,15 @@ bool ConvertRBGToHSV(Image *image)
 
             
             data[pos] = (unsigned char)h;
-			if (s < 64)
-			{
-				data[pos + 1] = (unsigned char)0.0f;
-				data[pos + 2] = (unsigned char)0.0f;
-			}
-			else
-			{
-				data[pos + 1] = (unsigned char)255.0f;
-				data[pos + 2] = (unsigned char)255.0f;
-			}
-
-            
+			data[pos + 1] = (unsigned char)s;
+			data[pos + 2] = (unsigned char)v;
         }
     }
     
     return true;
 }
 
-bool ConvertHSVToBinary(Image *image, Image *binaryImage)
+bool ConvertHSVToBinary(Image *image, Image *binaryImage, int threshold)
 {
 	unsigned char *data = (unsigned char *)image->data;
 	int width = image->width;
@@ -270,7 +260,7 @@ bool ConvertHSVToBinary(Image *image, Image *binaryImage)
 	int x, y;
 	long int pos;
 	long int posBinary;
-	unsigned char v = 0.0;
+	unsigned char s = 0.0;
 
 	if ((width <= 0) || (height <= 0) || (image->data == NULL)) return false;
 	if (channels != 3) return 0;
@@ -290,9 +280,16 @@ bool ConvertHSVToBinary(Image *image, Image *binaryImage)
 			pos = y * bytesperline + x * channels;
 			posBinary = y * bytesperlineGray + x * binaryImage->channels;
 
-			v = (float)data[pos + 2];
+			s = (float)data[pos + 1];
 
-			binaryImage->data[posBinary] = v;
+			if (s < threshold)
+			{
+				binaryImage->data[posBinary] = 0.0f;
+			}
+			else
+			{
+				binaryImage->data[posBinary] = 255.0f;
+			}
 		}
 	}
 

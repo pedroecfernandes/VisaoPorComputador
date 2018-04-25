@@ -15,10 +15,12 @@
 #include "../../Entities/Image.h"
 #include "../../Entities/Blob.h"
 #include "../../Engine/Labeling/Labeling.h"
+#include "../Pieces.h"
 #include "../../Engine/Utils.h"
 #include <stdlib.h>
 #include <string.h>
 #endif
+
 
 // Etiquetagem de blobs
 // src        : Imagem bin·ria
@@ -286,6 +288,7 @@ int FillBlobsInfoFromImage(Image *src, Blob *blobs, int nblobs)
                     if((data[pos - 1] != blobs[i].label) || (data[pos + 1] != blobs[i].label) || (data[pos - bytesperline] != blobs[i].label) || (data[pos + bytesperline] != blobs[i].label))
                     {
                         blobs[i].perimeter++;
+
                     }
                 }
             }
@@ -303,5 +306,137 @@ int FillBlobsInfoFromImage(Image *src, Blob *blobs, int nblobs)
     }
     
     return 1;
+}
+
+Contour* GetContourBlobsFromImage(Image *src, Blob *blobs, int nblobs)
+{
+	unsigned char *data = (unsigned char *)src->data;
+	int width = src->width;
+	int height = src->height;
+	int bytesperline = src->bytesperline;
+	int channels = src->channels;
+	Contour contours[sizeof(blobs)/sizeof(Blob*)];
+	int x, y, i;
+	long int pos;
+	int xmin, ymin, xmax, ymax;
+	long int sumx, sumy;
+
+	// VerificaÁ„o de erros
+	if ((src->width <= 0) || (src->height <= 0) || (src->data == NULL)) return 0;
+	if (channels != 1) return 0;
+
+	for (i = 0; i < nblobs; i++)
+	{
+		contours[i].count = 0;
+
+		for (y = 1; y<height - 1; y++)
+		{
+			for (x = 1; x<width - 1; x++)
+			{
+				pos = y * bytesperline + x * channels;
+
+				if (data[pos] == blobs[i].label)
+				{
+					// Se pelo menos um dos quatro vizinhos n„o pertence ao mesmo label, ent„o È um pixel de contorno
+					if ((data[pos - 1] != blobs[i].label) || (data[pos + 1] != blobs[i].label) || (data[pos - bytesperline] != blobs[i].label) || (data[pos + bytesperline] != blobs[i].label))
+					{
+						contours[i].label = blobs[i].label;
+						contours[i].count++;
+
+						Position position;
+						position.x = x;
+						position.y = y;
+						contours[i].positions[contours[i].count] = position;
+					}
+				}
+			}
+		}
+	}
+
+	return 1;
+}
+
+// Creates an highlighted box arround the blob
+void HighlightBlobInRGBImage(Image *image, Blob *blob, int hR, int hG, int hB)
+{
+	int pos = 0;
+
+	for (int y = blob->y; y < blob->height + blob->y; y++)
+	{
+		pos = y * image->bytesperline + blob->x * image->channels;
+
+		image->data[pos] = hR;
+		image->data[pos + 1] = hG;
+		image->data[pos + 2] = hB;
+	}
+
+	for (int x = blob->x; x < blob->width + blob->x; x++)
+	{
+		pos = blob->y * image->bytesperline + x * image->channels;
+
+		image->data[pos] = hR;
+		image->data[pos + 1] = hG;
+		image->data[pos + 2] = hB;
+	}
+
+	for (int y = blob->height + blob->y; y > blob->y; y--)
+	{
+		pos = y * image->bytesperline + (blob->width + blob->x) * image->channels;
+
+		image->data[pos] = hR;
+		image->data[pos + 1] = hG;
+		image->data[pos + 2] = hB;
+	}
+
+	for (int x = blob->width + blob->x; x > blob->x; x--)
+	{
+		pos = (blob->height + blob->y) * image->bytesperline + x * image->channels;
+
+		image->data[pos] = hR;
+		image->data[pos + 1] = hG;
+		image->data[pos + 2] = hB;
+	}
+}
+
+// Creates an highlighted box arround the blob
+void HighlightMassCenterInRGBImage(Image *image, int xc, int yc, int radius, int hR, int hG, int hB)
+{
+	int pos = 0;
+
+	for (int y = yc - radius; y < yc + radius; y++)
+	{
+		pos = y * image->bytesperline + (xc - radius) * image->channels;
+
+		image->data[pos] = hR;
+		image->data[pos + 1] = hG;
+		image->data[pos + 2] = hB;
+	}
+
+	for (int x = xc - radius; x < xc + radius; x++)
+	{
+		pos = (yc + radius) * image->bytesperline + x * image->channels;
+
+		image->data[pos] = hR;
+		image->data[pos + 1] = hG;
+		image->data[pos + 2] = hB;
+	}
+
+	for (int y = yc + radius; y > yc - radius; y--)
+	{
+		pos = y * image->bytesperline + (xc + radius) * image->channels;
+
+		image->data[pos] = hR;
+		image->data[pos + 1] = hG;
+		image->data[pos + 2] = hB;
+	}
+
+	for (int x = xc + radius; x > xc - radius; x--)
+	{
+		pos = (yc - radius) * image->bytesperline + x * image->channels;
+
+		image->data[pos] = hR;
+		image->data[pos + 1] = hG;
+		image->data[pos + 2] = hB;
+	}
 }
 

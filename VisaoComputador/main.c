@@ -39,6 +39,7 @@ int main(int argc, const char * argv[])
 	int nblobs = 0, i = 0, count = 0, countPieces = 0;
 	Blob *blobs;
 	Piece *pieces;
+	Contour *contours;
 
 	if(originalImage == NULL)
 	{
@@ -47,23 +48,22 @@ int main(int argc, const char * argv[])
 		return 0;
 	}
 
-	Image *editedImage = vc_image_new(originalImage->width, originalImage->height, 1, originalImage->levels);
+	Image *binaryImage = vc_image_new(originalImage->width, originalImage->height, 1, originalImage->levels);
 
 	ConvertRBGToHSV(hsvImage);
-	ConvertRGBToGrayScale(hsvImage, editedImage);
-	ApplyGrayScaleToBinary(editedImage, 100);
-	vc_write_image("../../VisaoComputador/Results/binary.pgm", editedImage);
+	ConvertHSVToBinary(hsvImage, binaryImage, 64);
+	vc_write_image("../../VisaoComputador/Results/binary.pgm", binaryImage);
 
-	Image *blobOutputImage = vc_image_new(editedImage->width, editedImage->height, 1, 255);
+	Image *blobOutputImage = vc_image_new(binaryImage->width, binaryImage->height, 1, 255);
 
-	if (editedImage == NULL)
+	if (binaryImage == NULL)
 	{
 		printf("ERROR -> vc_image_new():\n\tOut of memory!\n");
 		getchar();
 		return 0;
 	}
 
-	blobs = GetBlobArrayFromImage(editedImage, blobOutputImage, &nblobs);
+	blobs = GetBlobArrayFromImage(binaryImage, blobOutputImage, &nblobs);
 
 	if (blobs != NULL)
 	{
@@ -79,6 +79,8 @@ int main(int argc, const char * argv[])
 
 		pieces = (Piece*)calloc(count, sizeof(Piece));
 
+		contours = GetContourBlobsFromImage(blobOutputImage, blobs, nblobs);
+
 		printf("\nNumber of segmented objects: %d\n", count);
 		for (i = 0; i<nblobs; i++)
 		{
@@ -86,6 +88,7 @@ int main(int argc, const char * argv[])
 			{
 				pieces[countPieces].blob = blobs[i];
 				pieces[countPieces].color = GetColorFromHSV(hsvImage, pieces[countPieces].blob.xc, pieces[countPieces].blob.yc);
+				pieces[countPieces].contour = contours[i];
 
 				printf("\n-> Label %d:\n", pieces[countPieces].blob.label);
 				printf("   Area=%-5d Perimetro=%-5d x=%-5d y=%-5d w=%-5d h=%-5d xc=%-5d yc=%-5d\n", 
@@ -99,10 +102,15 @@ int main(int argc, const char * argv[])
 					pieces[countPieces].blob.yc);
 				printf("   Color=%s\n", COLOR_STRING[pieces[countPieces].color]);
 
+				HighlightBlobInRGBImage(originalImage, &pieces[countPieces].blob, 0, 0, 0);
+				HighlightMassCenterInRGBImage(originalImage, pieces[countPieces].blob.xc, pieces[countPieces].blob.yc, 3, 255, 255, 255);
+
 				countPieces++;
 			}
 		}
 	}
+
+	vc_write_image("../../VisaoComputador/Results/final.pgm", originalImage);
     
 	vc_image_free(hsvImage);
 

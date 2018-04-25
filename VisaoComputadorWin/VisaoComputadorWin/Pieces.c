@@ -34,7 +34,7 @@ enum Color GetColorFromHSV(Image *image, int xc, int yc)
 			{
 				h = ((double)image->data[pos] * 360.0) / 255.0;
 
-				//printf("h: %f\n", h);
+				printf("h: %f\n", h);
 
 				if (h <= 12 || h >= 338)
 					colors[Red]++;
