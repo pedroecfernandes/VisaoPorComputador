@@ -308,54 +308,6 @@ int FillBlobsInfoFromImage(Image *src, Blob *blobs, int nblobs)
     return 1;
 }
 
-Contour* GetContourBlobsFromImage(Image *src, Blob *blobs, int nblobs)
-{
-	unsigned char *data = (unsigned char *)src->data;
-	int width = src->width;
-	int height = src->height;
-	int bytesperline = src->bytesperline;
-	int channels = src->channels;
-	Contour contours[sizeof(blobs)/sizeof(Blob*)];
-	int x, y, i;
-	long int pos;
-	int xmin, ymin, xmax, ymax;
-	long int sumx, sumy;
-
-	// VerificaÁ„o de erros
-	if ((src->width <= 0) || (src->height <= 0) || (src->data == NULL)) return 0;
-	if (channels != 1) return 0;
-
-	for (i = 0; i < nblobs; i++)
-	{
-		contours[i].count = 0;
-
-		for (y = 1; y<height - 1; y++)
-		{
-			for (x = 1; x<width - 1; x++)
-			{
-				pos = y * bytesperline + x * channels;
-
-				if (data[pos] == blobs[i].label)
-				{
-					// Se pelo menos um dos quatro vizinhos n„o pertence ao mesmo label, ent„o È um pixel de contorno
-					if ((data[pos - 1] != blobs[i].label) || (data[pos + 1] != blobs[i].label) || (data[pos - bytesperline] != blobs[i].label) || (data[pos + bytesperline] != blobs[i].label))
-					{
-						contours[i].label = blobs[i].label;
-						contours[i].count++;
-
-						Position position;
-						position.x = x;
-						position.y = y;
-						contours[i].positions[contours[i].count] = position;
-					}
-				}
-			}
-		}
-	}
-
-	return 1;
-}
-
 // Creates an highlighted box arround the blob
 void HighlightBlobInRGBImage(Image *image, Blob *blob, int hR, int hG, int hB)
 {

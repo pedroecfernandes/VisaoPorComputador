@@ -36,10 +36,10 @@ int main(int argc, const char * argv[])
 	setlocale(LC_ALL, "pt_PT");
 	Image *originalImage = vc_read_image("../../VisaoComputador/Images/PecasDeMadeira.ppm");
 	Image *hsvImage = vc_read_image("../../VisaoComputador/Images/PecasDeMadeira.ppm");
-	int nblobs = 0, i = 0, count = 0, countPieces = 0;
+	int nblobs = 0, i = 0, j = 0, count = 0, countPieces = 0;
 	Blob *blobs;
 	Piece *pieces;
-	Contour *contours;
+	int countColor;
 
 	if(originalImage == NULL)
 	{
@@ -79,8 +79,6 @@ int main(int argc, const char * argv[])
 
 		pieces = (Piece*)calloc(count, sizeof(Piece));
 
-		contours = GetContourBlobsFromImage(blobOutputImage, blobs, nblobs);
-
 		printf("\nNumber of segmented objects: %d\n", count);
 		for (i = 0; i<nblobs; i++)
 		{
@@ -88,7 +86,6 @@ int main(int argc, const char * argv[])
 			{
 				pieces[countPieces].blob = blobs[i];
 				pieces[countPieces].color = GetColorFromHSV(hsvImage, pieces[countPieces].blob.xc, pieces[countPieces].blob.yc);
-				pieces[countPieces].contour = contours[i];
 
 				printf("\n-> Label %d:\n", pieces[countPieces].blob.label);
 				printf("   Area=%-5d Perimetro=%-5d x=%-5d y=%-5d w=%-5d h=%-5d xc=%-5d yc=%-5d\n", 
@@ -100,7 +97,7 @@ int main(int argc, const char * argv[])
 					pieces[countPieces].blob.height, 
 					pieces[countPieces].blob.xc,
 					pieces[countPieces].blob.yc);
-				printf("   Color=%s\n", COLOR_STRING[pieces[countPieces].color]);
+				printf("   Color=%s\n\n", COLOR_STRING[pieces[countPieces].color]);
 
 				HighlightBlobInRGBImage(originalImage, &pieces[countPieces].blob, 0, 0, 0);
 				HighlightMassCenterInRGBImage(originalImage, pieces[countPieces].blob.xc, pieces[countPieces].blob.yc, 3, 255, 255, 255);
@@ -108,7 +105,22 @@ int main(int argc, const char * argv[])
 				countPieces++;
 			}
 		}
+
+		// present all number of pieces by color
+		for (i = 0; i < sizeof(COLOR_STRING) / sizeof(int); i++)
+		{
+			countColor = 0;
+
+			for (j = 0; j < countPieces; j++)
+			{
+				if (pieces[j].color == i)
+					countColor++;
+			}
+
+			printf("%s: %d\n", COLOR_STRING[i], countColor);
+		}
 	}
+	
 
 	vc_write_image("../../VisaoComputador/Results/final.pgm", originalImage);
     
