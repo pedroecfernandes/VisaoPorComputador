@@ -26,8 +26,4 @@ bool ConvertRGBToBGR(Image *image);
 bool ConvertRGBToGrayScaleBasedOnChannel(Image *image, Image *output, bool RChannel, bool GChannel, bool BChannel);
 bool ConvertRGBToGrayScale(Image *image, Image *output);
 bool ConvertRBGToHSV(Image *image);
-<<<<<<< HEAD
 bool ConvertHSVToBinary(Image *image, Image *binaryImage, int threshold);
-=======
-bool ConvertHSVToRGB(Image *image);
->>>>>>> 995d97458ee33e719337384e750cdc876242d693

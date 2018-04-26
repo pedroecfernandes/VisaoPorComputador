@@ -17,4 +17,3 @@
 
 bool ApplyInvertRGB(Image *image);
 bool ApplyInvertGrayScale(Image *image);
-bool ApplyInvertBinary(Image *image);

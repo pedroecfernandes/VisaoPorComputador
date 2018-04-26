@@ -8,7 +8,7 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
-//#define VC_DEBUG
+#define VC_DEBUG
 
 #ifdef OSX
 #include "Image.h"

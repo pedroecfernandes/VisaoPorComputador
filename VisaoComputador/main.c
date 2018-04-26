@@ -6,14 +6,10 @@
 //  Copyright © 2018 Pedro C. Fernandes. All rights reserved.
 //
 #define _CRT_SECURE_NO_WARNINGS 
-<<<<<<< HEAD
 
 #include <stdio.h>
 #include <stdbool.h>
 #include <locale.h>
-=======
-#define DebugProcess
->>>>>>> 995d97458ee33e719337384e750cdc876242d693
 
 #ifdef OSX
 #include "Engine.h"
@@ -148,142 +144,84 @@ void TP1Dados()
     
     if (ConvertRGBToGrayScaleBasedOnChannel(image, grayImage, false, true, false))
     {
-        //  Begin 1st Pass -> White Dices
+        //First Pass 2 Pieces (White)
         vc_write_image("grayImage.pgm", grayImage);
         
         Image *binaryImage = vc_read_image("grayImage.pgm");
-        ApplyGrayScaleToBinary(binaryImage, 192);
         
-        #ifdef DebugProcess
-            vc_write_image("binary.pgm", binaryImage);
-        #endif
+        ApplyGrayScaleToBinary(binaryImage, 193);
+        vc_write_image("binary.pgm", binaryImage);
         
-        IdentifyDices(image, binaryImage);
+        int i, nblobs;
+        Blob *blobs;
         
-        vc_image_free(grayImage);
-        //  End 1st Pass -> White Dices
-        
-        
-        //  Begin 2nd Pass -> Black Dices
-        grayImage = vc_read_image("grayImage.pgm");
-        ApplyInvertGrayScale(grayImage);
-        vc_write_image("grayImage.pgm", grayImage);
-        
-        binaryImage = vc_read_image("grayImage.pgm");
-        ApplyGrayScaleToBinary(binaryImage, 192);
-        
-        #ifdef DebugProcess
-                vc_write_image("binary.pgm", binaryImage);
-        #endif
-        
-        IdentifyDices(image, binaryImage);
-        
-        vc_image_free(grayImage);
-        //  End 2nd Pass -> Black Dices
-    }
-    
-    vc_write_image("IdentifiedDices.ppm", image);
-    
-    vc_image_free(image);
-}
-
-void ProcessDice(Image *originalImage, Image *binaryImage, Blob *blobs, int nblobs)
-{
-    for(int i = 0; i < nblobs; i++)
-    {
-        if(blobs[i].area > 700)
+        Image *blobsOutputImage = vc_image_new(binaryImage->width, binaryImage->height, 1, 255);
+        if(blobsOutputImage == NULL)
         {
-            Image *blobImage = vc_image_new(blobs[i].width, blobs[i].height, binaryImage->channels, binaryImage->levels);
+            printf("ERROR -> vc_image_new():\n\tOut of memory!\n");
+            getchar();
+        }
+        
+        blobs = GetBlobArrayFromImage(binaryImage, blobsOutputImage, &nblobs);
+        
+        if(blobs != NULL)
+        {
+            FillBlobsInfoFromImage(blobsOutputImage, blobs, nblobs);
             
-            ExtractImageFromBlob(blobs[i], binaryImage, blobImage);
-            
-#ifdef DebugProcess
-            vc_write_image("1_ExtractedBlob.pgm", blobImage);
-#endif
-            
-            CleanBinaryImageBorders(blobImage);
-            vc_write_image("2_NoBorder.pgm", blobImage);
-            
-            Image *imageCleaned = vc_read_image("2_NoBorder.pgm");
-            ApplyInvertBinary(imageCleaned);
-            
-#ifdef DebugProcess
-            vc_write_image("3_Inverted.pgm", imageCleaned);
-#endif
-            
-            Image *blobImageCounter = vc_image_new(blobImage->width, blobImage->height, blobImage->levels, blobImage->channels);
-            int blobMatch = 0, blobCount = 0;
-            
-            Image *imageEroded = vc_image_new(blobImage->width, blobImage->height, blobImage->levels, blobImage->channels);
-            
-            // Clean any possible noise
-            ApplyBinaryErode(imageCleaned, imageEroded, 3);
-            
-#ifdef DebugProcess
-            vc_write_image("4_Eroded.pgm", imageEroded);
-#endif
-            
-            Blob *insideBlobs;
-            insideBlobs = GetBlobArrayFromImage(imageEroded, blobImageCounter, &blobMatch);
-            
-            FillBlobsInfoFromImage(blobImageCounter, insideBlobs, blobMatch);
-            
-            for (int k = 0; k<blobMatch; k++)
+            printf("\nNumber of segmented objects: %d\n", nblobs);
+            for(i=0; i<nblobs; i++)
             {
-#ifdef DebugProcess
-                
-                printf("\n-> Label %d:\n", blobs[i].label);
-                printf("   Area=%-5d Perimetro=%-5d x=%-5d y=%-5d w=%-5d h=%-5d xc=%-5d yc=%-5d\n", blobs[i].area, blobs[i].perimeter, blobs[i].x, blobs[i].y, blobs[i].width, blobs[i].height, blobs[i].xc, blobs[i].yc);
-#endif
-                
-                if (insideBlobs[k].area > 50)
-                {
-                    blobCount++;
+                if(blobs[i].area > 700) {
+                    printf("\n-> Label %d:\n", blobs[i].label);
+                    printf("   Area=%-5d Perimetro=%-5d x=%-5d y=%-5d w=%-5d h=%-5d xc=%-5d yc=%-5d\n", blobs[i].area, blobs[i].perimeter, blobs[i].x, blobs[i].y, blobs[i].width, blobs[i].height, blobs[i].xc, blobs[i].yc);
                 }
             }
-            
-            if (blobCount > 0)
-            {
-                printf("\nFound Dice!\n");
-                printf("Value: %d\n", blobCount);
-                printf("Center of Mass: x=%d;y=%d\n\n", blobs[i].xc, blobs[i].yc);
-                
-                HighlightBlobInRGBImage(originalImage, &blobs[i], 255, 70, 70);
-            }
-            
-            vc_image_free(blobImage);
         }
-    }
-}
-
-void IdentifyDices(Image *originalImage, Image *binaryImage)
-{
-    Image *blobsFullImage = vc_image_new(binaryImage->width, binaryImage->height, 1, 255);
-    if(blobsFullImage == NULL)
-    {
-        printf("ERROR -> vc_image_new():\n\tOut of memory!\n");
-        getchar();
-    }
-    
-    Blob *blobsWhite;
-    int nblobsWhite;
-    blobsWhite = GetBlobArrayFromImage(binaryImage, blobsFullImage, &nblobsWhite);
-    
-#ifdef DebugProcess
-    vc_write_image("GetBlobArrayFromImage_Result.pgm", blobsFullImage);
-#endif
-    
-    if(blobsWhite != NULL)
-    {
-        FillBlobsInfoFromImage(blobsFullImage, blobsWhite, nblobsWhite);
-#ifdef DebugProcess
-        printf("\nNumber of blobs found in whole image: %d\n", nblobsWhite);
-#endif
         
-        ProcessDice(originalImage, binaryImage, blobsWhite, nblobsWhite);
+        vc_write_image("blobsOutputImage.pgm", blobsOutputImage);
+        
+        vc_image_free(blobsOutputImage);
+        
+        
+        /*Image *morphImage = vc_image_new(image->width, image->height, 1, image->levels);
+        if (ApplyBinaryErode(grayImage, morphImage, 10))
+        {
+            Image *morphImage2 = vc_image_new(image->width, image->height, 1, image->levels);
+            ApplyBinaryDilate(morphImage, morphImage2, 30);
+            vc_write_image("morphImage.pgm", morphImage);
+            vc_write_image("morphImageComplete.pgm", morphImage2);
+            vc_image_free(morphImage);
+            vc_image_free(morphImage2);
+        }*/
+        
+        /*
+        //Second Pass 1 Piece (Black)
+        ApplyInvertGrayScale(grayImage);
+        
+        vc_write_image("grayImage2.pgm", grayImage);
+        
+        ApplyGrayScaleToBinary(grayImage, 10);
+        
+        vc_write_image("binary2.pgm", grayImage);
+        
+        LabelingTP1();
+         */
+        
+        vc_image_free(grayImage);
     }
     
-    vc_image_free(blobsFullImage);
+    vc_image_free(image);
+    
+    /*if (ApplyBinaryErode(image, output, 10))
+    {
+        vc_write_image("output.pgm", output);
+        
+        vc_image_free(image);
+        vc_image_free(output);
+        
+        printf("press any key...");
+        getchar();
+    }*/
 }
 
 void LabelingTP1()
@@ -325,6 +263,57 @@ void LabelingTP1()
     
     vc_write_image("vc0023.pgm", image[1]);
     
+    vc_image_free(image[1]);
+    
+    //system("FilterGear vc0023.pgm");
+    
+    printf("Press any key to exit...\n");
+    getchar();
+}
+
+void Labeling()
+{
+    Image *image[2];
+    int i, nblobs;
+    Blob *blobs;
+    
+    image[0] = vc_read_image("Images/coins.pgm");
+    
+    if(image[0] == NULL)
+    {
+        printf("ERROR -> vc_read_image():\n\tFile not found!\n");
+        getchar();
+    }
+    
+    image[1] = vc_image_new(image[0]->width, image[0]->height, 1, 255);
+    if(image[1] == NULL)
+    {
+        printf("ERROR -> vc_image_new():\n\tOut of memory!\n");
+        getchar();
+    }
+    
+    ApplyInvertGrayScale(image[0]);
+    ApplyGrayScaleToBinary(image[0], 127);
+    blobs = GetBlobArrayFromImage(image[0], image[1], &nblobs);
+    
+    if(blobs != NULL)
+    {
+        FillBlobsInfoFromImage(image[1], blobs, nblobs);
+        
+        printf("\nNumber of segmented objects: %d\n", nblobs);
+        for(i=0; i<nblobs; i++)
+        {
+            if(blobs[i].area > 700) {
+                printf("\n-> Label %d:\n", blobs[i].label);
+                printf("   Area=%-5d Perimetro=%-5d x=%-5d y=%-5d w=%-5d h=%-5d xc=%-5d yc=%-5d\n", blobs[i].area, blobs[i].perimeter, blobs[i].x, blobs[i].y, blobs[i].width, blobs[i].height, blobs[i].xc, blobs[i].yc);
+            }
+        }
+    }
+    
+    vc_write_image("vc0023.pgm", image[1]);
+    vc_write_image("vc0021.pgm", image[0]);
+    
+    vc_image_free(image[0]);
     vc_image_free(image[1]);
     
     //system("FilterGear vc0023.pgm");

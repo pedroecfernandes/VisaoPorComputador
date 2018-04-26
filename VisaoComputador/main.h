@@ -9,7 +9,6 @@
 #ifndef main_h
 #define main_h
 
-#include "Blob.h"
 
 #endif /* main_h */
 
@@ -28,6 +27,4 @@ void ApplyGrayBinaryErode();
 void ApplyGrayBinaryDilate();
 void Labeling();
 void TP1Dados();
-void IdentifyDices(Image *originalImage, Image *binaryImage);
-void ProcessDice(Image *originalImage, Image *binaryImage, Blob *blobs, int nblobs);
-
+void LabelingTP1();
