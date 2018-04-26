@@ -14,6 +14,6 @@ enum Color {
 };
 
 static const char *COLOR_STRING[] = {
-	"Red", "Orange", "Yellow", "Green",
+	"Red", "Orange/Beige", "Yellow", "Green",
 	"Blue", "Cyan", "Purple", "Pink"
 };
