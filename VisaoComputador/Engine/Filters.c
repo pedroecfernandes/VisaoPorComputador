@@ -57,3 +57,17 @@ bool ApplyInvertGrayScale(Image *image)
     
     return true;
 }
+
+bool ApplyInvertBinary(Image *image)
+{
+    int i;
+    
+    for (i=0; i<image->bytesperline*image->height; i+=image->channels) {
+        if (image->data[i] == 1)
+            image->data[i] = 0;
+        else
+            image->data[i] = 1;
+    }
+    
+    return true;
+}
