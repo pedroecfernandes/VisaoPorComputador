@@ -30,6 +30,8 @@
 		0433BDA52067FE7100D6D51D /* Dados.ppm in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0433BDA42067FDE100D6D51D /* Dados.ppm */; };
 		04D5D0392050974A00D68F05 /* Segmentators.c in Sources */ = {isa = PBXBuildFile; fileRef = 04D5D0382050974A00D68F05 /* Segmentators.c */; };
 		04D5D03C2050A1FA00D68F05 /* MorphologicalOperators.c in Sources */ = {isa = PBXBuildFile; fileRef = 04D5D03B2050A1FA00D68F05 /* MorphologicalOperators.c */; };
+		04FD9E3420979C1B00AECF82 /* Edging.c in Sources */ = {isa = PBXBuildFile; fileRef = 04FD9E3320979C1B00AECF82 /* Edging.c */; };
+		04FD9E3820979DF800AECF82 /* Histogram.c in Sources */ = {isa = PBXBuildFile; fileRef = 04FD9E3720979DF800AECF82 /* Histogram.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -95,6 +97,10 @@
 		04D5D0382050974A00D68F05 /* Segmentators.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Segmentators.c; sourceTree = "<group>"; };
 		04D5D03A2050A1FA00D68F05 /* MorphologicalOperators.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MorphologicalOperators.h; sourceTree = "<group>"; };
 		04D5D03B2050A1FA00D68F05 /* MorphologicalOperators.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = MorphologicalOperators.c; sourceTree = "<group>"; };
+		04FD9E3220979C0E00AECF82 /* Edging.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Edging.h; sourceTree = "<group>"; };
+		04FD9E3320979C1B00AECF82 /* Edging.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Edging.c; sourceTree = "<group>"; };
+		04FD9E3620979DF800AECF82 /* Histogram.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Histogram.h; sourceTree = "<group>"; };
+		04FD9E3720979DF800AECF82 /* Histogram.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Histogram.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,6 +177,8 @@
 		0429B01920449BAE004F687E /* Engine */ = {
 			isa = PBXGroup;
 			children = (
+				04FD9E3520979DEB00AECF82 /* Histogram */,
+				04FD9E31209799A200AECF82 /* Edging */,
 				0433BD9D2060426500D6D51D /* Labeling */,
 				0429AFF3203E1ABD004F687E /* Engine.h */,
 				0429AFF2203E1ABD004F687E /* Engine.c */,
@@ -218,6 +226,24 @@
 				0433BD9F2060427800D6D51D /* Labeling.c */,
 			);
 			path = Labeling;
+			sourceTree = "<group>";
+		};
+		04FD9E31209799A200AECF82 /* Edging */ = {
+			isa = PBXGroup;
+			children = (
+				04FD9E3220979C0E00AECF82 /* Edging.h */,
+				04FD9E3320979C1B00AECF82 /* Edging.c */,
+			);
+			path = Edging;
+			sourceTree = "<group>";
+		};
+		04FD9E3520979DEB00AECF82 /* Histogram */ = {
+			isa = PBXGroup;
+			children = (
+				04FD9E3620979DF800AECF82 /* Histogram.h */,
+				04FD9E3720979DF800AECF82 /* Histogram.c */,
+			);
+			path = Histogram;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -278,10 +304,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				04D5D03C2050A1FA00D68F05 /* MorphologicalOperators.c in Sources */,
+				04FD9E3420979C1B00AECF82 /* Edging.c in Sources */,
 				0433BDA02060427800D6D51D /* Labeling.c in Sources */,
 				0429AFF4203E1ABD004F687E /* Engine.c in Sources */,
 				0429B01D2044A0DA004F687E /* Conversors.c in Sources */,
 				0429B01620449714004F687E /* Filters.c in Sources */,
+				04FD9E3820979DF800AECF82 /* Histogram.c in Sources */,
 				0429AFE9203E1A9A004F687E /* main.c in Sources */,
 				04D5D0392050974A00D68F05 /* Segmentators.c in Sources */,
 			);
