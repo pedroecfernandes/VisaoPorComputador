@@ -14,7 +14,7 @@
 #endif /* main_h */
 
 
-int main(int argc, const char * argv[]) ;
+int main2(int argc, const char * argv[]) ;
 
 void RGBToBGR();
 void RGBToGrayScaleBasedOnRedChannel();
