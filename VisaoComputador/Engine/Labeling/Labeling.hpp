@@ -15,8 +15,8 @@
 
 
 #ifdef OSX
-#include "Blob.h"
-#include "Image.h"
+#include "Blob.hpp"
+#include "Image.hpp"
 #include <stdbool.h>
 #else
 #include "../../Entities/Image.h"

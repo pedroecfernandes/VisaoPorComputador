@@ -11,7 +11,7 @@
 //#define VC_DEBUG
 
 #ifdef OSX
-#include "Image.h"
+#include "Image.hpp"
 #else
 #include "../Entities/Image.h"
 #endif

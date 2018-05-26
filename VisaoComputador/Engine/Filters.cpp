@@ -9,8 +9,8 @@
 
 
 #ifdef OSX
-#include "Filters.h"
-#include "Engine.h"
+#include "Filters.hpp"
+#include "Engine.hpp"
 #include <stdbool.h>
 #else
 #include "Filters.h"
@@ -20,17 +20,17 @@
 #endif
 
 
-bool ApplyInvertRGB(Image *image)
+bool ApplyInvertRGB(IplImage *image)
 {
-    unsigned char *data = (unsigned char *)image->data;
+    unsigned char *data = (unsigned char *)image->imageData;
     int width = image->width;
     int height = image->height;
-    int bytesperline = image->width*image->channels;
-    int channels = image->channels;
+    int bytesperline = image->width*image->nChannels;
+    int channels = image->nChannels;
     int x, y;
     long int pos;
     
-    if ((width <= 0) || (height <= 0) || (image->data == NULL)) return false;
+    if ((width <= 0) || (height <= 0) || (image->imageData == NULL)) return false;
     
     for (y = 0; y < height; y++)
     {
@@ -47,26 +47,26 @@ bool ApplyInvertRGB(Image *image)
     return true;
 }
 
-bool ApplyInvertGrayScale(Image *image)
+bool ApplyInvertGrayScale(IplImage *image)
 {
     int i;
     
-    for (i=0; i<image->bytesperline*image->height; i+=image->channels) {
-        image->data[i] = 255 - image->data[i];
+    for (i=0; i<(image->width*image->nChannels)*image->height; i+=image->nChannels) {
+        image->imageData[i] = 255 - image->imageData[i];
     }
     
     return true;
 }
 
-bool ApplyInvertBinary(Image *image)
+bool ApplyInvertBinary(IplImage *image)
 {
     int i;
     
-    for (i=0; i<image->bytesperline*image->height; i+=image->channels) {
-        if (image->data[i] == 1)
-            image->data[i] = 0;
+    for (i=0; i<(image->width*image->nChannels)*image->height; i+=image->nChannels) {
+        if (image->imageData[i] == 1)
+            image->imageData[i] = 0;
         else
-            image->data[i] = 1;
+            image->imageData[i] = 1;
     }
     
     return true;

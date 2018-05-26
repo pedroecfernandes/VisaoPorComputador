@@ -1,17 +1,17 @@
 //
-//  Outliners.h
+//  Histogram.h
 //  VisaoComputador
 //
 //  Created by Pedro C. Fernandes on 30/04/18.
 //  Copyright © 2018 Pedro C. Fernandes. All rights reserved.
 //
 
-#ifndef Outliners_h
-#define Outliners_h
+#ifndef Histogram_h
+#define Histogram_h
 
 #ifdef OSX
 #include <stdio.h>
-#include "Image.h"
+#include <opencv2/opencv.hpp>
 
 #include <stdbool.h>
 #else
@@ -20,7 +20,8 @@
 #include <stdbool.h>
 #endif
 
-#endif /* Outliners_h */
+#endif /* Histogram_h */
 
-bool ApplyPrewittEdging(Image *src, Image *dst, float th);
-bool ApplySobelEdging(Image *src, Image *dst, float th);
+//bool ApplyHistogramGrayScale(IplImage *src, Image *dst);
+//bool GetHistogramGrayScale(IplImage *src, Image *dst);
+//bool GetHistogram(IplImage *src, Image *dst);

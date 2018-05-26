@@ -10,7 +10,7 @@
 
 #ifdef OSX
 #include <stdio.h>
-#include "Image.h"
+#include <opencv2/opencv.hpp>
 #include <stdbool.h>
 #else
 #include "../Entities/Image.h"
@@ -18,5 +18,5 @@
 #include <stdbool.h>
 #endif
 
-bool ApplyBinaryOpen(Image *input, Image *dst, int kernelErode, int kernelDilate);
-bool ApplyBinaryClose(Image *input, Image *output, int kernelErodeinput, int kernelDilate);
+//bool ApplyBinaryOpen(Image *input, Image *dst, int kernelErode, int kernelDilate);
+//bool ApplyBinaryClose(Image *input, Image *output, int kernelErodeinput, int kernelDilate);

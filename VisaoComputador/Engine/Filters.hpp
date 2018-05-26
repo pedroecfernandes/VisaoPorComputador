@@ -8,13 +8,13 @@
 
 #ifdef OSX
 #include <stdio.h>
-#include "Image.h"
+#include <opencv2/opencv.hpp>
 #include <stdbool.h>
 #else
 #include <stdbool.h>
 #include "../Entities/Image.h"
 #endif
 
-bool ApplyInvertRGB(Image *image);
-bool ApplyInvertGrayScale(Image *image);
-bool ApplyInvertBinary(Image *image);
+bool ApplyInvertRGB(IplImage *image);
+bool ApplyInvertGrayScale(IplImage *image);
+bool ApplyInvertBinary(IplImage *image);

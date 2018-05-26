@@ -7,11 +7,11 @@
 //
 
 #ifdef OSX
-#include "Blob.h"
-#include "Image.h"
-#include "Labeling.h"
+#include "Blob.hpp"
+#include <opencv2/opencv.hpp>
+#include "Labeling.hpp"
 #include <stdbool.h>
-#include "Utils.h"
+#include "Utils.hpp"
 #else
 #include "../../Entities/Image.h"
 #include "../../Entities/Blob.h"

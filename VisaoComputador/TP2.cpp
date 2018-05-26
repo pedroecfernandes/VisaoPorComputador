@@ -6,17 +6,41 @@
 //  Copyright © 2018 Pedro C. Fernandes. All rights reserved.
 //
 
+#ifdef OSX
+#include <stdio.h>
+#include <stdbool.h>
+#include "main.h"
+#include "Conversors.hpp"
+#include "Segmentators.hpp"
+#include "Engine/Labeling/Labeling.hpp"
 #include "TP2.hpp"
 #include <opencv2/opencv.hpp>
+#include <opencv2/imgproc.hpp>
+#include <opencv2/highgui.hpp>
+#include <opencv2/core/utility.hpp>
+using namespace cv;
+#else
+#include <stdio.h>
+#include "../VisaoComputador/Engine/Engine.h"
+#include "../VisaoComputador/Engine/Filters.h"
+#include <stdbool.h>
+#include "main.h"
+#include "../VisaoComputador/Engine/Conversors/Conversors.h"
+#include "../VisaoComputador/Engine/Segmentators.h"
+#include "../VisaoComputador/Engine/Labeling/Labeling.h"
+#endif
 
 int main(int argc, const char * argv[])
 {
     std::cout << "OpenCV Version" << CV_VERSION << std::endl;
     
     // Vídeo
-    char *videofile = (char*)"Images/video1_tp2.mp4";
+    char *videofile = (char*)"Images/video3-tp2.mp4";
     CvCapture *capture;
     IplImage *frame;
+    IplImage *frameAux;
+    Blob *blobs;
+    int i, nblobs;
     struct
     {
         int width, height;
@@ -32,6 +56,7 @@ int main(int argc, const char * argv[])
     char str[500] = { 0 };
     // Outros
     int key = 0;
+    IplImage *gray = NULL;
     
     /* Leitura de vídeo de um ficheiro */
     capture = cvCaptureFromFile(videofile);
@@ -83,6 +108,18 @@ int main(int argc, const char * argv[])
         cvPutText(frame, str, cvPoint(20, 80), &font, cvScalar(255, 255, 255));
         
         // Faça o seu código aqui...
+        if (video.nframe == 83)
+        {
+            //frame->
+            IplImage* frameAux = cvCreateImage(cvGetSize(frame), 8, 3); // allocate a 3 channel byte image
+            if (gray == NULL)
+                gray = cvCreateImage(cvGetSize(frameAux), 8, 1); // allocate a 1 channel byte image
+            
+            cvCopy(frame, frameAux, NULL); // OR return img_src_cpy;
+            ConvertRGBToGrayScaleBasedOnChannel(frameAux, gray, 0, 1, 0);
+            cvSaveImage("/Users/pedrocfernandes/Documents/ssd.png", gray);
+        }
+        
         
         /* Exibe a frame */
         cvShowImage("VC - TP2", frame);

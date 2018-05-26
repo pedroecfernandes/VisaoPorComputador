@@ -13,7 +13,7 @@
 		040BD65F20B34A650038E334 /* video3-tp2.mp4 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 040BD65C20B34A450038E334 /* video3-tp2.mp4 */; };
 		040BD66020B34A650038E334 /* video4-tp2.mp4 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 040BD65920B34A430038E334 /* video4-tp2.mp4 */; };
 		0429AFE9203E1A9A004F687E /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 0429AFE8203E1A9A004F687E /* main.c */; };
-		0429AFF4203E1ABD004F687E /* Engine.c in Sources */ = {isa = PBXBuildFile; fileRef = 0429AFF2203E1ABD004F687E /* Engine.c */; };
+		0429AFF4203E1ABD004F687E /* Engine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0429AFF2203E1ABD004F687E /* Engine.cpp */; };
 		0429B002203E1CC8004F687E /* flir-01.pgm in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0429B000203E1BAA004F687E /* flir-01.pgm */; };
 		0429B003203E1CC8004F687E /* flir-02.pgm in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0429B001203E1BAB004F687E /* flir-02.pgm */; };
 		0429B004203E1CC8004F687E /* flir-03.pgm in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0429AFFA203E1BAA004F687E /* flir-03.pgm */; };
@@ -26,17 +26,17 @@
 		0429B00B203E1CC8004F687E /* P2.pgm in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0429AFFB203E1BAA004F687E /* P2.pgm */; };
 		0429B00C203E1CC8004F687E /* P3.ppm in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0429AFFC203E1BAA004F687E /* P3.ppm */; };
 		0429B013203E2BD8004F687E /* hell.ppm in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0429B012203E2BB4004F687E /* hell.ppm */; };
-		0429B01620449714004F687E /* Filters.c in Sources */ = {isa = PBXBuildFile; fileRef = 0429B01520449714004F687E /* Filters.c */; };
-		0429B01D2044A0DA004F687E /* Conversors.c in Sources */ = {isa = PBXBuildFile; fileRef = 0429B01C2044A0DA004F687E /* Conversors.c */; };
+		0429B01620449714004F687E /* Filters.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0429B01520449714004F687E /* Filters.cpp */; };
+		0429B01D2044A0DA004F687E /* Conversors.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0429B01C2044A0DA004F687E /* Conversors.cpp */; };
 		0429B02820475BDC004F687E /* HSVTestImage01.ppm in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0429B02620475BC9004F687E /* HSVTestImage01.ppm */; };
 		0429B02920475BDC004F687E /* HSVTestImage02.ppm in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0429B02720475BC9004F687E /* HSVTestImage02.ppm */; };
-		0433BDA02060427800D6D51D /* Labeling.c in Sources */ = {isa = PBXBuildFile; fileRef = 0433BD9F2060427800D6D51D /* Labeling.c */; };
+		0433BDA02060427800D6D51D /* Labeling.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0433BD9F2060427800D6D51D /* Labeling.cpp */; };
 		0433BDA32060524A00D6D51D /* coins.pgm in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0433BDA22060523F00D6D51D /* coins.pgm */; };
 		0433BDA52067FE7100D6D51D /* Dados.ppm in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0433BDA42067FDE100D6D51D /* Dados.ppm */; };
-		04D5D0392050974A00D68F05 /* Segmentators.c in Sources */ = {isa = PBXBuildFile; fileRef = 04D5D0382050974A00D68F05 /* Segmentators.c */; };
-		04D5D03C2050A1FA00D68F05 /* MorphologicalOperators.c in Sources */ = {isa = PBXBuildFile; fileRef = 04D5D03B2050A1FA00D68F05 /* MorphologicalOperators.c */; };
-		04FD9E3420979C1B00AECF82 /* Edging.c in Sources */ = {isa = PBXBuildFile; fileRef = 04FD9E3320979C1B00AECF82 /* Edging.c */; };
-		04FD9E3820979DF800AECF82 /* Histogram.c in Sources */ = {isa = PBXBuildFile; fileRef = 04FD9E3720979DF800AECF82 /* Histogram.c */; };
+		04D5D0392050974A00D68F05 /* Segmentators.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04D5D0382050974A00D68F05 /* Segmentators.cpp */; };
+		04D5D03C2050A1FA00D68F05 /* MorphologicalOperators.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04D5D03B2050A1FA00D68F05 /* MorphologicalOperators.cpp */; };
+		04FD9E3420979C1B00AECF82 /* Edging.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04FD9E3320979C1B00AECF82 /* Edging.cpp */; };
+		04FD9E3820979DF800AECF82 /* Histogram.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04FD9E3720979DF800AECF82 /* Histogram.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -80,8 +80,8 @@
 		040BD65C20B34A450038E334 /* video3-tp2.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "video3-tp2.mp4"; sourceTree = "<group>"; };
 		0429AFE5203E1A9A004F687E /* VisaoComputador */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = VisaoComputador; sourceTree = BUILT_PRODUCTS_DIR; };
 		0429AFE8203E1A9A004F687E /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
-		0429AFF2203E1ABD004F687E /* Engine.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Engine.c; sourceTree = "<group>"; };
-		0429AFF3203E1ABD004F687E /* Engine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Engine.h; sourceTree = "<group>"; };
+		0429AFF2203E1ABD004F687E /* Engine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Engine.cpp; sourceTree = "<group>"; };
+		0429AFF3203E1ABD004F687E /* Engine.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Engine.hpp; sourceTree = "<group>"; };
 		0429AFF7203E1BAA004F687E /* flir-07.pgm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "flir-07.pgm"; sourceTree = "<group>"; };
 		0429AFF8203E1BAA004F687E /* flir-08.pgm */ = {isa = PBXFileReference; lastKnownFileType = file; path = "flir-08.pgm"; sourceTree = "<group>"; };
 		0429AFF9203E1BAA004F687E /* flir-06.pgm */ = {isa = PBXFileReference; lastKnownFileType = file; path = "flir-06.pgm"; sourceTree = "<group>"; };
@@ -94,28 +94,28 @@
 		0429B000203E1BAA004F687E /* flir-01.pgm */ = {isa = PBXFileReference; lastKnownFileType = file; path = "flir-01.pgm"; sourceTree = "<group>"; };
 		0429B001203E1BAB004F687E /* flir-02.pgm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "flir-02.pgm"; sourceTree = "<group>"; };
 		0429B012203E2BB4004F687E /* hell.ppm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = hell.ppm; sourceTree = "<group>"; };
-		0429B01420449714004F687E /* Filters.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Filters.h; sourceTree = "<group>"; };
-		0429B01520449714004F687E /* Filters.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Filters.c; sourceTree = "<group>"; };
-		0429B01720449880004F687E /* Image.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Image.h; sourceTree = "<group>"; };
+		0429B01420449714004F687E /* Filters.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Filters.hpp; sourceTree = "<group>"; };
+		0429B01520449714004F687E /* Filters.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Filters.cpp; sourceTree = "<group>"; };
+		0429B01720449880004F687E /* Image.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Image.hpp; sourceTree = "<group>"; };
 		0429B01A20449E6E004F687E /* main.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = main.h; sourceTree = "<group>"; };
-		0429B01B2044A0DA004F687E /* Conversors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Conversors.h; sourceTree = "<group>"; };
-		0429B01C2044A0DA004F687E /* Conversors.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Conversors.c; sourceTree = "<group>"; };
-		0429B0202044A2DC004F687E /* Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
+		0429B01B2044A0DA004F687E /* Conversors.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Conversors.hpp; sourceTree = "<group>"; };
+		0429B01C2044A0DA004F687E /* Conversors.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Conversors.cpp; sourceTree = "<group>"; };
+		0429B0202044A2DC004F687E /* Utils.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Utils.hpp; sourceTree = "<group>"; };
 		0429B02620475BC9004F687E /* HSVTestImage01.ppm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = HSVTestImage01.ppm; sourceTree = "<group>"; };
 		0429B02720475BC9004F687E /* HSVTestImage02.ppm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = HSVTestImage02.ppm; sourceTree = "<group>"; };
-		0433BD9E2060427800D6D51D /* Labeling.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Labeling.h; sourceTree = "<group>"; };
-		0433BD9F2060427800D6D51D /* Labeling.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Labeling.c; sourceTree = "<group>"; };
-		0433BDA1206042E100D6D51D /* Blob.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Blob.h; sourceTree = "<group>"; };
+		0433BD9E2060427800D6D51D /* Labeling.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Labeling.hpp; sourceTree = "<group>"; };
+		0433BD9F2060427800D6D51D /* Labeling.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Labeling.cpp; sourceTree = "<group>"; };
+		0433BDA1206042E100D6D51D /* Blob.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Blob.hpp; sourceTree = "<group>"; };
 		0433BDA22060523F00D6D51D /* coins.pgm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = coins.pgm; sourceTree = "<group>"; };
 		0433BDA42067FDE100D6D51D /* Dados.ppm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Dados.ppm; sourceTree = "<group>"; };
-		04D5D0372050974A00D68F05 /* Segmentators.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Segmentators.h; sourceTree = "<group>"; };
-		04D5D0382050974A00D68F05 /* Segmentators.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Segmentators.c; sourceTree = "<group>"; };
-		04D5D03A2050A1FA00D68F05 /* MorphologicalOperators.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MorphologicalOperators.h; sourceTree = "<group>"; };
-		04D5D03B2050A1FA00D68F05 /* MorphologicalOperators.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = MorphologicalOperators.c; sourceTree = "<group>"; };
-		04FD9E3220979C0E00AECF82 /* Edging.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Edging.h; sourceTree = "<group>"; };
-		04FD9E3320979C1B00AECF82 /* Edging.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Edging.c; sourceTree = "<group>"; };
-		04FD9E3620979DF800AECF82 /* Histogram.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Histogram.h; sourceTree = "<group>"; };
-		04FD9E3720979DF800AECF82 /* Histogram.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Histogram.c; sourceTree = "<group>"; };
+		04D5D0372050974A00D68F05 /* Segmentators.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Segmentators.hpp; sourceTree = "<group>"; };
+		04D5D0382050974A00D68F05 /* Segmentators.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Segmentators.cpp; sourceTree = "<group>"; };
+		04D5D03A2050A1FA00D68F05 /* MorphologicalOperators.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MorphologicalOperators.hpp; sourceTree = "<group>"; };
+		04D5D03B2050A1FA00D68F05 /* MorphologicalOperators.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MorphologicalOperators.cpp; sourceTree = "<group>"; };
+		04FD9E3220979C0E00AECF82 /* Edging.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Edging.hpp; sourceTree = "<group>"; };
+		04FD9E3320979C1B00AECF82 /* Edging.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Edging.cpp; sourceTree = "<group>"; };
+		04FD9E3620979DF800AECF82 /* Histogram.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Histogram.hpp; sourceTree = "<group>"; };
+		04FD9E3720979DF800AECF82 /* Histogram.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Histogram.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -197,8 +197,8 @@
 		0429B01820449A56004F687E /* Entities */ = {
 			isa = PBXGroup;
 			children = (
-				0429B01720449880004F687E /* Image.h */,
-				0433BDA1206042E100D6D51D /* Blob.h */,
+				0429B01720449880004F687E /* Image.hpp */,
+				0433BDA1206042E100D6D51D /* Blob.hpp */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -209,8 +209,8 @@
 				04FD9E3520979DEB00AECF82 /* Histogram */,
 				04FD9E31209799A200AECF82 /* Edging */,
 				0433BD9D2060426500D6D51D /* Labeling */,
-				0429AFF3203E1ABD004F687E /* Engine.h */,
-				0429AFF2203E1ABD004F687E /* Engine.c */,
+				0429AFF3203E1ABD004F687E /* Engine.hpp */,
+				0429AFF2203E1ABD004F687E /* Engine.cpp */,
 				0429B0252044A40C004F687E /* Utils */,
 				0429B0242044A3F0004F687E /* Conversors */,
 				0429B0232044A3E4004F687E /* Filters */,
@@ -221,12 +221,12 @@
 		0429B0232044A3E4004F687E /* Filters */ = {
 			isa = PBXGroup;
 			children = (
-				0429B01420449714004F687E /* Filters.h */,
-				0429B01520449714004F687E /* Filters.c */,
-				04D5D0372050974A00D68F05 /* Segmentators.h */,
-				04D5D0382050974A00D68F05 /* Segmentators.c */,
-				04D5D03A2050A1FA00D68F05 /* MorphologicalOperators.h */,
-				04D5D03B2050A1FA00D68F05 /* MorphologicalOperators.c */,
+				0429B01420449714004F687E /* Filters.hpp */,
+				0429B01520449714004F687E /* Filters.cpp */,
+				04D5D0372050974A00D68F05 /* Segmentators.hpp */,
+				04D5D0382050974A00D68F05 /* Segmentators.cpp */,
+				04D5D03A2050A1FA00D68F05 /* MorphologicalOperators.hpp */,
+				04D5D03B2050A1FA00D68F05 /* MorphologicalOperators.cpp */,
 			);
 			name = Filters;
 			sourceTree = "<group>";
@@ -234,8 +234,8 @@
 		0429B0242044A3F0004F687E /* Conversors */ = {
 			isa = PBXGroup;
 			children = (
-				0429B01B2044A0DA004F687E /* Conversors.h */,
-				0429B01C2044A0DA004F687E /* Conversors.c */,
+				0429B01B2044A0DA004F687E /* Conversors.hpp */,
+				0429B01C2044A0DA004F687E /* Conversors.cpp */,
 			);
 			path = Conversors;
 			sourceTree = "<group>";
@@ -243,7 +243,7 @@
 		0429B0252044A40C004F687E /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				0429B0202044A2DC004F687E /* Utils.h */,
+				0429B0202044A2DC004F687E /* Utils.hpp */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -251,8 +251,8 @@
 		0433BD9D2060426500D6D51D /* Labeling */ = {
 			isa = PBXGroup;
 			children = (
-				0433BD9E2060427800D6D51D /* Labeling.h */,
-				0433BD9F2060427800D6D51D /* Labeling.c */,
+				0433BD9E2060427800D6D51D /* Labeling.hpp */,
+				0433BD9F2060427800D6D51D /* Labeling.cpp */,
 			);
 			path = Labeling;
 			sourceTree = "<group>";
@@ -260,8 +260,8 @@
 		04FD9E31209799A200AECF82 /* Edging */ = {
 			isa = PBXGroup;
 			children = (
-				04FD9E3220979C0E00AECF82 /* Edging.h */,
-				04FD9E3320979C1B00AECF82 /* Edging.c */,
+				04FD9E3220979C0E00AECF82 /* Edging.hpp */,
+				04FD9E3320979C1B00AECF82 /* Edging.cpp */,
 			);
 			path = Edging;
 			sourceTree = "<group>";
@@ -269,8 +269,8 @@
 		04FD9E3520979DEB00AECF82 /* Histogram */ = {
 			isa = PBXGroup;
 			children = (
-				04FD9E3620979DF800AECF82 /* Histogram.h */,
-				04FD9E3720979DF800AECF82 /* Histogram.c */,
+				04FD9E3620979DF800AECF82 /* Histogram.hpp */,
+				04FD9E3720979DF800AECF82 /* Histogram.cpp */,
 			);
 			path = Histogram;
 			sourceTree = "<group>";
@@ -332,16 +332,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				04D5D03C2050A1FA00D68F05 /* MorphologicalOperators.c in Sources */,
-				04FD9E3420979C1B00AECF82 /* Edging.c in Sources */,
-				0433BDA02060427800D6D51D /* Labeling.c in Sources */,
-				0429AFF4203E1ABD004F687E /* Engine.c in Sources */,
-				0429B01D2044A0DA004F687E /* Conversors.c in Sources */,
-				0429B01620449714004F687E /* Filters.c in Sources */,
-				04FD9E3820979DF800AECF82 /* Histogram.c in Sources */,
+				04D5D03C2050A1FA00D68F05 /* MorphologicalOperators.cpp in Sources */,
+				04FD9E3420979C1B00AECF82 /* Edging.cpp in Sources */,
+				0433BDA02060427800D6D51D /* Labeling.cpp in Sources */,
+				0429AFF4203E1ABD004F687E /* Engine.cpp in Sources */,
+				0429B01D2044A0DA004F687E /* Conversors.cpp in Sources */,
+				0429B01620449714004F687E /* Filters.cpp in Sources */,
+				04FD9E3820979DF800AECF82 /* Histogram.cpp in Sources */,
 				040BD65720B345620038E334 /* TP2.cpp in Sources */,
 				0429AFE9203E1A9A004F687E /* main.c in Sources */,
-				04D5D0392050974A00D68F05 /* Segmentators.c in Sources */,
+				04D5D0392050974A00D68F05 /* Segmentators.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

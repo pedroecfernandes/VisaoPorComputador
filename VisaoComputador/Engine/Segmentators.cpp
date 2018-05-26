@@ -9,7 +9,7 @@
 
 #ifdef OSX
 
-#include "Segmentators.h"
+#include "Segmentators.hpp"
 
 #else
 
@@ -17,17 +17,17 @@
 #endif
 
 
-bool ApplyGrayScaleToBinary(Image *image, int threshold)
+bool ApplyGrayScaleToBinary(IplImage *image, int threshold)
 {
-    unsigned char *data = (unsigned char *)image->data;
+    unsigned char *data = (unsigned char *)image->imageData;
     int width = image->width;
     int height = image->height;
-    int bytesperline = image->width*image->channels;
-    int channels = image->channels;
+    int bytesperline = image->widthStep;
+    int channels = image->nChannels;
     int x, y;
     long int pos;
     
-    if ((width <= 0) || (height <= 0) || (image->data == NULL)) return false;
+    if ((width <= 0) || (height <= 0) || (image->imageData == NULL)) return false;
     if (channels != 1) return false;
     
     for (y = 0; y < height; y++)
@@ -46,18 +46,18 @@ bool ApplyGrayScaleToBinary(Image *image, int threshold)
         }
     }
     
-    image->levels = 1;
+//    image->levels = 1;
     return true;
 }
 
-bool ApplyGrayScaleBinaryMidpoint(Image *input, Image *output, int kernel)
+bool ApplyGrayScaleBinaryMidpoint(IplImage *input, IplImage *output, int kernel)
 {
-    unsigned char *datasrc = (unsigned char *)input->data;
-    unsigned char *datadst = (unsigned char *)output->data;
+    unsigned char *datasrc = (unsigned char *)input->imageData;
+    unsigned char *datadst = (unsigned char *)output->imageData;
     int width = input->width;
     int height = input->height;
-    int bytesperline = input->bytesperline;
-    int channels = input->channels;
+    int bytesperline = input->width * input->nChannels;
+    int channels = input->nChannels;
     int x, y;
     int xx, yy;
     int xxyymax = (kernel - 1) / 2;
@@ -66,9 +66,9 @@ bool ApplyGrayScaleBinaryMidpoint(Image *input, Image *output, int kernel)
     long int pos, posk;
     unsigned char threshold;
     
-    if ((input->width <= 0) || (input->height <= 0) || (input->data == NULL))
+    if ((input->width <= 0) || (input->height <= 0) || (input->imageData == NULL))
         return false;
-    if ((input->width != output->width) || (input->height != output->height) || (input->channels != output->channels)) return false;
+    if ((input->width != output->width) || (input->height != output->height) || (input->nChannels != output->nChannels)) return false;
     if (channels != 1)
         return false;
     
@@ -106,14 +106,14 @@ bool ApplyGrayScaleBinaryMidpoint(Image *input, Image *output, int kernel)
     return true;
 }
 
-bool ApplyBinaryDilate(Image *input, Image *output, int kernel)
+bool ApplyBinaryDilate(IplImage *input, IplImage *output, int kernel)
 {
-    unsigned char *datasrc = (unsigned char *)input->data;
-    unsigned char *datadst = (unsigned char *)output->data;
+    unsigned char *datasrc = (unsigned char *)input->imageData;
+    unsigned char *datadst = (unsigned char *)output->imageData;
     int width = input->width;
     int height = input->height;
-    int bytesperline = input->bytesperline;
-    int channels = input->channels;
+    int bytesperline = input->widthStep;
+    int channels = input->nChannels;
     int x, y;
     int xx, yy;
     int xxyymax = (kernel - 1) / 2;
@@ -122,9 +122,9 @@ bool ApplyBinaryDilate(Image *input, Image *output, int kernel)
     long int pos, posk;
     int aux = 0;
     // Verificação de erros
-    if ((input->width <= 0) || (input->height <= 0) || (input->data == NULL))
+    if ((input->width <= 0) || (input->height <= 0) || (input->imageData == NULL))
         return false;
-    if ((input->width != output->width) || (input->height != output->height) || (input->channels != output->channels)) return false;
+    if ((input->width != output->width) || (input->height != output->height) || (input->nChannels != output->nChannels)) return false;
     if (channels != 1)
         return false;
     
@@ -159,14 +159,14 @@ bool ApplyBinaryDilate(Image *input, Image *output, int kernel)
     return true;
 }
 
-bool ApplyBinaryErode(Image *input, Image *output, int kernel)
+bool ApplyBinaryErode(IplImage *input, IplImage *output, int kernel)
 {
-    unsigned char *datasrc = (unsigned char *)input->data;
-    unsigned char *datadst = (unsigned char *)output->data;
+    unsigned char *datasrc = (unsigned char *)input->imageData;
+    unsigned char *datadst = (unsigned char *)output->imageData;
     int width = input->width;
     int height = input->height;
-    int bytesperline = input->bytesperline;
-    int channels = input->channels;
+    int bytesperline = input->widthStep;
+    int channels = input->nChannels;
     int x, y;
     int xx, yy;
     int xxyymax = (kernel - 1) / 2;
@@ -175,9 +175,9 @@ bool ApplyBinaryErode(Image *input, Image *output, int kernel)
     long int pos, posk;
     int aux = 255;
     
-    if ((input->width <= 0) || (input->height <= 0) || (input->data == NULL))
+    if ((input->width <= 0) || (input->height <= 0) || (input->imageData == NULL))
         return false;
-    if ((input->width != output->width) || (input->height != output->height) || (input->channels != output->channels))
+    if ((input->width != output->width) || (input->height != output->height) || (input->nChannels != output->nChannels))
         return false;
     if (channels != 1)
         return false;

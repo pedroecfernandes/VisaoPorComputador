@@ -7,21 +7,21 @@
 //
 
 #include <stdio.h>
-#include "Edging.h"
+#include "Edging.hpp"
 
-bool ApplyPrewittEdging(Image *src, Image *dst, float th)
+bool ApplyPrewittEdging(IplImage *src, IplImage *dst, float th)
 {
-    unsigned char *data = (unsigned char *)src->data;
+    unsigned char *data = (unsigned char *)src->imageData;
     int width = src->width;
     int height = src->height;
-    int byteperline = src->width*src->channels;
-    int channels = src->channels;
+    int byteperline = src->width*src->nChannels;
+    int channels = src->nChannels;
     int x, y;
     long int pos;
     long int posA, posB, posC, posD, posE, posF, posG, posH;
     long int mag, mx, my;
     
-    if ((width <= 0) || (height <= 0) || (src->data == NULL)) return 0;
+    if ((width <= 0) || (height <= 0) || (src->imageData == NULL)) return 0;
     if (channels != 1) return 0;
     
     for (y = 0; y < height; y++)
@@ -44,27 +44,27 @@ bool ApplyPrewittEdging(Image *src, Image *dst, float th)
             mag = sqrt((mx*mx) + (my * my));
             
             if (mag > th)
-                dst->data[pos] = 255;
+                dst->imageData[pos] = 255;
             else
-                dst->data[pos] = 0;
+                dst->imageData[pos] = 0;
         }
     }
     return 1;
 }
 
-bool ApplySobelEdging(Image *src, Image *dst, float th)
+bool ApplySobelEdging(IplImage *src, IplImage *dst, float th)
 {
-    unsigned char *data = (unsigned char *)src->data;
+    unsigned char *data = (unsigned char *)src->imageData;
     int width = src->width;
     int height = src->height;
-    int byteperline = src->width*src->channels;
-    int channels = src->channels;
+    int byteperline = src->width*src->nChannels;
+    int channels = src->nChannels;
     int x, y;
     long int pos;
     long int posA, posB, posC, posD, posE, posF, posG, posH;
     long int mag, mx, my;
     
-    if ((width <= 0) || (height <= 0) || (src->data == NULL)) return 0;
+    if ((width <= 0) || (height <= 0) || (src->imageData == NULL)) return 0;
     if (channels != 1) return 0;
     
     for (y = 0; y < height; y++)
@@ -88,9 +88,9 @@ bool ApplySobelEdging(Image *src, Image *dst, float th)
             mag = sqrt((mx*mx) + (my * my));
             
             if (mag > th)
-                dst->data[pos] = 255;
+                dst->imageData[pos] = 255;
             else
-                dst->data[pos] = 0;
+                dst->imageData[pos] = 0;
         }
     }
     return 1;

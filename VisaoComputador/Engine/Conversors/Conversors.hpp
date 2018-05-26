@@ -11,7 +11,7 @@
 
 #ifdef OSX
 #include <stdio.h>
-#include "Image.h"
+#include <opencv2/opencv.hpp>
 
 #include <stdbool.h>
 #else
@@ -22,7 +22,8 @@
 
 #endif /* Conversors_h */
 
-bool ConvertRGBToBGR(Image *image);
-bool ConvertRGBToGrayScaleBasedOnChannel(Image *image, Image *output, bool RChannel, bool GChannel, bool BChannel);
-bool ConvertRBGToHSV(Image *image);
-bool ConvertHSVToRGB(Image *image);
+bool ConvertRGBToBGR(IplImage *image);
+bool ConvertRGBToGrayScaleBasedOnChannel(IplImage *image, IplImage *output, bool RChannel, bool GChannel, bool BChannel);
+bool ConvertRBGToHSV(IplImage *image);
+bool ConvertBGRToHSV(IplImage *image);
+bool ConvertHSVToRGB(IplImage *image);
