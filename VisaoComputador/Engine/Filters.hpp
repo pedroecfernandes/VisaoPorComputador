@@ -12,7 +12,8 @@
 #include <stdbool.h>
 #else
 #include <stdbool.h>
-#include "../Entities/Image.h"
+#include "../Entities/Image.hpp"
+#include <opencv2/opencv.hpp>
 #endif
 
 bool ApplyInvertRGB(IplImage *image);

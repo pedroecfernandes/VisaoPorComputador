@@ -13,10 +13,10 @@
 #include <stdbool.h>
 #include "Utils.hpp"
 #else
-#include "../../Entities/Image.h"
-#include "../../Entities/Blob.h"
-#include "../../Engine/Labeling/Labeling.h"
-#include "../../Engine/Utils.h"
+#include "../../Entities/Image.hpp"
+#include "../../Entities/Blob.hpp"
+#include "../../Engine/Labeling/Labeling.hpp"
+#include "../../Engine/Utils.hpp"
 #include <stdlib.h>
 #include <string.h>
 #endif

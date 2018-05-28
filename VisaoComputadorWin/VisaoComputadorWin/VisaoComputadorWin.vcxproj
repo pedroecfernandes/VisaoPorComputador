@@ -69,7 +69,10 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);D:\VC\opencv\build\include;</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64;D:\VC\opencv\build\x64\vc14\lib;</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -84,7 +87,11 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS;</PreprocessorDefinitions>
     </ClCompile>
+    <Link>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;opencv_world320d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -115,17 +122,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\VisaoComputador\Engine\Conversors\Conversors.h" />
-    <ClInclude Include="..\..\VisaoComputador\Engine\Engine.h" />
-    <ClInclude Include="..\..\VisaoComputador\Engine\Filters.h" />
-    <ClInclude Include="..\..\VisaoComputador\Engine\Labeling\Labeling.h" />
-    <ClInclude Include="..\..\VisaoComputador\Engine\MorphologicalOperators.h" />
-    <ClInclude Include="..\..\VisaoComputador\Engine\Segmentators.h" />
-    <ClInclude Include="..\..\VisaoComputador\Engine\Utils.h" />
-    <ClInclude Include="..\..\VisaoComputador\Entities\Image.h" />
-    <ClInclude Include="..\..\VisaoComputador\main.h" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="..\..\VisaoComputador\Images\flir-01.pgm">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
       </ExcludedFromBuild>
@@ -145,13 +141,37 @@
     <None Include="..\..\VisaoComputador\Images\P3.ppm" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\VisaoComputador\Engine\Conversors\Conversors.c" />
-    <ClCompile Include="..\..\VisaoComputador\Engine\Engine.c" />
-    <ClCompile Include="..\..\VisaoComputador\Engine\Filters.c" />
-    <ClCompile Include="..\..\VisaoComputador\Engine\Labeling\Labeling.c" />
-    <ClCompile Include="..\..\VisaoComputador\Engine\MorphologicalOperators.c" />
-    <ClCompile Include="..\..\VisaoComputador\Engine\Segmentators.c" />
+    <ClInclude Include="..\..\VisaoComputador\Engine\Conversors\Conversors.hpp" />
+    <ClInclude Include="..\..\VisaoComputador\Engine\Edging\Edging.hpp" />
+    <ClInclude Include="..\..\VisaoComputador\Engine\Engine.hpp" />
+    <ClInclude Include="..\..\VisaoComputador\Engine\Filters.hpp" />
+    <ClInclude Include="..\..\VisaoComputador\Engine\Histogram\Histogram.hpp" />
+    <ClInclude Include="..\..\VisaoComputador\Engine\Labeling\Labeling.hpp" />
+    <ClInclude Include="..\..\VisaoComputador\Engine\MorphologicalOperators.hpp" />
+    <ClInclude Include="..\..\VisaoComputador\Engine\Segmentators.hpp" />
+    <ClInclude Include="..\..\VisaoComputador\Engine\Utils.hpp" />
+    <ClInclude Include="..\..\VisaoComputador\Entities\Blob.hpp" />
+    <ClInclude Include="..\..\VisaoComputador\Entities\Image.hpp" />
+    <ClInclude Include="..\..\VisaoComputador\main.h" />
+    <ClInclude Include="..\..\VisaoComputador\TP2.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="..\..\VisaoComputador\Videos\video1_tp2.mp4" />
+    <Media Include="..\..\VisaoComputador\Videos\video2-tp2.mp4" />
+    <Media Include="..\..\VisaoComputador\Videos\video3-tp2.mp4" />
+    <Media Include="..\..\VisaoComputador\Videos\video4-tp2.mp4" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\VisaoComputador\Engine\Conversors\Conversors.cpp" />
+    <ClCompile Include="..\..\VisaoComputador\Engine\Edging\Edging.cpp" />
+    <ClCompile Include="..\..\VisaoComputador\Engine\Engine.cpp" />
+    <ClCompile Include="..\..\VisaoComputador\Engine\Filters.cpp" />
+    <ClCompile Include="..\..\VisaoComputador\Engine\Histogram\Histogram.cpp" />
+    <ClCompile Include="..\..\VisaoComputador\Engine\Labeling\Labeling.cpp" />
+    <ClCompile Include="..\..\VisaoComputador\Engine\MorphologicalOperators.cpp" />
+    <ClCompile Include="..\..\VisaoComputador\Engine\Segmentators.cpp" />
     <ClCompile Include="..\..\VisaoComputador\main.c" />
+    <ClCompile Include="..\..\VisaoComputador\TP2.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -13,7 +13,7 @@
 #ifdef OSX
 #include "Image.hpp"
 #else
-#include "../Entities/Image.h"
+#include "../Entities/Image.hpp"
 #endif
 
 

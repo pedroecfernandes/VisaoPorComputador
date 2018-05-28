@@ -15,11 +15,11 @@
 #include <string.h>
 #include "Utils.hpp"
 #else
-#include "Conversors.h"
+#include "Conversors.hpp"
 #include <math.h>
 #include <ctype.h>
 #include <string.h>
-#include "../Utils.h"
+#include "../Utils.hpp"
 #endif
 
 

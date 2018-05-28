@@ -13,8 +13,9 @@
 #include <opencv2/opencv.hpp>
 #include <stdbool.h>
 #else
-#include "../Entities/Image.h"
+#include "../Entities/Image.hpp"
 #include <stdio.h>
+#include <opencv2/opencv.hpp>
 #include <stdbool.h>
 #endif
 

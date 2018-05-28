@@ -1,0 +1,41 @@
+﻿  Conversors.cpp
+d:\visual studio projects\visaocomputadorlib\visaocomputador\engine\conversors\conversors.cpp(9): warning C4005: '_CRT_SECURE_NO_WARNINGS': macro redefinition
+  d:\visual studio projects\visaocomputadorlib\visaocomputador\engine\conversors\conversors.cpp(9): note: command-line arguments:  see previous definition of '_CRT_SECURE_NO_WARNINGS'
+d:\visual studio projects\visaocomputadorlib\visaocomputador\engine\conversors\conversors.cpp(64): warning C4244: '=': conversion from 'float' to 'unsigned char', possible loss of data
+d:\visual studio projects\visaocomputadorlib\visaocomputador\engine\conversors\conversors.cpp(65): warning C4244: '=': conversion from 'float' to 'unsigned char', possible loss of data
+d:\visual studio projects\visaocomputadorlib\visaocomputador\engine\conversors\conversors.cpp(121): warning C4244: '=': conversion from 'float' to 'char', possible loss of data
+d:\visual studio projects\visaocomputadorlib\visaocomputador\engine\conversors\conversors.cpp(123): warning C4244: '=': conversion from 'float' to 'char', possible loss of data
+d:\visual studio projects\visaocomputadorlib\visaocomputador\engine\conversors\conversors.cpp(125): warning C4244: '=': conversion from 'float' to 'char', possible loss of data
+d:\visual studio projects\visaocomputadorlib\visaocomputador\engine\conversors\conversors.cpp(174): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\visual studio projects\visaocomputadorlib\visaocomputador\engine\conversors\conversors.cpp(234): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\visual studio projects\visaocomputadorlib\visaocomputador\engine\conversors\conversors.cpp(262): warning C4244: 'initializing': conversion from 'double' to 'unsigned char', possible loss of data
+d:\visual studio projects\visaocomputadorlib\visaocomputador\engine\conversors\conversors.cpp(274): warning C4244: '=': conversion from 'float' to 'unsigned char', possible loss of data
+d:\visual studio projects\visaocomputadorlib\visaocomputador\engine\conversors\conversors.cpp(275): warning C4244: '=': conversion from 'float' to 'unsigned char', possible loss of data
+d:\visual studio projects\visaocomputadorlib\visaocomputador\engine\conversors\conversors.cpp(276): warning C4244: '=': conversion from 'float' to 'unsigned char', possible loss of data
+  Edging.cpp
+d:\visual studio projects\visaocomputadorlib\visaocomputador\engine\edging\edging.cpp(44): warning C4244: '=': conversion from 'double' to 'long', possible loss of data
+d:\visual studio projects\visaocomputadorlib\visaocomputador\engine\edging\edging.cpp(47): warning C4309: '=': truncation of constant value
+d:\visual studio projects\visaocomputadorlib\visaocomputador\engine\edging\edging.cpp(88): warning C4244: '=': conversion from 'double' to 'long', possible loss of data
+d:\visual studio projects\visaocomputadorlib\visaocomputador\engine\edging\edging.cpp(91): warning C4309: '=': truncation of constant value
+  Engine.cpp
+d:\visual studio projects\visaocomputadorlib\visaocomputador\engine\engine.cpp(10): warning C4005: '_CRT_SECURE_NO_WARNINGS': macro redefinition
+  d:\visual studio projects\visaocomputadorlib\visaocomputador\engine\engine.cpp(10): note: command-line arguments:  see previous definition of '_CRT_SECURE_NO_WARNINGS'
+d:\visual studio projects\visaocomputadorlib\visaocomputador\engine\engine.cpp(255): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+d:\visual studio projects\visaocomputadorlib\visaocomputador\engine\engine.cpp(295): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+  Filters.cpp
+d:\visual studio projects\visaocomputadorlib\visaocomputador\engine\filters.cpp(8): warning C4005: '_CRT_SECURE_NO_WARNINGS': macro redefinition
+  d:\visual studio projects\visaocomputadorlib\visaocomputador\engine\filters.cpp(8): note: command-line arguments:  see previous definition of '_CRT_SECURE_NO_WARNINGS'
+  Histogram.cpp
+  Labeling.cpp
+  MorphologicalOperators.cpp
+  Segmentators.cpp
+  TP2.cpp
+d:\visual studio projects\visaocomputadorlib\visaocomputador\tp2.cpp(23): warning C4005: '_CRT_SECURE_NO_WARNINGS': macro redefinition
+  d:\visual studio projects\visaocomputadorlib\visaocomputador\tp2.cpp(23): note: command-line arguments:  see previous definition of '_CRT_SECURE_NO_WARNINGS'
+d:\visual studio projects\visaocomputadorlib\visaocomputador\tp2.cpp(45): warning C4101: 'frameAux': unreferenced local variable
+d:\visual studio projects\visaocomputadorlib\visaocomputador\tp2.cpp(47): warning C4101: 'nblobs': unreferenced local variable
+d:\visual studio projects\visaocomputadorlib\visaocomputador\tp2.cpp(47): warning C4101: 'i': unreferenced local variable
+d:\visual studio projects\visaocomputadorlib\visaocomputador\tp2.cpp(46): warning C4101: 'blobs': unreferenced local variable
+  Generating Code...
+  main.c
+  VisaoComputadorWin.vcxproj -> D:\Visual Studio Projects\VisaoComputadorLib\VisaoComputadorWin\x64\Debug\VisaoComputadorWin.exe
