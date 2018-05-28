@@ -13,10 +13,10 @@
 #include <stdbool.h>
 #include "Utils.hpp"
 #else
-#include "../../Entities/Image.h"
-#include "../../Entities/Blob.h"
-#include "../../Engine/Labeling/Labeling.h"
-#include "../../Engine/Utils.h"
+#include "../../Entities/Image.hpp"
+#include "../../Entities/Blob.hpp"
+#include "../../Engine/Labeling/Labeling.hpp"
+#include "../../Engine/Utils.hpp"
 #include <stdlib.h>
 #include <string.h>
 #endif
@@ -201,6 +201,7 @@ Blob* GetBlobArrayFromImage(Image *src, Image *dst, int *nlabels)
                     datadst[posX] = label;
                     labeltable[label] = label;
                     label++;
+					if (label > 254) label = 254;
                 }
                 else
                 {

@@ -14,14 +14,18 @@
 #include "Filters.hpp"
 #include "Engine/Labeling/Labeling.hpp"
 #else
+#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
-#include "../VisaoComputador/Engine/Engine.h"
-#include "../VisaoComputador/Engine/Filters.h"
 #include <stdbool.h>
 #include "main.h"
-#include "../VisaoComputador/Engine/Conversors/Conversors.h"
-#include "../VisaoComputador/Engine/Segmentators.h"
-#include "../VisaoComputador/Engine/Labeling/Labeling.h"
+#include "Engine/Conversors/Conversors.hpp"
+#include "Engine/Segmentators.hpp"
+#include "Engine/Labeling/Labeling.hpp"
+#include "TP2.hpp"
+#include <opencv2/opencv.hpp>
+#include <opencv2/imgproc.hpp>
+#include <opencv2/highgui.hpp>
+#include <opencv2/core/utility.hpp>
 #endif
 
 int main(int argc, const char * argv[])

@@ -13,8 +13,8 @@
 #include "Engine.hpp"
 #include <stdbool.h>
 #else
-#include "Filters.h"
-#include "Engine.h"
+#include "Filters.hpp"
+#include "Engine.hpp"
 #include <stdbool.h>
 #include <stddef.h>
 #endif

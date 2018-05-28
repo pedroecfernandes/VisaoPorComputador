@@ -1,0 +1,13 @@
+﻿  TP2.cpp
+d:\visual studio projects\visaocomputadorlib\visaocomputador\tp2.cpp(23): warning C4005: '_CRT_SECURE_NO_WARNINGS': macro redefinition
+  d:\visual studio projects\visaocomputadorlib\visaocomputador\tp2.cpp(23): note: command-line arguments:  see previous definition of '_CRT_SECURE_NO_WARNINGS'
+d:\visual studio projects\visaocomputadorlib\visaocomputador\tp2.cpp(45): warning C4101: 'frameAux': unreferenced local variable
+d:\visual studio projects\visaocomputadorlib\visaocomputador\tp2.cpp(47): warning C4101: 'nblobs': unreferenced local variable
+d:\visual studio projects\visaocomputadorlib\visaocomputador\tp2.cpp(47): warning C4101: 'i': unreferenced local variable
+d:\visual studio projects\visaocomputadorlib\visaocomputador\tp2.cpp(46): warning C4101: 'blobs': unreferenced local variable
+  Generating code
+  1 of 189 functions ( 0.5%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  VisaoComputadorWin.vcxproj -> D:\Visual Studio Projects\VisaoComputadorLib\VisaoComputadorWin\x64\Release\VisaoComputadorWin.exe

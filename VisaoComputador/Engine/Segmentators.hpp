@@ -14,7 +14,8 @@
 #include <stdbool.h>
 #else
 #include <stdio.h>
-#include "../Entities/Image.h"
+#include "../Entities/Image.hpp"
+#include <opencv2/opencv.hpp>
 #include <stdbool.h>
 #endif
 
