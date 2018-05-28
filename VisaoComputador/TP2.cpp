@@ -39,7 +39,7 @@ int main(int argc, const char * argv[])
     std::cout << "OpenCV Version" << CV_VERSION << std::endl;
     
     // Vídeo
-    char *videofile = (char*)"Images/video3-tp2.mp4";
+    char *videofile = (char*)"video3-tp2.mp4";
     CvCapture *capture;
     IplImage *frame;
     IplImage *frameAux;
@@ -121,7 +121,7 @@ int main(int argc, const char * argv[])
             
             cvCopy(frame, frameAux, NULL); // OR return img_src_cpy;
             ConvertRGBToGrayScaleBasedOnChannel(frameAux, gray, 0, 1, 0);
-            cvSaveImage("/Users/pedrocfernandes/Documents/ssd.png", gray);
+            cvSaveImage("C:/Users/Márcio/Desktop/ssd.png", gray);
         }
         
         
