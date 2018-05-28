@@ -201,6 +201,7 @@ Blob* GetBlobArrayFromImage(Image *src, Image *dst, int *nlabels)
                     datadst[posX] = label;
                     labeltable[label] = label;
                     label++;
+					if (label > 254) label = 254;
                 }
                 else
                 {
