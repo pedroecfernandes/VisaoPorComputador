@@ -9,16 +9,10 @@
 #ifdef OSX
 #include <stdio.h>
 #include <stdbool.h>
-#include "main.h"
 #include "Conversors.hpp"
 #include "Segmentators.hpp"
+#include "Filters.hpp"
 #include "Engine/Labeling/Labeling.hpp"
-#include "TP2.hpp"
-#include <opencv2/opencv.hpp>
-#include <opencv2/imgproc.hpp>
-#include <opencv2/highgui.hpp>
-#include <opencv2/core/utility.hpp>
-using namespace cv;
 #else
 #include <stdio.h>
 #include "../VisaoComputador/Engine/Engine.h"
@@ -116,8 +110,11 @@ int main(int argc, const char * argv[])
                 gray = cvCreateImage(cvGetSize(frameAux), 8, 1); // allocate a 1 channel byte image
             
             cvCopy(frame, frameAux, NULL); // OR return img_src_cpy;
-            ConvertRGBToGrayScaleBasedOnChannel(frameAux, gray, 0, 1, 0);
-            cvSaveImage("/Users/pedrocfernandes/Documents/ssd.png", gray);
+            ConvertRGBToGrayScaleBasedOnChannel(frameAux, gray, 1, 0, 0);
+            ApplyInvertGrayScale(gray);
+            cvSaveImage("ssd.png", gray);
+            ApplyGrayScaleToBinary(gray, 130);
+            cvSaveImage("ssd.png", gray);
         }
         
         
