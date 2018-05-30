@@ -210,6 +210,7 @@ int main(int argc, const char * argv[])
                 CountMixedCoins(blobs[i].area, c100, c200);
             }
             
+            //TODO: Tracking :)
         }
         
         
