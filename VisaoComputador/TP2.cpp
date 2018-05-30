@@ -89,7 +89,7 @@ int main(int argc, const char * argv[])
     CvCapture *capture;
     IplImage *frame;
     IplImage *frameAux;
-    Blob *blobs;
+    Blob *previousFrameBlobs;
     int i, nblobs;
     struct
     {
@@ -108,6 +108,7 @@ int main(int argc, const char * argv[])
     int key = 0;
     IplImage *gray = NULL;
     IplImage *binaryEroded = NULL;
+    int c1 = 0, c2 = 0, c5 = 0, c10 = 0, c20 = 0, c50 = 0, c100 = 0, c200 = 0;
     
     /* Leitura de vídeo de um ficheiro */
     capture = cvCaptureFromFile(videofile);
@@ -182,8 +183,6 @@ int main(int argc, const char * argv[])
             blobs = GetBlobArrayFromImage(binaryEroded, blobsFullImage, &nblobs);
             FillBlobsInfoFromImage(blobsFullImage, blobs, nblobs);
             
-            int c1 = 0, c2 = 0, c5 = 0, c10 = 0, c20 = 0, c50 = 0, c100 = 0, c200 = 0;
-            
             for(int i = 0; i < nblobs; i++)
             {
                 IplImage* extractedCoinImage = cvCreateImage(cvSize(blobs[i].width, blobs[i].height), 8, 3); // allocate a 3 channel byte image
@@ -200,6 +199,7 @@ int main(int argc, const char * argv[])
                 //TODO:
                 //GetMediumHSVColorsFromBlobExtratedImage(blob, extractedCoinImage, h, s, v);
                 
+                // TODO: Ignore if same blob
                 // Dark Coins
                 if (s > 40 && v > 25 && (h > 19 && h < 22))
                 {
