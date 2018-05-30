@@ -16,17 +16,14 @@
 #include "Engine/Labeling/Labeling.hpp"
 #else
 #define _CRT_SECURE_NO_WARNINGS
+#define _USE_MATH_DEFINES
 #include <stdio.h>
 #include <stdbool.h>
-#include "main.h"
+#include <math.h>
+#include "Engine/Filters.hpp"
 #include "Engine/Conversors/Conversors.hpp"
 #include "Engine/Segmentators.hpp"
 #include "Engine/Labeling/Labeling.hpp"
-#include "TP2.hpp"
-#include <opencv2/opencv.hpp>
-#include <opencv2/imgproc.hpp>
-#include <opencv2/highgui.hpp>
-#include <opencv2/core/utility.hpp>
 #endif
 
 double GetCircleArea(int r)
@@ -85,7 +82,7 @@ int main(int argc, const char * argv[])
     std::cout << "OpenCV Version" << CV_VERSION << std::endl;
     
     // Vídeo
-    char *videofile = (char*)"Images/video3-tp2.mp4";
+    const char *videofile = (char*)"../../VisaoComputador/Videos/video3-tp2.mp4";
     CvCapture *capture;
     IplImage *frame;
     IplImage *frameAux;
@@ -194,23 +191,13 @@ int main(int argc, const char * argv[])
                 
                 ConvertBGRToHSV(extractedCoinImage);
                 
-                //TODO: Check in extractedCoinImage HSV dominant color in original image (calc all points and make medium)
-                int h = 0, s = 0, v = 0;
+                //TODO: Check HSV dominant color in original image (calc all points and make medium)
                 
-                //TODO:
-                //GetMediumHSVColorsFromBlobExtratedImage(blob, extractedCoinImage, h, s, v);
-                
-                // Dark Coins
-                if (s > 40 && v > 25 && (h > 19 && h < 22))
-                {
-                    CountDarkCoins(blobs[i].area, c1, c2, c5);
-                }
-                
+                CountDarkCoins(blobs[i].area, c1, c2, c5);
                 CountGoldCoins(blobs[i].area, c10, c20, c50);
                 CountMixedCoins(blobs[i].area, c100, c200);
             }
             
-            //TODO: Tracking :)
         }
         
         

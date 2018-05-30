@@ -13,12 +13,11 @@
 #include <stdbool.h>
 #include "Utils.hpp"
 #else
-#include "../../Entities/Image.hpp"
+#include <opencv2/opencv.hpp>
 #include "../../Entities/Blob.hpp"
 #include "../../Engine/Labeling/Labeling.hpp"
 #include "../../Engine/Utils.hpp"
-#include <stdlib.h>
-#include <string.h>
+#include <stdbool.h>
 #endif
 
 bool CleanBinaryImageBorders(IplImage *blobImage)

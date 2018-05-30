@@ -18,9 +18,9 @@
 #include "Blob.hpp"
 #include <stdbool.h>
 #else
-#include "../../Entities/Image.hpp"
 #include "../../Entities/Blob.hpp"
 #include <stdbool.h>
+#include <stdio.h>
 #endif
 
 
