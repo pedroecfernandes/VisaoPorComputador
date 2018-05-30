@@ -12,6 +12,7 @@
 #include "Conversors.hpp"
 #include "Segmentators.hpp"
 #include "Filters.hpp"
+#include <math.h>
 #include "Engine/Labeling/Labeling.hpp"
 #else
 #define _CRT_SECURE_NO_WARNINGS
@@ -27,6 +28,57 @@
 #include <opencv2/highgui.hpp>
 #include <opencv2/core/utility.hpp>
 #endif
+
+double GetCircleArea(int r)
+{
+    return M_PI * (r * r);
+}
+
+void CountDarkCoins(double area, int &one, int &two, int &five)
+{
+    if (area > GetCircleArea(55) && area <GetCircleArea(64))
+    {
+        one++;
+    }
+    else if (area > GetCircleArea(66) && area <GetCircleArea(70))
+    {
+        two++;
+    }
+    else if (area > GetCircleArea(72) && area <GetCircleArea(80))
+    {
+        five++;
+    }
+}
+
+void CountGoldCoins(double area, int &ten, int &twenty, int &fifty)
+{
+    //TODO:
+    if (area > GetCircleArea(55) && area <GetCircleArea(64))
+    {
+        ten++;
+    }
+    else if (area > GetCircleArea(66) && area <GetCircleArea(70))
+    {
+        twenty++;
+    }
+    else if (area > GetCircleArea(72) && area <GetCircleArea(80))
+    {
+        fifty++;
+    }
+}
+
+void CountMixedCoins(double area, int &one, int &two)
+{
+    //TODO:
+    if (area > GetCircleArea(55) && area <GetCircleArea(64))
+    {
+        one++;
+    }
+    else if (area > GetCircleArea(66) && area <GetCircleArea(70))
+    {
+        two++;
+    }
+}
 
 int main(int argc, const char * argv[])
 {
@@ -55,6 +107,7 @@ int main(int argc, const char * argv[])
     // Outros
     int key = 0;
     IplImage *gray = NULL;
+    IplImage *binaryEroded = NULL;
     
     /* Leitura de vídeo de um ficheiro */
     capture = cvCaptureFromFile(videofile);
@@ -109,16 +162,37 @@ int main(int argc, const char * argv[])
         if (video.nframe == 83)
         {
             //frame->
+            IplImage *blobsFullImage = cvCreateImage(cvGetSize(frame), 8, 1);
             IplImage* frameAux = cvCreateImage(cvGetSize(frame), 8, 3); // allocate a 3 channel byte image
             if (gray == NULL)
                 gray = cvCreateImage(cvGetSize(frameAux), 8, 1); // allocate a 1 channel byte image
+            if (binaryEroded == NULL)
+                binaryEroded = cvCreateImage(cvGetSize(frameAux), 8, 1); // allocate a 1 channel byte image
             
             cvCopy(frame, frameAux, NULL); // OR return img_src_cpy;
             ConvertRGBToGrayScaleBasedOnChannel(frameAux, gray, 1, 0, 0);
             ApplyInvertGrayScale(gray);
-            cvSaveImage("ssd.png", gray);
             ApplyGrayScaleToBinary(gray, 130);
-            cvSaveImage("ssd.png", gray);
+            ApplyBinaryErode(gray, binaryEroded, 3);
+            cvSaveImage("binary.png", gray);
+            cvSaveImage("binaryEroded.png", binaryEroded);
+            
+            Blob *blobs;
+            int nblobs;
+            blobs = GetBlobArrayFromImage(binaryEroded, blobsFullImage, &nblobs);
+            FillBlobsInfoFromImage(blobsFullImage, blobs, nblobs);
+            
+            int c1 = 0, c2 = 0, c5 = 0, c10 = 0, c20 = 0, c50 = 0, c100 = 0, c200 = 0;
+            
+            for(int i = 0; i < nblobs; i++)
+            {
+                //TODO: Check color in original image
+                
+                CountDarkCoins(blobs[i].area, c1, c2, c5);
+                CountGoldCoins(blobs[i].area, c10, c20, c50);
+                CountMixedCoins(blobs[i].area, c100, c200);
+            }
+            
         }
         
         

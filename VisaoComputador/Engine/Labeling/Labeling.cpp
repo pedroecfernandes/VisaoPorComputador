@@ -21,7 +21,7 @@
 #include <string.h>
 #endif
 
-bool CleanBinaryImageBorders(Image *blobImage)
+bool CleanBinaryImageBorders(IplImage *blobImage)
 {
     int pos = 0;
     
@@ -29,10 +29,10 @@ bool CleanBinaryImageBorders(Image *blobImage)
     {
         for (int x = 0; x < blobImage->width; x++)
         {
-            pos = y * blobImage->bytesperline + x * blobImage->channels;
+            pos = y * blobImage->widthStep + x * blobImage->nChannels;
             
-            if (blobImage->data[pos] == 0)
-                blobImage->data[pos] = 1;
+            if (blobImage->imageData[pos] == 0)
+                blobImage->imageData[pos] = 1;
             else
                 break;
         }
@@ -42,10 +42,10 @@ bool CleanBinaryImageBorders(Image *blobImage)
     {
         for (int x = blobImage->width - 1; x > 0; x--)
         {
-            pos = y * blobImage->bytesperline + x * blobImage->channels;
+            pos = y * blobImage->widthStep + x * blobImage->nChannels;
             
-            if (blobImage->data[pos] == 0)
-                blobImage->data[pos] = 1;
+            if (blobImage->imageData[pos] == 0)
+                blobImage->imageData[pos] = 1;
             else
                 break;
         }
@@ -55,37 +55,37 @@ bool CleanBinaryImageBorders(Image *blobImage)
 }
 
 // Creates an highlighted box arround the blob
-void HighlightBlobInRGBImage(Image *image, Blob *blob, int hR, int hG, int hB)
+void HighlightBlobInRGBImage(IplImage *image, Blob *blob, int hR, int hG, int hB)
 {
     int pos = 0;
     
     for (int y = blob->y; y < blob->height + blob->y; y++)
     {
-        pos = y * image->bytesperline + blob->x * image->channels;
+        pos = y * image->widthStep + blob->x * image->nChannels;
     
-        image->data[pos] = hR;
-        image->data[pos + 1] = hG;
-        image->data[pos + 2] = hB;
+        image->imageData[pos] = hR;
+        image->imageData[pos + 1] = hG;
+        image->imageData[pos + 2] = hB;
         
-        pos = y * image->bytesperline + (blob->x + blob->width - 1) * image->channels;
-        image->data[pos] = hR;
-        image->data[pos + 1] = hG;
-        image->data[pos + 2] = hB;
+        pos = y * image->widthStep + (blob->x + blob->width - 1) * image->nChannels;
+        image->imageData[pos] = hR;
+        image->imageData[pos + 1] = hG;
+        image->imageData[pos + 2] = hB;
     }
     
     for (int x = blob->x; x < blob->width + blob->x; x++)
     {
-        pos = blob->y * image->bytesperline + x * image->channels;
+        pos = blob->y * image->widthStep + x * image->nChannels;
         
-        image->data[pos] = hR;
-        image->data[pos + 1] = hG;
-        image->data[pos + 2] = hB;
+        image->imageData[pos] = hR;
+        image->imageData[pos + 1] = hG;
+        image->imageData[pos + 2] = hB;
         
-        pos = (blob->y + blob->height -1 ) * image->bytesperline + x * image->channels;
+        pos = (blob->y + blob->height -1 ) * image->widthStep + x * image->nChannels;
         
-        image->data[pos] = hR;
-        image->data[pos + 1] = hG;
-        image->data[pos + 2] = hB;
+        image->imageData[pos] = hR;
+        image->imageData[pos + 1] = hG;
+        image->imageData[pos + 2] = hB;
     }
 }
 
@@ -93,7 +93,7 @@ void HighlightBlobInRGBImage(Image *image, Blob *blob, int hR, int hG, int hB)
 //      Image *blobImage = vc_image_new(blobs[i].width, blobs[i].height, image->channels, image->levels);
 //      ExtractImageFromBlob(blobs[i], image, blobImage);
 //      vc_image_free(blobImage);
-bool ExtractImageFromBlob(Blob blob, Image *blobSrcImage, Image *blobDstImage)
+bool ExtractImageFromBlob(Blob blob, IplImage *blobSrcImage, IplImage *blobDstImage)
 {    
     int posblobOnSrcImage = 0;
     int posDiceImage = 0;
@@ -105,17 +105,17 @@ bool ExtractImageFromBlob(Blob blob, Image *blobSrcImage, Image *blobDstImage)
         
         for (int y = blob.y; y < blob.y + blob.height; y++)
         {
-            posblobOnSrcImage = y * blobSrcImage->bytesperline + x * blobSrcImage->channels;
-            posDiceImage = blobDiceImageY * blobDstImage->bytesperline + blobDiceImageX * blobDstImage->channels;
+            posblobOnSrcImage = y * blobSrcImage->widthStep + x * blobSrcImage->nChannels;
+            posDiceImage = blobDiceImageY * blobDstImage->widthStep + blobDiceImageX * blobDstImage->nChannels;
             
             // Copy color value
-            blobDstImage->data[posDiceImage] = blobSrcImage->data[posblobOnSrcImage];
+            blobDstImage->imageData[posDiceImage] = blobSrcImage->imageData[posblobOnSrcImage];
             
             // RGB Treatment
-            if (blobSrcImage->channels == 3)
+            if (blobSrcImage->nChannels == 3)
             {
-                blobDstImage->data[posDiceImage + 1] = blobSrcImage->data[posblobOnSrcImage + 1];
-                blobDstImage->data[posDiceImage + 2] = blobSrcImage->data[posblobOnSrcImage + 2];
+                blobDstImage->imageData[posDiceImage + 1] = blobSrcImage->imageData[posblobOnSrcImage + 1];
+                blobDstImage->imageData[posDiceImage + 2] = blobSrcImage->imageData[posblobOnSrcImage + 2];
             }
             
             blobDiceImageY++;
@@ -132,14 +132,14 @@ bool ExtractImageFromBlob(Blob blob, Image *blobSrcImage, Image *blobDstImage)
 // dst        : Imagem grayscale (ir· conter as etiquetas)
 // nlabels    : EndereÁo de memÛria de uma vari·vel inteira. Recebe o n˙mero de etiquetas encontradas.
 // Blob*      : Retorna lista de estruturas de blobs (objectos), com respectivas etiquetas. … necess·rio libertar posteriormente esta memÛria.
-Blob* GetBlobArrayFromImage(Image *src, Image *dst, int *nlabels)
+Blob* GetBlobArrayFromImage(IplImage *src, IplImage *dst, int *nlabels)
 {
-    unsigned char *datasrc = (unsigned char *) src->data;
-    unsigned char *datadst = (unsigned char *) dst->data;
+    unsigned char *datasrc = (unsigned char *) src->imageData;
+    unsigned char *datadst = (unsigned char *) dst->imageData;
     int width = src->width;
     int height = src->height;
-    int bytesperline = src->bytesperline;
-    int channels = src->channels;
+    int bytesperline = src->widthStep;
+    int channels = src->nChannels;
     int x, y, a, b;
     long int i, size;
     long int posX, posA, posB, posC, posD;
@@ -150,8 +150,8 @@ Blob* GetBlobArrayFromImage(Image *src, Image *dst, int *nlabels)
     Blob *blobs; // Apontador para lista de blobs (objectos) que ser· retornada desta funÁ„o.
     
     // VerificaÁ„o de erros
-    if((src->width <= 0) || (src->height <= 0) || (src->data == NULL)) return 0;
-    if((src->width != dst->width) || (src->height != dst->height) || (src->channels != dst->channels)) return NULL;
+    if((src->width <= 0) || (src->height <= 0) || (src->imageData == NULL)) return 0;
+    if((src->width != dst->width) || (src->height != dst->height) || (src->nChannels != dst->nChannels)) return NULL;
     if(channels != 1) return NULL;
     
     // Copia dados da imagem bin·ria para imagem grayscale
@@ -339,20 +339,20 @@ Blob* GetBlobArrayFromImage(Image *src, Image *dst, int *nlabels)
 }
 
 
-int FillBlobsInfoFromImage(Image *src, Blob *blobs, int nblobs)
+int FillBlobsInfoFromImage(IplImage *src, Blob *blobs, int nblobs)
 {
-    unsigned char *data = (unsigned char *) src->data;
+    unsigned char *data = (unsigned char *) src->imageData;
     int width = src->width;
     int height = src->height;
-    int bytesperline = src->bytesperline;
-    int channels = src->channels;
+    int bytesperline = src->widthStep;
+    int channels = src->nChannels;
     int x, y, i;
     long int pos;
     int xmin, ymin, xmax, ymax;
     long int sumx, sumy;
     
     // VerificaÁ„o de erros
-    if((src->width <= 0) || (src->height <= 0) || (src->data == NULL)) return 0;
+    if((src->width <= 0) || (src->height <= 0) || (src->imageData== NULL)) return 0;
     if(channels != 1) return 0;
     
     // Conta ·rea de cada blob

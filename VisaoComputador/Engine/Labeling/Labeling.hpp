@@ -16,7 +16,6 @@
 
 #ifdef OSX
 #include "Blob.hpp"
-#include "Image.hpp"
 #include <stdbool.h>
 #else
 #include "../../Entities/Image.hpp"
@@ -25,8 +24,8 @@
 #endif
 
 
-Blob* GetBlobArrayFromImage(Image *src, Image *dst, int *nlabels);
-int FillBlobsInfoFromImage(Image *src, Blob *blobs, int nblobs);
-bool ExtractImageFromBlob(Blob blob, Image *blobSrcImage, Image *blobDstImage);
-bool CleanBinaryImageBorders(Image *blobImage);
-void HighlightBlobInRGBImage(Image *image, Blob *blob, int hR, int hG, int hB);
+Blob* GetBlobArrayFromImage(IplImage *src, IplImage *dst, int *nlabels);
+int FillBlobsInfoFromImage(IplImage *src, Blob *blobs, int nblobs);
+bool ExtractImageFromBlob(Blob blob, IplImage *blobSrcImage, IplImage *blobDstImage);
+bool CleanBinaryImageBorders(IplImage *blobImage);
+void HighlightBlobInRGBImage(IplImage *image, Blob *blob, int hR, int hG, int hB);
