@@ -186,7 +186,15 @@ int main(int argc, const char * argv[])
             
             for(int i = 0; i < nblobs; i++)
             {
-                //TODO: Check color in original image
+                IplImage* extractedCoinImage = cvCreateImage(cvSize(blobs[i].width, blobs[i].height), 8, 3); // allocate a 3 channel byte image
+                
+                ExtractImageFromBlob(blobs[i], frame, extractedCoinImage);
+                
+                cvSaveImage("coin.png", extractedCoinImage);
+                
+                ConvertBGRToHSV(extractedCoinImage);
+                
+                //TODO: Check HSV dominant color in original image (calc all points and make medium)
                 
                 CountDarkCoins(blobs[i].area, c1, c2, c5);
                 CountGoldCoins(blobs[i].area, c10, c20, c50);
