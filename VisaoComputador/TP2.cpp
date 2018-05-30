@@ -194,9 +194,11 @@ int main(int argc, const char * argv[])
                 
                 ConvertBGRToHSV(extractedCoinImage);
                 
-                //TODO: Check HSV dominant color in original image (calc all points and make medium)
+                //TODO: Check in extractedCoinImage HSV dominant color in original image (calc all points and make medium)
                 int h = 0, s = 0, v = 0;
                 
+                //TODO:
+                //GetMediumHSVColorsFromBlobExtratedImage(blob, extractedCoinImage, h, s, v);
                 
                 // Dark Coins
                 if (s > 40 && v > 25 && (h > 19 && h < 22))
