@@ -195,8 +195,15 @@ int main(int argc, const char * argv[])
                 ConvertBGRToHSV(extractedCoinImage);
                 
                 //TODO: Check HSV dominant color in original image (calc all points and make medium)
+                int h = 0, s = 0, v = 0;
                 
-                CountDarkCoins(blobs[i].area, c1, c2, c5);
+                
+                // Dark Coins
+                if (s > 40 && v > 25 && (h > 19 && h < 22))
+                {
+                    CountDarkCoins(blobs[i].area, c1, c2, c5);
+                }
+                
                 CountGoldCoins(blobs[i].area, c10, c20, c50);
                 CountMixedCoins(blobs[i].area, c100, c200);
             }
