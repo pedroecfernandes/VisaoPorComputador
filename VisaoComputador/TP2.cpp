@@ -191,8 +191,6 @@ int main(int argc, const char * argv[])
         
         // Faça o seu código aqui...
         
-        //frame->
-        
         if (blobsFullImage == NULL)
             blobsFullImage = cvCreateImage(cvGetSize(frame), 8, 1); // allocate a 1 channel byte image
         if (gray == NULL)
