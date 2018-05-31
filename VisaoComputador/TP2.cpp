@@ -12,6 +12,7 @@
 #include "Conversors.hpp"
 #include "Segmentators.hpp"
 #include "Filters.hpp"
+#include "CoinTypes.hpp"
 #include <math.h>
 #include "Engine/Labeling/Labeling.hpp"
 #else
@@ -31,13 +32,7 @@
 #include <opencv2/core/utility.hpp>
 #endif
 
-bool IsCoin(Blob *blob, IplImage *frame)
-{
-    //TODO: Validate if is coin (area, color)
-    return true;
-}
-
-void OSD(Blob *blob, IplImage *frame, CvFont *font, CvFont *fontbkg)
+void OSD(Blob *blob, IplImage *frame, CvFont *font, CvFont *fontbkg, char *coinText)
 {
     char str[500] = { 0 };
     cvCircle(frame, cvPoint(blob->xc, blob->yc), blob->height / 2, cvScalar(255));
@@ -54,7 +49,7 @@ void OSD(Blob *blob, IplImage *frame, CvFont *font, CvFont *fontbkg)
     cvPutText(frame, str, cvPoint(blob->xc, blob->yc + 40), fontbkg, cvScalar(0, 0, 0));
     cvPutText(frame, str, cvPoint(blob->xc, blob->yc + 40), font, cvScalar(255, 255, 255));
     
-    sprintf(str, "TYPE: %d", "TODO!");
+    sprintf(str, "Coin: %s", coinText);
     cvPutText(frame, str, cvPoint(blob->xc, blob->yc + 60), fontbkg, cvScalar(0, 0, 0));
     cvPutText(frame, str, cvPoint(blob->xc, blob->yc + 60), font, cvScalar(255, 255, 255));
 }
@@ -64,19 +59,69 @@ double GetCircleArea(int r)
     return M_PI * (r * r);
 }
 
+bool Is1Cent(double area)
+{
+    return (area > GetCircleArea(55) && area <GetCircleArea(64));
+}
+
+bool Is2Cent(double area)
+{
+    return (area > GetCircleArea(66) && area <GetCircleArea(70));
+}
+
+bool Is5Cent(double area)
+{
+    return (area > GetCircleArea(72) && area <GetCircleArea(80));
+}
+
+bool Is10Cent(double area)
+{
+    //TODO: Adjust Values
+    return (area > GetCircleArea(72) && area <GetCircleArea(80));
+}
+
+bool Is20Cent(double area)
+{
+    //TODO: Adjust Values
+    return (area > GetCircleArea(72) && area <GetCircleArea(80));
+}
+
+bool Is50Cent(double area)
+{
+    //TODO: Adjust Values
+    return (area > GetCircleArea(72) && area <GetCircleArea(80));
+}
+
+bool Is1Eur(double area)
+{
+    //TODO: Adjust Values
+    return (area > GetCircleArea(72) && area <GetCircleArea(80));
+}
+
+bool Is2Eur(double area)
+{
+    //TODO: Adjust Values
+    return (area > GetCircleArea(72) && area <GetCircleArea(80));
+}
+
 void CountDarkCoins(double area, int &one, int &two, int &five)
 {
-    if (area > GetCircleArea(55) && area <GetCircleArea(64))
+    if (Is1Cent(area))
     {
         one++;
         printf("One!");
     }
-    else if (area > GetCircleArea(66) && area <GetCircleArea(70))
+    else if (Is2Cent(area))
     {
         two++;
         printf("Two!");
     }
-    else if (area > GetCircleArea(72) && area <GetCircleArea(80))
+    else if (Is5Cent(area))
+    {
+        five++;
+        printf("Five!");
+    }
+    else if (Is5Cent(area))
     {
         five++;
         printf("Five!");
@@ -86,15 +131,15 @@ void CountDarkCoins(double area, int &one, int &two, int &five)
 void CountGoldCoins(double area, int &ten, int &twenty, int &fifty)
 {
     //TODO:
-    if (area > GetCircleArea(55) && area <GetCircleArea(64))
+    if (Is10Cent(area))
     {
         ten++;
     }
-    else if (area > GetCircleArea(66) && area <GetCircleArea(70))
+    else if (Is20Cent(area))
     {
         twenty++;
     }
-    else if (area > GetCircleArea(72) && area <GetCircleArea(80))
+    else if (Is50Cent(area))
     {
         fifty++;
     }
@@ -102,14 +147,55 @@ void CountGoldCoins(double area, int &ten, int &twenty, int &fifty)
 
 void CountMixedCoins(double area, int &one, int &two)
 {
-    //TODO:
-    if (area > GetCircleArea(55) && area <GetCircleArea(64))
+    if (Is1Eur(area))
     {
         one++;
     }
-    else if (area > GetCircleArea(66) && area <GetCircleArea(70))
+    else if (Is2Eur(area))
     {
         two++;
+    }
+}
+
+bool IsCoin(Blob *blob, IplImage *extractedCoinImage, char* outStr)
+{
+    if (Is1Cent(blob->area))
+        
+    
+    ConvertBGRToHSV(extractedCoinImage);
+    
+    switch (GetColorCoinTypeFromHSV(extractedCoinImage))
+    {
+        case DarkCoin:
+            if (Is1Cent(blob->area))
+                sprintf(outStr, "1 Cent%s", "");
+            else if (Is2Cent(blob->area))
+                sprintf(outStr, "2 Cent%s", "");
+            else if (Is5Cent(blob->area))
+                sprintf(outStr, "5 Cent%s", "");
+            
+            return Is1Cent(blob->area) || Is2Cent(blob->area) || Is5Cent(blob->area);
+            
+        case MixedCoin:
+            if (Is1Eur(blob->area))
+                sprintf(outStr, "1 Eur%s", "");
+            else if (Is2Eur(blob->area))
+                sprintf(outStr, "2 Eur%s", "");
+            
+            return Is1Eur(blob->area) || Is2Eur(blob->area);
+            
+        case GoldCoin:
+            if (Is10Cent(blob->area))
+                sprintf(outStr, "10 Cent%s", "");
+            else if (Is20Cent(blob->area))
+                sprintf(outStr, "20 Cent%s", "");
+            else if (Is50Cent(blob->area))
+                sprintf(outStr, "50 Cent%s", "");
+            
+            return Is10Cent(blob->area) || Is20Cent(blob->area) || Is50Cent(blob->area);
+            
+        default:
+            return false;
     }
 }
 
@@ -140,6 +226,7 @@ int main(int argc, const char * argv[])
     double vScale = 0.35;
     int lineWidth = 1;
     char str[500] = { 0 };
+    char coinText[500] = { 0 };
     // Outros
     int key = 0;
     IplImage *gray = NULL;
@@ -238,19 +325,18 @@ int main(int argc, const char * argv[])
 
             // END check for repeated blob & ignore
             
+            // BEGIN image processing
+            
+            IplImage* extractedCoinImage = cvCreateImage(cvSize(activeFrameBlobs[i].width, activeFrameBlobs[i].height), 8, 3); // allocate a 3 channel byte image
+            
+            ExtractImageFromBlob(activeFrameBlobs[i], frame, extractedCoinImage);
+            
+            //cvSaveImage("coin.png", extractedCoinImage);
+            
+            ConvertBGRToHSV(extractedCoinImage);
             
             if (!found)
             {
-                // BEGIN image processing
-                
-                //IplImage* extractedCoinImage = cvCreateImage(cvSize(activeFrameBlobs[i].width, activeFrameBlobs[i].height), 8, 3); // allocate a 3 channel byte image
-                
-                //ExtractImageFromBlob(activeFrameBlobs[i], frame, extractedCoinImage);
-                
-                //cvSaveImage("coin.png", extractedCoinImage);
-                
-                //ConvertBGRToHSV(extractedCoinImage);
-                
                 //TODO: Check in extractedCoinImage HSV dominant color in original image (calc all points and make medium)
                 //int h = 0, s = 0, v = 0;
                 
@@ -266,15 +352,17 @@ int main(int argc, const char * argv[])
                 
                 //CountGoldCoins(blobs[i].area, c10, c20, c50);
                 //CountMixedCoins(blobs[i].area, c100, c200);
-                
-                //cvReleaseImage(&extractedCoinImage);
-                
-                // END image processing
             }
-            else if (IsCoin(&activeFrameBlobs[i], frame)) // TODO: OSD & Filter only for coins!
+            else if (IsCoin(&activeFrameBlobs[i], extractedCoinImage, coinText)) // TODO: OSD & Filter only for coins!
             {
-                OSD(&activeFrameBlobs[i], frame, &font, &fontbkg);
+                OSD(&activeFrameBlobs[i], frame, &font, &fontbkg, coinText);
             }
+            
+            
+            sprintf(coinText, "", "");
+            cvReleaseImage(&extractedCoinImage);
+            
+            // END image processing
         }
         
         free(previousFrameBlobs);

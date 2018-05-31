@@ -1,6 +1,10 @@
 #ifdef OSX
 #include "Blob.hpp"
 #include <stdbool.h>
+#include <opencv2/opencv.hpp>
+#include "Colors.hpp"
+#include "CoinTypes.hpp"
+#include "Conversors/Conversors.hpp"
 #else
 #include <stdbool.h>
 #include <stdio.h>
