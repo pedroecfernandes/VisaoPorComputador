@@ -31,6 +31,12 @@
 #include <opencv2/core/utility.hpp>
 #endif
 
+bool IsCoin(Blob *blob, IplImage *frame)
+{
+    //TODO: Validate if is coin (area, color)
+    return true;
+}
+
 void OSD(Blob *blob, IplImage *frame, CvFont *font, CvFont *fontbkg)
 {
     char str[500] = { 0 };
@@ -265,9 +271,8 @@ int main(int argc, const char * argv[])
                 
                 // END image processing
             }
-            else
+            else if (IsCoin(&activeFrameBlobs[i], frame)) // TODO: OSD & Filter only for coins!
             {
-                // TODO: OSD & Filter only for coins!
                 OSD(&activeFrameBlobs[i], frame, &font, &fontbkg);
             }
         }
