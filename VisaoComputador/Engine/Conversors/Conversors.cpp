@@ -16,10 +16,9 @@
 #include "Utils.hpp"
 #else
 #include "Conversors.hpp"
-#include <math.h>
-#include <ctype.h>
-#include <string.h>
+#include <stdio.h>  // for NULL
 #include "../Utils.hpp"
+
 #endif
 
 

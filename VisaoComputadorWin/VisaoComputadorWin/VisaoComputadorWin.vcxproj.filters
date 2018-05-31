@@ -107,6 +107,9 @@
     <ClInclude Include="..\..\VisaoComputador\TP2.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\VisaoComputador\Entities\Colors.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Media Include="..\..\VisaoComputador\Videos\video1_tp2.mp4">
@@ -123,9 +126,6 @@
     </Media>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\VisaoComputador\main.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\VisaoComputador\TP2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -152,6 +152,15 @@
     </ClCompile>
     <ClCompile Include="..\..\VisaoComputador\Engine\Labeling\Labeling.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\VisaoComputador\Engine\Colors.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\VisaoComputador\main.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\VisaoComputador\Entities\Coins.hpp">
+      <Filter>Header Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
