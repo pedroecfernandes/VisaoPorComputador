@@ -31,6 +31,28 @@
 #include <opencv2/core/utility.hpp>
 #endif
 
+void OSD(Blob *blob, IplImage *frame, CvFont *font, CvFont *fontbkg)
+{
+    char str[500] = { 0 };
+    cvCircle(frame, cvPoint(blob->xc, blob->yc), blob->height / 2, cvScalar(255));
+    
+    sprintf(str, "AREA: %d", blob->area);
+    cvPutText(frame, str, cvPoint(blob->xc, blob->yc), fontbkg, cvScalar(0, 0, 0));
+    cvPutText(frame, str, cvPoint(blob->xc, blob->yc), font, cvScalar(255, 255, 255));
+    
+    sprintf(str, "PERIMETER: %d", blob->perimeter);
+    cvPutText(frame, str, cvPoint(blob->xc, blob->yc + 20), fontbkg, cvScalar(0, 0, 0));
+    cvPutText(frame, str, cvPoint(blob->xc, blob->yc + 20), font, cvScalar(255, 255, 255));
+    
+    sprintf(str, "CENTER OF MASS: x=%d y=%d", blob->xc, blob->yc);
+    cvPutText(frame, str, cvPoint(blob->xc, blob->yc + 40), fontbkg, cvScalar(0, 0, 0));
+    cvPutText(frame, str, cvPoint(blob->xc, blob->yc + 40), font, cvScalar(255, 255, 255));
+    
+    sprintf(str, "TYPE: %d", "TODO!");
+    cvPutText(frame, str, cvPoint(blob->xc, blob->yc + 60), fontbkg, cvScalar(0, 0, 0));
+    cvPutText(frame, str, cvPoint(blob->xc, blob->yc + 60), font, cvScalar(255, 255, 255));
+}
+
 double GetCircleArea(int r)
 {
     return M_PI * (r * r);
@@ -108,8 +130,8 @@ int main(int argc, const char * argv[])
     } video;
     // Texto
     CvFont font, fontbkg;
-    double hScale = 0.5;
-    double vScale = 0.5;
+    double hScale = 0.35;
+    double vScale = 0.35;
     int lineWidth = 1;
     char str[500] = { 0 };
     // Outros
@@ -217,9 +239,9 @@ int main(int argc, const char * argv[])
             {
                 // BEGIN image processing
                 
-                //IplImage* extractedCoinImage = cvCreateImage(cvSize(blobs[i].width, blobs[i].height), 8, 3); // allocate a 3 channel byte image
+                //IplImage* extractedCoinImage = cvCreateImage(cvSize(activeFrameBlobs[i].width, activeFrameBlobs[i].height), 8, 3); // allocate a 3 channel byte image
                 
-                //ExtractImageFromBlob(blobs[i], frame, extractedCoinImage);
+                //ExtractImageFromBlob(activeFrameBlobs[i], frame, extractedCoinImage);
                 
                 //cvSaveImage("coin.png", extractedCoinImage);
                 
@@ -244,6 +266,11 @@ int main(int argc, const char * argv[])
                 //cvReleaseImage(&extractedCoinImage);
                 
                 // END image processing
+            }
+            else
+            {
+                // TODO: OSD & Filter only for coins!
+                OSD(&activeFrameBlobs[i], frame, &font, &fontbkg);
             }
         }
         
