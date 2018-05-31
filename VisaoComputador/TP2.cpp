@@ -104,59 +104,6 @@ bool Is2Eur(double area)
     return (area > GetCircleArea(72) && area <GetCircleArea(80));
 }
 
-void CountDarkCoins(double area, int &one, int &two, int &five)
-{
-    if (Is1Cent(area))
-    {
-        one++;
-        printf("One!");
-    }
-    else if (Is2Cent(area))
-    {
-        two++;
-        printf("Two!");
-    }
-    else if (Is5Cent(area))
-    {
-        five++;
-        printf("Five!");
-    }
-    else if (Is5Cent(area))
-    {
-        five++;
-        printf("Five!");
-    }
-}
-
-void CountGoldCoins(double area, int &ten, int &twenty, int &fifty)
-{
-    //TODO:
-    if (Is10Cent(area))
-    {
-        ten++;
-    }
-    else if (Is20Cent(area))
-    {
-        twenty++;
-    }
-    else if (Is50Cent(area))
-    {
-        fifty++;
-    }
-}
-
-void CountMixedCoins(double area, int &one, int &two)
-{
-    if (Is1Eur(area))
-    {
-        one++;
-    }
-    else if (Is2Eur(area))
-    {
-        two++;
-    }
-}
-
 void IncrementCoinsCount(Blob *blob, IplImage *extractedHSVCoinImage, int &one, int &two, int &five, int &ten, int &twenty, int &fifty, int &oneE, int &twoE)
 {
     switch (GetColorCoinTypeFromHSV(extractedHSVCoinImage))
