@@ -28,3 +28,4 @@ bool ConvertRGBToGrayScaleBasedOnChannel(IplImage *image, IplImage *output, bool
 bool ConvertRBGToHSV(IplImage *image);
 bool ConvertBGRToHSV(IplImage *image);
 bool ConvertHSVToRGB(IplImage *image);
+bool ConvertHSVToBGR(IplImage *image);
