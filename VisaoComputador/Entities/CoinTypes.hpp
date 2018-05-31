@@ -3,6 +3,7 @@
 #include <stdbool.h>
 #else
 #include <opencv2/opencv.hpp>
+#include "../Entities/Blob.hpp"
 #endif
 
 
@@ -13,4 +14,4 @@ enum CoinType {
 	UndefinedCoin
 };
 
-enum CoinType GetColorCoinTypeFromHSV(IplImage *hsvImage);
+enum CoinType GetColorCoinTypeFromHSV(IplImage *hsvImage, IplImage *binaryImage, Blob *blob);

@@ -25,7 +25,7 @@
 
 bool ConvertRGBToBGR(IplImage *image);
 bool ConvertRGBToGrayScaleBasedOnChannel(IplImage *image, IplImage *output, bool RChannel, bool GChannel, bool BChannel);
-bool ConvertRBGToHSV(IplImage *image);
+bool ConvertRGBToHSV(IplImage *image);
 bool ConvertBGRToHSV(IplImage *image);
 bool ConvertHSVToRGB(IplImage *image);
 bool ConvertHSVToBGR(IplImage *image);

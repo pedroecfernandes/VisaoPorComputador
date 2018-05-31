@@ -1,12 +1,12 @@
 ﻿  TP2.cpp
 d:\visual studio projects\visaocomputadorlib\visaocomputador\tp2.cpp(18): warning C4005: '_CRT_SECURE_NO_WARNINGS': macro redefinition
   d:\visual studio projects\visaocomputadorlib\visaocomputador\tp2.cpp(18): note: command-line arguments:  see previous definition of '_CRT_SECURE_NO_WARNINGS'
-d:\visual studio projects\visaocomputadorlib\visaocomputador\tp2.cpp(88): warning C4101: 'frameAux': unreferenced local variable
-d:\visual studio projects\visaocomputadorlib\visaocomputador\tp2.cpp(90): warning C4101: 'nblobs': unreferenced local variable
-d:\visual studio projects\visaocomputadorlib\visaocomputador\tp2.cpp(90): warning C4101: 'i': unreferenced local variable
-d:\visual studio projects\visaocomputadorlib\visaocomputador\tp2.cpp(89): warning C4101: 'blobs': unreferenced local variable
   Generating code
-  1 of 202 functions ( 0.5%) were compiled, the rest were copied from previous compilation.
+d:\visual studio projects\visaocomputadorlib\visaocomputador\engine\coinscolortype.cpp(78): warning C4723: potential divide by 0
+d:\visual studio projects\visaocomputadorlib\visaocomputador\engine\coinscolortype.cpp(78): warning C4723: potential divide by 0
+d:\visual studio projects\visaocomputadorlib\visaocomputador\engine\coinscolortype.cpp(74): warning C4723: potential divide by 0
+d:\visual studio projects\visaocomputadorlib\visaocomputador\engine\coinscolortype.cpp(70): warning C4723: potential divide by 0
+  4 of 199 functions ( 2.0%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
     0 functions had inline decision re-evaluated but remain unchanged
   Finished generating code

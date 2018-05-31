@@ -24,11 +24,11 @@
 #include "Engine/Conversors/Conversors.hpp"
 #include "Engine/Segmentators.hpp"
 #include "Engine/Labeling/Labeling.hpp"
-#include "TP2.hpp"
 #include <opencv2/opencv.hpp>
 #include <opencv2/imgproc.hpp>
 #include <opencv2/highgui.hpp>
 #include <opencv2/core/utility.hpp>
+#include "Entities/CoinTypes.hpp"
 #endif
 
 double GetCircleArea(int r)
@@ -36,53 +36,51 @@ double GetCircleArea(int r)
     return M_PI * (r * r);
 }
 
-void CountDarkCoins(double area, int &one, int &two, int &five)
+void CountDarkCoins(Blob *blob, int &one, int &two, int &five, IplImage *hsvImage, IplImage *binaryImage)
 {
-    if (area > GetCircleArea(55) && area <GetCircleArea(64))
-    {
-        one++;
-        printf("One!");
-    }
-    else if (area > GetCircleArea(66) && area <GetCircleArea(70))
-    {
-        two++;
-        printf("Two!");
-    }
-    else if (area > GetCircleArea(72) && area <GetCircleArea(80))
-    {
-        five++;
-        printf("Five!");
-    }
+	if (blob->area > GetCircleArea(55) && blob->area <GetCircleArea(64) && GetColorCoinTypeFromHSV(hsvImage, binaryImage, blob) == CoinType::DarkCoin)
+	{
+		one++;
+		printf("One!");
+	}
+	else if (blob->area > GetCircleArea(66) && blob->area <GetCircleArea(70) && GetColorCoinTypeFromHSV(hsvImage, binaryImage, blob) == CoinType::DarkCoin)
+	{
+		two++;
+		printf("Two!");
+	}
+	else if (blob->area > GetCircleArea(72) && blob->area <GetCircleArea(80) && GetColorCoinTypeFromHSV(hsvImage, binaryImage, blob) == CoinType::DarkCoin)
+	{
+		five++;
+		printf("Five!");
+	}
 }
 
-void CountGoldCoins(double area, int &ten, int &twenty, int &fifty)
+void CountGoldCoins(Blob *blob, int &ten, int &twenty, int &fifty, IplImage *hsvImage, IplImage *binaryImage)
 {
-    //TODO:
-    if (area > GetCircleArea(55) && area <GetCircleArea(64))
-    {
-        ten++;
-    }
-    else if (area > GetCircleArea(66) && area <GetCircleArea(70))
-    {
-        twenty++;
-    }
-    else if (area > GetCircleArea(72) && area <GetCircleArea(80))
-    {
-        fifty++;
-    }
+	if (blob->area > GetCircleArea(55) && blob->area <GetCircleArea(64) && GetColorCoinTypeFromHSV(hsvImage, binaryImage, blob) == CoinType::GoldCoin)
+	{
+		ten++;
+	}
+	else if (blob->area > GetCircleArea(66) && blob->area <GetCircleArea(70) && GetColorCoinTypeFromHSV(hsvImage, binaryImage, blob) == CoinType::GoldCoin)
+	{
+		twenty++;
+	}
+	else if (blob->area > GetCircleArea(72) && blob->area <GetCircleArea(80) && GetColorCoinTypeFromHSV(hsvImage, binaryImage, blob) == CoinType::GoldCoin)
+	{
+		fifty++;
+	}
 }
 
-void CountMixedCoins(double area, int &one, int &two)
+void CountMixedCoins(Blob *blob, int &one, int &two, IplImage *hsvImage, IplImage *binaryImage)
 {
-    //TODO:
-    if (area > GetCircleArea(55) && area <GetCircleArea(64))
-    {
-        one++;
-    }
-    else if (area > GetCircleArea(66) && area <GetCircleArea(70))
-    {
-        two++;
-    }
+	if (blob->area > GetCircleArea(55) && blob->area <GetCircleArea(64) && GetColorCoinTypeFromHSV(hsvImage, binaryImage, blob) == CoinType::MixedCoin)
+	{
+		one++;
+	}
+	else if (blob->area > GetCircleArea(66) && blob->area <GetCircleArea(70) && GetColorCoinTypeFromHSV(hsvImage, binaryImage, blob) == CoinType::MixedCoin)
+	{
+		two++;
+	}
 }
 
 int main(int argc, const char * argv[])
@@ -90,7 +88,7 @@ int main(int argc, const char * argv[])
     std::cout << "OpenCV Version" << CV_VERSION << std::endl;
     
     // Vídeo
-    char *videofile = (char*)"Images/video3-tp2.mp4";
+    char *videofile = (char*)"../../VisaoComputador/Videos/video3-tp2.mp4";
     CvCapture *capture;
     IplImage *frame;
     Blob *activeFrameBlobs = NULL;
@@ -98,6 +96,7 @@ int main(int argc, const char * argv[])
     Blob *previousFrameBlobs = NULL;
     int nPreviousFrameBlobs = 0;
     IplImage *blobsFullImage = NULL;
+	IplImage *hsvFullImage = NULL;
     int i = 0;
     struct
     {
@@ -167,8 +166,6 @@ int main(int argc, const char * argv[])
         cvPutText(frame, str, cvPoint(20, 80), &fontbkg, cvScalar(0, 0, 0));
         cvPutText(frame, str, cvPoint(20, 80), &font, cvScalar(255, 255, 255));
         
-        // Faça o seu código aqui...
-        
         //frame->
         
         if (blobsFullImage == NULL)
@@ -182,6 +179,11 @@ int main(int argc, const char * argv[])
         ApplyInvertGrayScale(gray);
         ApplyGrayScaleToBinary(gray, 130);
         ApplyBinaryErode(gray, binaryEroded, 3);
+
+		if (hsvFullImage == NULL)
+			hsvFullImage = cvCreateImage(cvGetSize(frame), 8, 3);
+
+		ConvertBGRToHSV(hsvFullImage);
         //cvSaveImage("binary.png", gray);
         //cvSaveImage("binaryEroded.png", binaryEroded);
         
@@ -217,9 +219,9 @@ int main(int argc, const char * argv[])
             {
                 // BEGIN image processing
                 
-                //IplImage* extractedCoinImage = cvCreateImage(cvSize(blobs[i].width, blobs[i].height), 8, 3); // allocate a 3 channel byte image
+                //IplImage* extractedCoinImage = cvCreateImage(cvSize(activeFrameBlobs[i].width, activeFrameBlobs[i].height), 8, 3); // allocate a 3 channel byte image
                 
-                //ExtractImageFromBlob(blobs[i], frame, extractedCoinImage);
+                //ExtractImageFromBlob(activeFrameBlobs[i], frame, extractedCoinImage);
                 
                 //cvSaveImage("coin.png", extractedCoinImage);
                 
@@ -236,7 +238,7 @@ int main(int argc, const char * argv[])
                 //{
                 
                 // Only start counting when blob is full on screen :)
-                CountDarkCoins(activeFrameBlobs[i].area, c1, c2, c5);
+                CountDarkCoins(&activeFrameBlobs[i], c1, c2, c5, hsvFullImage, binaryEroded);
                 
                 //CountGoldCoins(blobs[i].area, c10, c20, c50);
                 //CountMixedCoins(blobs[i].area, c100, c200);

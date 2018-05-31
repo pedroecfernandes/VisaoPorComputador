@@ -8,46 +8,44 @@
 #include "../Entities/Colors.hpp"
 #include "../Entities/CoinTypes.hpp"
 #include "Conversors/Conversors.hpp"
+#include "../Entities/Blob.hpp"
 #endif
 
 
 
-enum CoinType GetColorCoinTypeFromHSV(IplImage *hsvImage)
+enum CoinType GetColorCoinTypeFromHSV(IplImage *hsvImage, IplImage *binaryImage, Blob *blob)
 {
 	int bytesperlineHSV = hsvImage->width*hsvImage->nChannels;
 	long int posBinary, posHSV;
 	double h, s, v;
 	int countPixels = 0, i = 0, j = 0;
-	int colors[sizeof(COLOR_STRING) / sizeof(int)];
-	IplImage *binaryImage = NULL;
-	cvCopy(hsvImage, binaryImage, NULL);
-
-	ConvertHSVToBGR(binaryImage);
-
+	int colors[4];
 	int bytesperlineBinary = binaryImage->width*binaryImage->nChannels;
 
 	if ((binaryImage->width <= 0) || (binaryImage->height <= 0) || (binaryImage->imageData == NULL)) return CoinType::UndefinedCoin;
 	if (hsvImage->nChannels != 3) return CoinType::UndefinedCoin;
 
 	// initialize array with 0
-	for (i = 0; i < (sizeof(colors) / sizeof(int)); i++)
+	for (i = 0; i < 4; i++)
 	{
 		colors[i] = 0;
 	}
 
-	for (i = 0; i < hsvImage->height; i++)
+	for (i = blob->y; i < blob->y + blob->height; i++)
 	{
-		for (j = 0; j < hsvImage->width; j++)
+		for (j = blob->x; j < blob->x + blob->width; j++)
 		{
 			posBinary = i * bytesperlineBinary + j * binaryImage->nChannels;
 
-			if (binaryImage->imageData[posBinary] == 255)
+			if ((double)binaryImage->imageData[posBinary] == -1)
 			{
 				posHSV = i * bytesperlineHSV + j * hsvImage->nChannels;
 
 				h = ((double)hsvImage->imageData[posHSV] * 360.0) / 255.0;
-				s = ((double)hsvImage->imageData[posHSV] * 100.0) / 255.0;
-				v = ((double)hsvImage->imageData[posHSV] * 100.0) / 255.0;
+				s = ((double)hsvImage->imageData[posHSV+1] * 100.0) / 255.0;
+				v = ((double)hsvImage->imageData[posHSV+2] * 100.0) / 255.0;
+
+				printf("h: %f  | s: %f | v: %f", h, s, v);
 
 				if((h >= 20 && h <= 40) && (s >= 35 && s <= 75) && (v >= 20 && v <= 40))
 				{
@@ -71,17 +69,20 @@ enum CoinType GetColorCoinTypeFromHSV(IplImage *hsvImage)
 		}
 	}
 
-	if ((colors[Bronze] / countPixels) > 0.85)
+	if (countPixels != 0)
 	{
-		return CoinType::DarkCoin;
-	}
-	else if ((colors[Gold] / countPixels) > 0.85)
-	{
-		return CoinType::GoldCoin;
-	}
-	else if (((colors[Gold] / countPixels) > 0.65 && (colors[Silver] / countPixels) > 0.10) || ((colors[Silver] / countPixels) > 0.65 && (colors[Gold] / countPixels) > 0.10))
-	{
-		return CoinType::MixedCoin;
+		if ((colors[Bronze] / countPixels) > 0.85)
+		{
+			return CoinType::DarkCoin;
+		}
+		else if ((colors[Gold] / countPixels) > 0.85)
+		{
+			return CoinType::GoldCoin;
+		}
+		else if (((colors[Gold] / countPixels) > 0.65 && (colors[Silver] / countPixels) > 0.10) || ((colors[Silver] / countPixels) > 0.65 && (colors[Gold] / countPixels) > 0.10))
+		{
+			return CoinType::MixedCoin;
+		}
 	}
 
 	return CoinType::UndefinedCoin;
