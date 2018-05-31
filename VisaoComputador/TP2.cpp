@@ -24,6 +24,11 @@
 #include "Engine/Conversors/Conversors.hpp"
 #include "Engine/Segmentators.hpp"
 #include "Engine/Labeling/Labeling.hpp"
+#include "TP2.hpp"
+#include <opencv2/opencv.hpp>
+#include <opencv2/imgproc.hpp>
+#include <opencv2/highgui.hpp>
+#include <opencv2/core/utility.hpp>
 #endif
 
 double GetCircleArea(int r)
@@ -36,14 +41,17 @@ void CountDarkCoins(double area, int &one, int &two, int &five)
     if (area > GetCircleArea(55) && area <GetCircleArea(64))
     {
         one++;
+        printf("One!");
     }
     else if (area > GetCircleArea(66) && area <GetCircleArea(70))
     {
         two++;
+        printf("Two!");
     }
     else if (area > GetCircleArea(72) && area <GetCircleArea(80))
     {
         five++;
+        printf("Five!");
     }
 }
 
@@ -82,12 +90,15 @@ int main(int argc, const char * argv[])
     std::cout << "OpenCV Version" << CV_VERSION << std::endl;
     
     // Vídeo
-    const char *videofile = (char*)"../../VisaoComputador/Videos/video3-tp2.mp4";
+    char *videofile = (char*)"Images/video3-tp2.mp4";
     CvCapture *capture;
     IplImage *frame;
-    IplImage *frameAux;
-    Blob *blobs;
-    int i, nblobs;
+    Blob *activeFrameBlobs = NULL;
+    int nActiveFrameBlobs = 0;
+    Blob *previousFrameBlobs = NULL;
+    int nPreviousFrameBlobs = 0;
+    IplImage *blobsFullImage = NULL;
+    int i = 0;
     struct
     {
         int width, height;
@@ -105,6 +116,7 @@ int main(int argc, const char * argv[])
     int key = 0;
     IplImage *gray = NULL;
     IplImage *binaryEroded = NULL;
+    int c1 = 0, c2 = 0, c5 = 0, c10 = 0, c20 = 0, c50 = 0, c100 = 0, c200 = 0;
     
     /* Leitura de vídeo de um ficheiro */
     capture = cvCaptureFromFile(videofile);
@@ -156,50 +168,95 @@ int main(int argc, const char * argv[])
         cvPutText(frame, str, cvPoint(20, 80), &font, cvScalar(255, 255, 255));
         
         // Faça o seu código aqui...
-        if (video.nframe == 83)
+        
+        //frame->
+        
+        if (blobsFullImage == NULL)
+            blobsFullImage = cvCreateImage(cvGetSize(frame), 8, 1); // allocate a 1 channel byte image
+        if (gray == NULL)
+            gray = cvCreateImage(cvGetSize(frame), 8, 1); // allocate a 1 channel byte image
+        if (binaryEroded == NULL)
+            binaryEroded = cvCreateImage(cvGetSize(frame), 8, 1); // allocate a 1 channel byte image
+        
+        ConvertRGBToGrayScaleBasedOnChannel(frame, gray, 1, 0, 0);
+        ApplyInvertGrayScale(gray);
+        ApplyGrayScaleToBinary(gray, 130);
+        ApplyBinaryErode(gray, binaryEroded, 3);
+        //cvSaveImage("binary.png", gray);
+        //cvSaveImage("binaryEroded.png", binaryEroded);
+        
+        activeFrameBlobs = GetBlobArrayFromImage(binaryEroded, blobsFullImage, &nActiveFrameBlobs);
+        FillBlobsInfoFromImage(blobsFullImage, activeFrameBlobs, nActiveFrameBlobs);
+    
+        for(i = 0; i < nActiveFrameBlobs; i++)
         {
-            //frame->
-            IplImage *blobsFullImage = cvCreateImage(cvGetSize(frame), 8, 1);
-            IplImage* frameAux = cvCreateImage(cvGetSize(frame), 8, 3); // allocate a 3 channel byte image
-            if (gray == NULL)
-                gray = cvCreateImage(cvGetSize(frameAux), 8, 1); // allocate a 1 channel byte image
-            if (binaryEroded == NULL)
-                binaryEroded = cvCreateImage(cvGetSize(frameAux), 8, 1); // allocate a 1 channel byte image
+            // BEGIN check for repeated blob & ignore
             
-            cvCopy(frame, frameAux, NULL); // OR return img_src_cpy;
-            ConvertRGBToGrayScaleBasedOnChannel(frameAux, gray, 1, 0, 0);
-            ApplyInvertGrayScale(gray);
-            ApplyGrayScaleToBinary(gray, 130);
-            ApplyBinaryErode(gray, binaryEroded, 3);
-            cvSaveImage("binary.png", gray);
-            cvSaveImage("binaryEroded.png", binaryEroded);
+            if (video.height - (activeFrameBlobs[i].y + activeFrameBlobs[i].height) <= 50)
+                continue;
             
-            Blob *blobs;
-            int nblobs;
-            blobs = GetBlobArrayFromImage(binaryEroded, blobsFullImage, &nblobs);
-            FillBlobsInfoFromImage(blobsFullImage, blobs, nblobs);
+            bool found = false;
             
-            int c1 = 0, c2 = 0, c5 = 0, c10 = 0, c20 = 0, c50 = 0, c100 = 0, c200 = 0;
-            
-            for(int i = 0; i < nblobs; i++)
+            for (int j = 0; j < nPreviousFrameBlobs; j++)
             {
-                IplImage* extractedCoinImage = cvCreateImage(cvSize(blobs[i].width, blobs[i].height), 8, 3); // allocate a 3 channel byte image
+                if (video.height - (previousFrameBlobs[j].y + previousFrameBlobs[j].height) < 50)
+                    continue;
                 
-                ExtractImageFromBlob(blobs[i], frame, extractedCoinImage);
-                
-                cvSaveImage("coin.png", extractedCoinImage);
-                
-                ConvertBGRToHSV(extractedCoinImage);
-                
-                //TODO: Check HSV dominant color in original image (calc all points and make medium)
-                
-                CountDarkCoins(blobs[i].area, c1, c2, c5);
-                CountGoldCoins(blobs[i].area, c10, c20, c50);
-                CountMixedCoins(blobs[i].area, c100, c200);
+                double blobsDistance = sqrt(pow(abs(activeFrameBlobs[i].xc - previousFrameBlobs[j].xc), 2) + pow(abs(activeFrameBlobs[i].yc - previousFrameBlobs[j].yc), 2));
+                if (blobsDistance < 50)
+                {
+                    found = true;
+                    break;
+                }
             }
+
+            // END check for repeated blob & ignore
             
+            
+            if (!found)
+            {
+                // BEGIN image processing
+                
+                //IplImage* extractedCoinImage = cvCreateImage(cvSize(blobs[i].width, blobs[i].height), 8, 3); // allocate a 3 channel byte image
+                
+                //ExtractImageFromBlob(blobs[i], frame, extractedCoinImage);
+                
+                //cvSaveImage("coin.png", extractedCoinImage);
+                
+                //ConvertBGRToHSV(extractedCoinImage);
+                
+                //TODO: Check in extractedCoinImage HSV dominant color in original image (calc all points and make medium)
+                //int h = 0, s = 0, v = 0;
+                
+                //TODO:
+                //GetMediumHSVColorsFromBlobExtratedImage(blob, extractedCoinImage, h, s, v);
+                
+                // Dark Coins
+                //if (s > 40 && v > 25 && (h > 19 && h < 22))
+                //{
+                
+                // Only start counting when blob is full on screen :)
+                CountDarkCoins(activeFrameBlobs[i].area, c1, c2, c5);
+                
+                //CountGoldCoins(blobs[i].area, c10, c20, c50);
+                //CountMixedCoins(blobs[i].area, c100, c200);
+                
+                //cvReleaseImage(&extractedCoinImage);
+                
+                // END image processing
+            }
         }
         
+        free(previousFrameBlobs);
+        free(activeFrameBlobs);
+    
+        
+        previousFrameBlobs = GetBlobArrayFromImage(binaryEroded, blobsFullImage, &nPreviousFrameBlobs);
+        FillBlobsInfoFromImage(blobsFullImage, previousFrameBlobs, nPreviousFrameBlobs);
+        
+        cvReleaseImage(&blobsFullImage);
+        cvReleaseImage(&gray);
+        cvReleaseImage(&binaryEroded);
         
         /* Exibe a frame */
         cvShowImage("VC - TP2", frame);
