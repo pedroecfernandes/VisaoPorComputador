@@ -157,14 +157,9 @@ void CountMixedCoins(double area, int &one, int &two)
     }
 }
 
-bool IsCoin(Blob *blob, IplImage *extractedCoinImage, char* outStr)
+bool IsCoin(Blob *blob, IplImage *extractedHSVCoinImage, char* outStr)
 {
-    if (Is1Cent(blob->area))
-        
-    
-    ConvertBGRToHSV(extractedCoinImage);
-    
-    switch (GetColorCoinTypeFromHSV(extractedCoinImage))
+    switch (GetColorCoinTypeFromHSV(extractedHSVCoinImage))
     {
         case DarkCoin:
             if (Is1Cent(blob->area))
