@@ -157,6 +157,34 @@ void CountMixedCoins(double area, int &one, int &two)
     }
 }
 
+void IncrementCoinsCount(Blob *blob, IplImage *extractedHSVCoinImage, int &one, int &two, int &five, int &ten, int &twenty, int &fifty, int &oneE, int &twoE)
+{
+    switch (GetColorCoinTypeFromHSV(extractedHSVCoinImage))
+    {
+        case DarkCoin:
+            if (Is1Cent(blob->area))
+                one++;
+            else if (Is2Cent(blob->area))
+                two++;
+            else if (Is5Cent(blob->area))
+                five++;
+            
+        case MixedCoin:
+            if (Is1Eur(blob->area))
+                oneE++;
+            else if (Is2Eur(blob->area))
+                twoE++;
+            
+        case GoldCoin:
+            if (Is10Cent(blob->area))
+                ten++;
+            else if (Is20Cent(blob->area))
+                twenty++;
+            else if (Is50Cent(blob->area))
+                fifty++;
+    }
+}
+
 bool IsCoin(Blob *blob, IplImage *extractedHSVCoinImage, char* outStr)
 {
     switch (GetColorCoinTypeFromHSV(extractedHSVCoinImage))
@@ -325,28 +353,13 @@ int main(int argc, const char * argv[])
             IplImage* extractedCoinImage = cvCreateImage(cvSize(activeFrameBlobs[i].width, activeFrameBlobs[i].height), 8, 3); // allocate a 3 channel byte image
             
             ExtractImageFromBlob(activeFrameBlobs[i], frame, extractedCoinImage);
-            
             //cvSaveImage("coin.png", extractedCoinImage);
             
             ConvertBGRToHSV(extractedCoinImage);
             
             if (!found)
             {
-                //TODO: Check in extractedCoinImage HSV dominant color in original image (calc all points and make medium)
-                //int h = 0, s = 0, v = 0;
-                
-                //TODO:
-                //GetMediumHSVColorsFromBlobExtratedImage(blob, extractedCoinImage, h, s, v);
-                
-                // Dark Coins
-                //if (s > 40 && v > 25 && (h > 19 && h < 22))
-                //{
-                
-                // Only start counting when blob is full on screen :)
-                CountDarkCoins(activeFrameBlobs[i].area, c1, c2, c5);
-                
-                //CountGoldCoins(blobs[i].area, c10, c20, c50);
-                //CountMixedCoins(blobs[i].area, c100, c200);
+                IncrementCoinsCount(&activeFrameBlobs[i], extractedCoinImage, c1, c2, c5, c10, c20, c50, c100, c200);
             }
             else if (IsCoin(&activeFrameBlobs[i], extractedCoinImage, coinText)) // TODO: OSD & Filter only for coins!
             {
