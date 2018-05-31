@@ -16,9 +16,11 @@
 #include "Engine/Labeling/Labeling.hpp"
 #else
 #define _CRT_SECURE_NO_WARNINGS
+#define _USE_MATH_DEFINES
 #include <stdio.h>
 #include <stdbool.h>
-#include "main.h"
+#include <math.h>
+#include "Engine/Filters.hpp"
 #include "Engine/Conversors/Conversors.hpp"
 #include "Engine/Segmentators.hpp"
 #include "Engine/Labeling/Labeling.hpp"
