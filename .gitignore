@@ -11,3 +11,7 @@ VisaoComputador/TP2_BACKUP_21573.cpp
 VisaoComputador/TP2_BASE_21573.cpp
 VisaoComputador/TP2_LOCAL_21573.cpp
 VisaoComputador/TP2_REMOTE_21573.cpp
+*.obj
+*.filters
+*.vcxproj
+*.ipch
