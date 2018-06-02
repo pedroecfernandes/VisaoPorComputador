@@ -112,25 +112,47 @@ void IncrementCoinsCount(Blob *blob, IplImage *HSVImage, IplImage *BinaryImage, 
 		{
 		case DarkCoin:
 			if (Is1Cent(blob->area))
+			{
 				one++;
+				printf("one\n");
+			}
 			else if (Is2Cent(blob->area))
+			{
 				two++;
+				printf("two\n");
+			}
 			else if (Is5Cent(blob->area))
+			{
 				five++;
+				printf("five\n");
+			}
+			break;
 
 		case MixedCoin:
 			if (Is1Eur(blob->area))
+			{
 				oneE++;
+			}
 			else if (Is2Eur(blob->area))
+			{
 				twoE++;
+			}
+			break;
 
 		case GoldCoin:
 			if (Is10Cent(blob->area))
+			{
 				ten++;
+			}
 			else if (Is20Cent(blob->area))
+			{
 				twenty++;
+			}
 			else if (Is50Cent(blob->area))
+			{
 				fifty++;
+			}
+			break;
 		}
 	}
 }
