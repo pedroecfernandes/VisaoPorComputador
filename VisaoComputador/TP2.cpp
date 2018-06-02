@@ -195,6 +195,8 @@ bool IsCoin(Blob *blob, IplImage *HSVImage, IplImage *BinaryImage, char* outStr)
 			return false;
 		}
 	}
+    
+    return false;
 }
 
 int main(int argc, const char * argv[])
