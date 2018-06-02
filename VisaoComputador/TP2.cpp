@@ -76,31 +76,26 @@ bool Is5Cent(double area)
 
 bool Is10Cent(double area)
 {
-	//TODO: Adjust Values
 	return (area > GetCircleArea(60) && area <GetCircleArea(72));
 }
 
 bool Is20Cent(double area)
 {
-	//TODO: Adjust Values
-	return (area > GetCircleArea(75) && area <GetCircleArea(82));
+	return (area > GetCircleArea(75) && area <GetCircleArea(84));
 }
 
 bool Is50Cent(double area)
 {
-	//TODO: Adjust Values
-	return (area > GetCircleArea(84) && area <GetCircleArea(100));
+	return (area > GetCircleArea(85) && area <GetCircleArea(100));
 }
 
 bool Is1Eur(double area)
 {
-	//TODO: Adjust Values
 	return (area > GetCircleArea(76) && area <GetCircleArea(89));
 }
 
 bool Is2Eur(double area)
 {
-	//TODO: Adjust Values
 	return (area > GetCircleArea(90) && area < GetCircleArea(120));
 }
 
@@ -209,7 +204,7 @@ int main(int argc, const char * argv[])
 	std::cout << "OpenCV Version" << CV_VERSION << std::endl;
 
 	// Vídeo
-	const char *videofile = (char*)"Videos/video3-tp2.mp4";
+	const char *videofile = (char*)"Videos/video2-tp2.mp4";
     //const char *videofile = (char*)"../../VisaoComputador/Videos/video3-tp2.mp4";
 	CvCapture *capture;
 	IplImage *frame;
@@ -384,6 +379,10 @@ int main(int argc, const char * argv[])
 
 	/* Fecha o ficheiro de vídeo */
 	cvReleaseCapture(&capture);
+    
+    printf("1 Cêntimo: %d\n2 Cêntimos: %d\n5 Cêntimos: %d\n10 Cêntimos: %d\n20 Cêntimos: %d\n50 Cêntimos: %d\n1 Euro: %d\n2 Euros: %d\n", c1, c2, c5, c10, c20, c50, c100, c200);
+    
+    
 
 	return 0;
 }
