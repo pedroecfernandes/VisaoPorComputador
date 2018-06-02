@@ -77,31 +77,31 @@ bool Is5Cent(double area)
 bool Is10Cent(double area)
 {
 	//TODO: Adjust Values
-	return (area > GetCircleArea(72) && area <GetCircleArea(80));
+	return (area > GetCircleArea(60) && area <GetCircleArea(72));
 }
 
 bool Is20Cent(double area)
 {
 	//TODO: Adjust Values
-	return (area > GetCircleArea(72) && area <GetCircleArea(80));
+	return (area > GetCircleArea(75) && area <GetCircleArea(82));
 }
 
 bool Is50Cent(double area)
 {
 	//TODO: Adjust Values
-	return (area > GetCircleArea(72) && area <GetCircleArea(80));
+	return (area > GetCircleArea(84) && area <GetCircleArea(100));
 }
 
 bool Is1Eur(double area)
 {
 	//TODO: Adjust Values
-	return (area > GetCircleArea(72) && area <GetCircleArea(80));
+	return (area > GetCircleArea(76) && area <GetCircleArea(89));
 }
 
 bool Is2Eur(double area)
 {
 	//TODO: Adjust Values
-	return (area > GetCircleArea(72) && area <GetCircleArea(80));
+	return (area > GetCircleArea(90) && area < GetCircleArea(120));
 }
 
 void IncrementCoinsCount(Blob *blob, IplImage *HSVImage, IplImage *BinaryImage, int &one, int &two, int &five, int &ten, int &twenty, int &fifty, int &oneE, int &twoE)
@@ -114,17 +114,17 @@ void IncrementCoinsCount(Blob *blob, IplImage *HSVImage, IplImage *BinaryImage, 
 			if (Is1Cent(blob->area))
 			{
 				one++;
-				printf("one\n");
+				printf("1C\n");
 			}
 			else if (Is2Cent(blob->area))
 			{
 				two++;
-				printf("two\n");
+				printf("2C\n");
 			}
 			else if (Is5Cent(blob->area))
 			{
 				five++;
-				printf("five\n");
+				printf("5C\n");
 			}
 			break;
 
@@ -132,10 +132,12 @@ void IncrementCoinsCount(Blob *blob, IplImage *HSVImage, IplImage *BinaryImage, 
 			if (Is1Eur(blob->area))
 			{
 				oneE++;
+                printf("1E\n");
 			}
 			else if (Is2Eur(blob->area))
 			{
 				twoE++;
+                printf("2E\n");
 			}
 			break;
 
@@ -143,13 +145,16 @@ void IncrementCoinsCount(Blob *blob, IplImage *HSVImage, IplImage *BinaryImage, 
 			if (Is10Cent(blob->area))
 			{
 				ten++;
+                printf("10C\n");
 			}
 			else if (Is20Cent(blob->area))
 			{
 				twenty++;
+                printf("20C\n");
 			}
 			else if (Is50Cent(blob->area))
 			{
+                printf("50C\n");
 				fifty++;
 			}
 			break;
@@ -204,7 +209,8 @@ int main(int argc, const char * argv[])
 	std::cout << "OpenCV Version" << CV_VERSION << std::endl;
 
 	// Vídeo
-	const char *videofile = (char*)"../../VisaoComputador/Videos/video3-tp2.mp4";
+	const char *videofile = (char*)"Videos/video3-tp2.mp4";
+    //const char *videofile = (char*)"../../VisaoComputador/Videos/video3-tp2.mp4";
 	CvCapture *capture;
 	IplImage *frame;
 	Blob *activeFrameBlobs = NULL;
