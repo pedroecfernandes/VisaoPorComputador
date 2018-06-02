@@ -29,6 +29,7 @@
 #include <opencv2/imgproc.hpp>
 #include <opencv2/highgui.hpp>
 #include <opencv2/core/utility.hpp>
+#include "Entities/CoinTypes.hpp"
 #endif
 
 void OSD(Blob *blob, IplImage *frame, CvFont *font, CvFont *fontbkg, char *coinText)
@@ -103,68 +104,74 @@ bool Is2Eur(double area)
 	return (area > GetCircleArea(72) && area <GetCircleArea(80));
 }
 
-void IncrementCoinsCount(Blob *blob, IplImage *extractedHSVCoinImage, int &one, int &two, int &five, int &ten, int &twenty, int &fifty, int &oneE, int &twoE)
+void IncrementCoinsCount(Blob *blob, IplImage *HSVImage, IplImage *BinaryImage, int &one, int &two, int &five, int &ten, int &twenty, int &fifty, int &oneE, int &twoE)
 {
-	switch (GetColorCoinTypeFromHSV(extractedHSVCoinImage))
+	if (blob->area > GetCircleArea(55))
 	{
-	case DarkCoin:
-		if (Is1Cent(blob->area))
-			one++;
-		else if (Is2Cent(blob->area))
-			two++;
-		else if (Is5Cent(blob->area))
-			five++;
+		switch (GetColorCoinTypeFromHSV(HSVImage, BinaryImage, blob))
+		{
+		case DarkCoin:
+			if (Is1Cent(blob->area))
+				one++;
+			else if (Is2Cent(blob->area))
+				two++;
+			else if (Is5Cent(blob->area))
+				five++;
 
-	case MixedCoin:
-		if (Is1Eur(blob->area))
-			oneE++;
-		else if (Is2Eur(blob->area))
-			twoE++;
+		case MixedCoin:
+			if (Is1Eur(blob->area))
+				oneE++;
+			else if (Is2Eur(blob->area))
+				twoE++;
 
-	case GoldCoin:
-		if (Is10Cent(blob->area))
-			ten++;
-		else if (Is20Cent(blob->area))
-			twenty++;
-		else if (Is50Cent(blob->area))
-			fifty++;
+		case GoldCoin:
+			if (Is10Cent(blob->area))
+				ten++;
+			else if (Is20Cent(blob->area))
+				twenty++;
+			else if (Is50Cent(blob->area))
+				fifty++;
+		}
 	}
 }
 
-bool IsCoin(Blob *blob, IplImage *extractedHSVCoinImage, char* outStr)
+bool IsCoin(Blob *blob, IplImage *HSVImage, IplImage *BinaryImage, char* outStr)
 {
-	switch (GetColorCoinTypeFromHSV(extractedHSVCoinImage))
+	if (blob->area > GetCircleArea(55))
 	{
-	case DarkCoin:
-		if (Is1Cent(blob->area))
-			sprintf(outStr, "1 Cent%s", "");
-		else if (Is2Cent(blob->area))
-			sprintf(outStr, "2 Cent%s", "");
-		else if (Is5Cent(blob->area))
-			sprintf(outStr, "5 Cent%s", "");
+		switch (GetColorCoinTypeFromHSV(HSVImage, BinaryImage, blob))
+		{
+		case DarkCoin:
+			if (Is1Cent(blob->area))
+				sprintf(outStr, "1 Cent%s", "");
+			else if (Is2Cent(blob->area))
+				sprintf(outStr, "2 Cent%s", "");
+			else if (Is5Cent(blob->area))
+				sprintf(outStr, "5 Cent%s", "");
 
-		return Is1Cent(blob->area) || Is2Cent(blob->area) || Is5Cent(blob->area);
+			return Is1Cent(blob->area) || Is2Cent(blob->area) || Is5Cent(blob->area);
 
-	case MixedCoin:
-		if (Is1Eur(blob->area))
-			sprintf(outStr, "1 Eur%s", "");
-		else if (Is2Eur(blob->area))
-			sprintf(outStr, "2 Eur%s", "");
+		case MixedCoin:
+			if (Is1Eur(blob->area))
+				sprintf(outStr, "1 Eur%s", "");
+			else if (Is2Eur(blob->area))
+				sprintf(outStr, "2 Eur%s", "");
 
-		return Is1Eur(blob->area) || Is2Eur(blob->area);
+			return Is1Eur(blob->area) || Is2Eur(blob->area);
 
-	case GoldCoin:
-		if (Is10Cent(blob->area))
-			sprintf(outStr, "10 Cent%s", "");
-		else if (Is20Cent(blob->area))
-			sprintf(outStr, "20 Cent%s", "");
-		else if (Is50Cent(blob->area))
-			sprintf(outStr, "50 Cent%s", "");
+		case GoldCoin:
+			if (Is10Cent(blob->area))
+				sprintf(outStr, "10 Cent%s", "");
+			else if (Is20Cent(blob->area))
+				sprintf(outStr, "20 Cent%s", "");
+			else if (Is50Cent(blob->area))
+				sprintf(outStr, "50 Cent%s", "");
 
-		return Is10Cent(blob->area) || Is20Cent(blob->area) || Is50Cent(blob->area);
+			return Is10Cent(blob->area) || Is20Cent(blob->area) || Is50Cent(blob->area);
 
-	default:
-		return false;
+		default:
+			return false;
+		}
 	}
 }
 
@@ -173,7 +180,7 @@ int main(int argc, const char * argv[])
 	std::cout << "OpenCV Version" << CV_VERSION << std::endl;
 
 	// Vídeo
-	char *videofile = (char*)"Images/video3-tp2.mp4";
+	const char *videofile = (char*)"../../VisaoComputador/Videos/video3-tp2.mp4";
 	CvCapture *capture;
 	IplImage *frame;
 	Blob *activeFrameBlobs = NULL;
@@ -200,6 +207,7 @@ int main(int argc, const char * argv[])
 	int key = 0;
 	IplImage *gray = NULL;
 	IplImage *binaryEroded = NULL;
+	IplImage *hsv = NULL;
 	int c1 = 0, c2 = 0, c5 = 0, c10 = 0, c20 = 0, c50 = 0, c100 = 0, c200 = 0;
 
 	/* Leitura de vídeo de um ficheiro */
@@ -267,6 +275,10 @@ int main(int argc, const char * argv[])
 		//cvSaveImage("binary.png", gray);
 		//cvSaveImage("binaryEroded.png", binaryEroded);
 
+		hsv = cvCreateImage(cvGetSize(frame), 8, 3);
+		cvCopy(frame, hsv, NULL);
+		ConvertBGRToHSV(hsv);
+
 		activeFrameBlobs = GetBlobArrayFromImage(binaryEroded, blobsFullImage, &nActiveFrameBlobs);
 		FillBlobsInfoFromImage(blobsFullImage, activeFrameBlobs, nActiveFrameBlobs);
 
@@ -305,9 +317,9 @@ int main(int argc, const char * argv[])
 
 			if (!found)
 			{
-				IncrementCoinsCount(&activeFrameBlobs[i], extractedCoinImage, c1, c2, c5, c10, c20, c50, c100, c200);
+				IncrementCoinsCount(&activeFrameBlobs[i], hsv, binaryEroded, c1, c2, c5, c10, c20, c50, c100, c200);
 			}
-			else if (IsCoin(&activeFrameBlobs[i], extractedCoinImage, coinText)) // TODO: OSD & Filter only for coins!
+			else if (IsCoin(&activeFrameBlobs[i], hsv, binaryEroded, coinText)) // TODO: OSD & Filter only for coins!
 			{
 				OSD(&activeFrameBlobs[i], frame, &font, &fontbkg, coinText);
 			}

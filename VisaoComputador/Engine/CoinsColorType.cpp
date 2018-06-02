@@ -49,7 +49,7 @@ enum CoinType GetColorCoinTypeFromHSV(IplImage *hsvImage, IplImage *binaryImage,
 				s = ((double)hsvImage->imageData[posHSV+1] * 100.0) / 255.0;
 				v = ((double)hsvImage->imageData[posHSV+2] * 100.0) / 255.0;
 
-				printf("h: %f  | s: %f | v: %f", h, s, v);
+				printf("h: %f  | s: %f | v: %f\n", h, s, v);
 
 				if((h >= 20 && h <= 40) && (s >= 35 && s <= 75) && (v >= 20 && v <= 40))
 				{
