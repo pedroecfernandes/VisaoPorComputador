@@ -107,6 +107,12 @@
     <ClInclude Include="..\..\VisaoComputador\TP2.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\VisaoComputador\Entities\CoinTypes.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\VisaoComputador\Entities\Colors.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Media Include="..\..\VisaoComputador\Videos\video1_tp2.mp4">
@@ -151,6 +157,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\VisaoComputador\Engine\Labeling\Labeling.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\VisaoComputador\Engine\CoinsColorType.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

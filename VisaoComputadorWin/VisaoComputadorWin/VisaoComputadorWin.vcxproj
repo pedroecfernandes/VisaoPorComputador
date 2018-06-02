@@ -157,6 +157,8 @@
     <ClInclude Include="..\..\VisaoComputador\Engine\Segmentators.hpp" />
     <ClInclude Include="..\..\VisaoComputador\Engine\Utils.hpp" />
     <ClInclude Include="..\..\VisaoComputador\Entities\Blob.hpp" />
+    <ClInclude Include="..\..\VisaoComputador\Entities\CoinTypes.hpp" />
+    <ClInclude Include="..\..\VisaoComputador\Entities\Colors.hpp" />
     <ClInclude Include="..\..\VisaoComputador\Entities\Image.hpp" />
     <ClInclude Include="..\..\VisaoComputador\main.h" />
     <ClInclude Include="..\..\VisaoComputador\TP2.hpp" />
@@ -168,6 +170,7 @@
     <Media Include="..\..\VisaoComputador\Videos\video4-tp2.mp4" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\VisaoComputador\Engine\CoinsColorType.cpp" />
     <ClCompile Include="..\..\VisaoComputador\Engine\Conversors\Conversors.cpp" />
     <ClCompile Include="..\..\VisaoComputador\Engine\Edging\Edging.cpp" />
     <ClCompile Include="..\..\VisaoComputador\Engine\Engine.cpp" />
