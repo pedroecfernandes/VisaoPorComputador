@@ -204,8 +204,8 @@ int main(int argc, const char * argv[])
 	std::cout << "OpenCV Version" << CV_VERSION << std::endl;
 
 	// Vídeo
-	const char *videofile = (char*)"Videos/video2-tp2.mp4";
-    //const char *videofile = (char*)"../../VisaoComputador/Videos/video3-tp2.mp4";
+	//const char *videofile = (char*)"Videos/video2-tp2.mp4";
+    const char *videofile = (char*)"../../VisaoComputador/Videos/video3-tp2.mp4";
 	CvCapture *capture;
 	IplImage *frame;
 	Blob *activeFrameBlobs = NULL;
@@ -382,7 +382,7 @@ int main(int argc, const char * argv[])
     
     printf("1 Cêntimo: %d\n2 Cêntimos: %d\n5 Cêntimos: %d\n10 Cêntimos: %d\n20 Cêntimos: %d\n50 Cêntimos: %d\n1 Euro: %d\n2 Euros: %d\n", c1, c2, c5, c10, c20, c50, c100, c200);
     
-    
+	system("pause");
 
 	return 0;
 }

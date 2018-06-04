@@ -19,13 +19,11 @@
 
 enum CoinType GetColorCoinTypeFromHSV(IplImage *hsvImage, IplImage *binaryImage, Blob *blob)
 {
-	int bytesperlineHSV = hsvImage->width*hsvImage->nChannels;
 	long int posBinary, posHSV;
 	double h, s, v;
 	double minH = 255, maxH = 0, minS = 255, maxS = 0, minV = 255, maxV = 0;
 	int countPixels = 0, i = 0, j = 0;
 	int colors[4];
-	int bytesperlineBinary = binaryImage->width*binaryImage->nChannels;
 
 	if ((binaryImage->width <= 0) || (binaryImage->height <= 0) || (binaryImage->imageData == NULL)) return CoinType::UndefinedCoin;
 	if (hsvImage->nChannels != 3) return CoinType::UndefinedCoin;
@@ -40,17 +38,15 @@ enum CoinType GetColorCoinTypeFromHSV(IplImage *hsvImage, IplImage *binaryImage,
 	{
 		for (j = blob->x; j < blob->x + blob->width; j++)
 		{
-			posBinary = i * bytesperlineBinary + j * binaryImage->nChannels;
+			posBinary = i * binaryImage->widthStep + j;
 
 			if ((double)binaryImage->imageData[posBinary] == -1)
 			{
-				posHSV = i * bytesperlineHSV + j * hsvImage->nChannels;
+				h = ((double)hsvImage->imageData[i * hsvImage->widthStep + (j * hsvImage->nChannels)] * 360.0) / 255.0;
+				s = ((double)hsvImage->imageData[i * hsvImage->widthStep + ((j * hsvImage->nChannels) + 1)] * 100.0) / 255.0;
+				v = ((double)hsvImage->imageData[i * hsvImage->widthStep + ((j * hsvImage->nChannels) + 2)] * 100.0) / 255.0;
 
-				h = ((double)hsvImage->imageData[posHSV] * 360.0) / 255.0;
-				s = ((double)hsvImage->imageData[posHSV+1] * 100.0) / 255.0;
-				v = ((double)hsvImage->imageData[posHSV+2] * 100.0) / 255.0;
-
-				if(h >= 20 && h < 40)
+				if (h >= 20 && h < 40)
 				{
 					colors[Bronze]++;
 				}
@@ -58,7 +54,7 @@ enum CoinType GetColorCoinTypeFromHSV(IplImage *hsvImage, IplImage *binaryImage,
 				{
 					colors[Gold]++;
 				}
-				else if ((s >= 0 && s <= 25) && (v >= 50 && v <= 100))
+				else if ((s >= 0 && s <= 25) && (v >= 0 && v <= 75))
 				{
 					colors[Silver]++;
 				}
@@ -67,27 +63,10 @@ enum CoinType GetColorCoinTypeFromHSV(IplImage *hsvImage, IplImage *binaryImage,
 					colors[Undefined]++;
 				}
 
-				if (h > maxH)
-					maxH = h;
-				if (h < minH)
-					minH = h;
-				if (s > maxS)
-					maxS = s;
-				if (s < minS)
-					minS = s;
-				if (v > maxV)
-					maxV = v;
-				if (v < minV)
-					minV = v;
-
 				countPixels++;
 			}
 		}
 	}
-
-	/*printf("maxH: %f  | minH: %f\n", maxH, minH);
-	printf("maxS: %f  | minS: %f\n", maxS, minS);
-	printf("maxV: %f  | minV: %f\n\n", maxV, minV);*/
 
 	if (countPixels != 0)
 	{
@@ -99,7 +78,7 @@ enum CoinType GetColorCoinTypeFromHSV(IplImage *hsvImage, IplImage *binaryImage,
 		{
 			return CoinType::DarkCoin;
 		}
-		else if (((double)colors[Gold] / (double)countPixels) > 0.85)
+		if (((double)colors[Gold] / (double)countPixels) > 0.85)
 		{
 			return CoinType::GoldCoin;
 		}
