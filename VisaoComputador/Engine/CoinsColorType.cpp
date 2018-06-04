@@ -50,11 +50,11 @@ enum CoinType GetColorCoinTypeFromHSV(IplImage *hsvImage, IplImage *binaryImage,
 				{
 					colors[Bronze]++;
 				}
-				else if (h >= 40 && h <= 90)
+				else if (h >= 40 && h <= 70)
 				{
 					colors[Gold]++;
 				}
-				else if ((s >= 0 && s <= 25) && (v >= 0 && v <= 75))
+				else if ((s >= 0 && s <= 25) && (v >= 15 && v <= 65))
 				{
 					colors[Silver]++;
 				}
@@ -70,10 +70,6 @@ enum CoinType GetColorCoinTypeFromHSV(IplImage *hsvImage, IplImage *binaryImage,
 
 	if (countPixels != 0)
 	{
-		if ((((double)colors[Gold] / (double)countPixels) > 0.30 && ((double)colors[Silver] / (double)countPixels) > 0.10) || (((double)colors[Silver] / (double)countPixels) > 0.30 && ((double)colors[Gold] / (double)countPixels) > 0.10))
-		{
-			return CoinType::MixedCoin;
-		}
 		if (((double)colors[Bronze] / (double)countPixels) > 0.85)
 		{
 			return CoinType::DarkCoin;
@@ -81,6 +77,10 @@ enum CoinType GetColorCoinTypeFromHSV(IplImage *hsvImage, IplImage *binaryImage,
 		if (((double)colors[Gold] / (double)countPixels) > 0.85)
 		{
 			return CoinType::GoldCoin;
+		}
+		if ((((double)colors[Gold] / (double)countPixels) > 0.50 && ((double)colors[Silver] / (double)countPixels) > 0.15) || (((double)colors[Silver] / (double)countPixels) > 0.50 && ((double)colors[Gold] / (double)countPixels) > 0.15))
+		{
+			return CoinType::MixedCoin;
 		}
 	}
 
