@@ -264,8 +264,13 @@ int main(int argc, const char * argv[])
 		ApplyInvertGrayScale(gray);
 		ApplyGrayScaleToBinary(gray, 130);
 		ApplyBinaryErode(gray, binaryEroded, 3);
+		cvReleaseImage(&gray);
 		/*cvSaveImage("binary.png", gray);
 		cvSaveImage("binaryEroded.png", binaryEroded);*/
+
+		hsv = cvCreateImage(cvGetSize(frame), 8, 3);
+		cvCopy(frame, hsv, NULL);
+		ConvertBGRToHSV(hsv);
 
 		activeFrameBlobs = GetBlobArrayFromImage(binaryEroded, blobsFullImage, &nActiveFrameBlobs);
 		FillBlobsInfoFromImage(blobsFullImage, activeFrameBlobs, nActiveFrameBlobs);
@@ -296,10 +301,6 @@ int main(int argc, const char * argv[])
 
             
 			// BEGIN image processing
-
-            hsv = cvCreateImage(cvGetSize(frame), 8, 3);
-            cvCopy(frame, hsv, NULL);
-            ConvertBGRToHSV(hsv);
             
 			if (!found)
 			{
@@ -310,13 +311,11 @@ int main(int argc, const char * argv[])
                 if (activeFrameBlobs[i].y > 100)
                     OSD(&activeFrameBlobs[i], frame, &font, &fontbkg);
 			}
-
-            cvReleaseImage(&gray);
-            cvReleaseImage(&hsv);
             
 			// END image processing
 		}
 
+		cvReleaseImage(&hsv);
 		free(previousFrameBlobs);
 		free(activeFrameBlobs);
 
