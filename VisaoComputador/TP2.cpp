@@ -380,7 +380,7 @@ int main(int argc, const char * argv[])
 	/* Fecha o ficheiro de vídeo */
 	cvReleaseCapture(&capture);
     
-    printf("1 Centimo: %d\n2 Centimos: %d\n5 Centimos: %d\n10 Centimos: %d\n20 Centimos: %d\n50 Centimos: %d\n1 Euro: %d\n2 Euros: %d\nNumero total de moedas: %d\nDinheiro contado: %d\n", 
+    printf("1 Centimo: %d\n2 Centimos: %d\n5 Centimos: %d\n10 Centimos: %d\n20 Centimos: %d\n50 Centimos: %d\n1 Euro: %d\n2 Euros: %d\nNumero total de moedas: %d\nDinheiro contado: %.2fd euros\n", 
 		c1, c2, c5, c10, c20, c50, c100, c200, (c1+c2+c5+c10+c20+c50+c100+c200), 
 		((0.01 * c1) + (0.02 * c2) + (0.05 * c5) + (0.1 * c10) + (0.2 * c20) + (0.5 * c50) + (1 * c100) + (2 * c200)));
     
