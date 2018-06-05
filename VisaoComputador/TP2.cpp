@@ -267,10 +267,6 @@ int main(int argc, const char * argv[])
 		//cvSaveImage("binary.png", gray);
 		//cvSaveImage("binaryEroded.png", binaryEroded);
 
-		hsv = cvCreateImage(cvGetSize(frame), 8, 3);
-		cvCopy(frame, hsv, NULL);
-		ConvertBGRToHSV(hsv);
-
 		activeFrameBlobs = GetBlobArrayFromImage(binaryEroded, blobsFullImage, &nActiveFrameBlobs);
 		FillBlobsInfoFromImage(blobsFullImage, activeFrameBlobs, nActiveFrameBlobs);
 
@@ -301,13 +297,10 @@ int main(int argc, const char * argv[])
             
 			// BEGIN image processing
 
-			IplImage* extractedCoinImage = cvCreateImage(cvSize(activeFrameBlobs[i].width, activeFrameBlobs[i].height), 8, 3); // allocate a 3 channel byte image 8bpp
-
-			ExtractImageFromBlob(activeFrameBlobs[i], frame, extractedCoinImage);
-			//cvSaveImage("coin.png", extractedCoinImage);
-
-			ConvertBGRToHSV(extractedCoinImage);
-
+            hsv = cvCreateImage(cvGetSize(frame), 8, 3);
+            cvCopy(frame, hsv, NULL);
+            ConvertBGRToHSV(hsv);
+            
 			if (!found)
 			{
 				IncrementCoinsCount(&activeFrameBlobs[i], hsv, binaryEroded, c1, c2, c5, c10, c20, c50, c100, c200);
@@ -318,8 +311,9 @@ int main(int argc, const char * argv[])
                     OSD(&activeFrameBlobs[i], frame, &font, &fontbkg);
 			}
 
-			cvReleaseImage(&extractedCoinImage);
-
+            cvReleaseImage(&gray);
+            cvReleaseImage(&hsv);
+            
 			// END image processing
 		}
 
@@ -331,7 +325,6 @@ int main(int argc, const char * argv[])
 		FillBlobsInfoFromImage(blobsFullImage, previousFrameBlobs, nPreviousFrameBlobs);
 
 		cvReleaseImage(&blobsFullImage);
-		cvReleaseImage(&gray);
 		cvReleaseImage(&binaryEroded);
 
 		/* Exibe a frame */

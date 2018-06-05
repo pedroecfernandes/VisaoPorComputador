@@ -83,6 +83,6 @@ enum CoinType GetColorCoinTypeFromHSV(IplImage *hsvImage, IplImage *binaryImage,
 			return CoinType::MixedCoin;
 		}
 	}
-
+    
 	return CoinType::UndefinedCoin;
 }
