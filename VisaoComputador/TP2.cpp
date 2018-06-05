@@ -32,7 +32,7 @@
 #include "Entities/CoinTypes.hpp"
 #endif
 
-void OSD(Blob *blob, IplImage *frame, CvFont *font, CvFont *fontbkg, char *coinText)
+void OSD(Blob *blob, IplImage *frame, CvFont *font, CvFont *fontbkg)
 {
 	char str[500] = { 0 };
 	cvCircle(frame, cvPoint(blob->xc, blob->yc), blob->height / 2, cvScalar(255));
@@ -48,10 +48,6 @@ void OSD(Blob *blob, IplImage *frame, CvFont *font, CvFont *fontbkg, char *coinT
 	sprintf(str, "CENTER OF MASS: x=%d y=%d", blob->xc, blob->yc);
 	cvPutText(frame, str, cvPoint(blob->xc, blob->yc + 40), fontbkg, cvScalar(0, 0, 0));
 	cvPutText(frame, str, cvPoint(blob->xc, blob->yc + 40), font, cvScalar(255, 255, 255));
-
-	sprintf(str, "Coin: %s", coinText);
-	cvPutText(frame, str, cvPoint(blob->xc, blob->yc + 60), fontbkg, cvScalar(0, 0, 0));
-	cvPutText(frame, str, cvPoint(blob->xc, blob->yc + 60), font, cvScalar(255, 255, 255));
 }
 
 double GetCircleArea(int r)
@@ -157,42 +153,16 @@ void IncrementCoinsCount(Blob *blob, IplImage *HSVImage, IplImage *BinaryImage, 
 	}
 }
 
-bool IsCoin(Blob *blob, IplImage *HSVImage, IplImage *BinaryImage, char* outStr)
+bool IsCoin(Blob *blob, IplImage *HSVImage, IplImage *BinaryImage)
 {
 	if (blob->area > GetCircleArea(55))
 	{
 		switch (GetColorCoinTypeFromHSV(HSVImage, BinaryImage, blob))
 		{
-		case DarkCoin:
-			if (Is1Cent(blob->area))
-				sprintf(outStr, "1 Cent%s", "");
-			else if (Is2Cent(blob->area))
-				sprintf(outStr, "2 Cent%s", "");
-			else if (Is5Cent(blob->area))
-				sprintf(outStr, "5 Cent%s", "");
-
-			return Is1Cent(blob->area) || Is2Cent(blob->area) || Is5Cent(blob->area);
-
-		case MixedCoin:
-			if (Is1Eur(blob->area))
-				sprintf(outStr, "1 Eur%s", "");
-			else if (Is2Eur(blob->area))
-				sprintf(outStr, "2 Eur%s", "");
-
-			return Is1Eur(blob->area) || Is2Eur(blob->area);
-
-		case GoldCoin:
-			if (Is10Cent(blob->area))
-				sprintf(outStr, "10 Cent%s", "");
-			else if (Is20Cent(blob->area))
-				sprintf(outStr, "20 Cent%s", "");
-			else if (Is50Cent(blob->area))
-				sprintf(outStr, "50 Cent%s", "");
-
-			return Is10Cent(blob->area) || Is20Cent(blob->area) || Is50Cent(blob->area);
-
-		default:
-			return false;
+            case DarkCoin: return Is1Cent(blob->area) || Is2Cent(blob->area) || Is5Cent(blob->area);
+            case MixedCoin: return Is1Eur(blob->area) || Is2Eur(blob->area);
+            case GoldCoin: return Is10Cent(blob->area) || Is20Cent(blob->area) || Is50Cent(blob->area);
+            default: return false;
 		}
 	}
     
@@ -204,8 +174,8 @@ int main(int argc, const char * argv[])
 	std::cout << "OpenCV Version" << CV_VERSION << std::endl;
 
 	// Vídeo
-	//const char *videofile = (char*)"Videos/video2-tp2.mp4";
-    const char *videofile = (char*)"../../VisaoComputador/Videos/video3-tp2.mp4";
+	const char *videofile = (char*)"Videos/video3-tp2.mp4";
+    //const char *videofile = (char*)"../../VisaoComputador/Videos/video3-tp2.mp4";
 	CvCapture *capture;
 	IplImage *frame;
 	Blob *activeFrameBlobs = NULL;
@@ -227,7 +197,6 @@ int main(int argc, const char * argv[])
 	double vScale = 0.35;
 	int lineWidth = 1;
 	char str[500] = { 0 };
-	char coinText[500] = { 0 };
 	// Outros
 	int key = 0;
 	IplImage *gray = NULL;
@@ -331,9 +300,10 @@ int main(int argc, const char * argv[])
 
 			// END check for repeated blob & ignore
 
+            
 			// BEGIN image processing
 
-			IplImage* extractedCoinImage = cvCreateImage(cvSize(activeFrameBlobs[i].width, activeFrameBlobs[i].height), 8, 3); // allocate a 3 channel byte image
+			IplImage* extractedCoinImage = cvCreateImage(cvSize(activeFrameBlobs[i].width, activeFrameBlobs[i].height), 8, 3); // allocate a 3 channel byte image 8bpp
 
 			ExtractImageFromBlob(activeFrameBlobs[i], frame, extractedCoinImage);
 			//cvSaveImage("coin.png", extractedCoinImage);
@@ -344,13 +314,12 @@ int main(int argc, const char * argv[])
 			{
 				IncrementCoinsCount(&activeFrameBlobs[i], hsv, binaryEroded, c1, c2, c5, c10, c20, c50, c100, c200);
 			}
-			else if (IsCoin(&activeFrameBlobs[i], hsv, binaryEroded, coinText)) // TODO: OSD & Filter only for coins!
+			else if (IsCoin(&activeFrameBlobs[i], hsv, binaryEroded))
 			{
-				OSD(&activeFrameBlobs[i], frame, &font, &fontbkg, coinText);
+                if (activeFrameBlobs[i].y > 100)
+                    OSD(&activeFrameBlobs[i], frame, &font, &fontbkg);
 			}
 
-
-			sprintf(coinText, "", "");
 			cvReleaseImage(&extractedCoinImage);
 
 			// END image processing
