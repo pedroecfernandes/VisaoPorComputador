@@ -253,8 +253,6 @@ int main(int argc, const char * argv[])
 		cvPutText(frame, str, cvPoint(20, 80), &fontbkg, cvScalar(0, 0, 0));
 		cvPutText(frame, str, cvPoint(20, 80), &font, cvScalar(255, 255, 255));
 
-		// Faça o seu código aqui...
-
 		if (blobsFullImage == NULL)
 			blobsFullImage = cvCreateImage(cvGetSize(frame), 8, 1); // allocate a 1 channel byte image
 		if (gray == NULL)
