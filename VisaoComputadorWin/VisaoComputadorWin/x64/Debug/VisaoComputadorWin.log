@@ -3,4 +3,5 @@ d:\visual studio projects\visaocomputadorlib\visaocomputador\tp2.cpp(19): warnin
   d:\visual studio projects\visaocomputadorlib\visaocomputador\tp2.cpp(19): note: command-line arguments:  see previous definition of '_CRT_SECURE_NO_WARNINGS'
 d:\visual studio projects\visaocomputadorlib\visaocomputador\tp2.cpp(353): warning C4474: 'sprintf' : too many arguments passed for format string
   d:\visual studio projects\visaocomputadorlib\visaocomputador\tp2.cpp(353): note: placeholders and their parameters expect 0 variadic arguments, but 1 were provided
+d:\visual studio projects\visaocomputadorlib\visaocomputador\tp2.cpp(383): warning C4477: 'printf' : format string '%d' requires an argument of type 'int', but variadic argument 10 has type 'double'
   VisaoComputadorWin.vcxproj -> D:\Visual Studio Projects\VisaoComputadorLib\VisaoComputadorWin\x64\Debug\VisaoComputadorWin.exe
