@@ -1,6 +1,4 @@
 ﻿  TP2.cpp
 d:\visual studio projects\visaocomputadorlib\visaocomputador\tp2.cpp(19): warning C4005: '_CRT_SECURE_NO_WARNINGS': macro redefinition
   d:\visual studio projects\visaocomputadorlib\visaocomputador\tp2.cpp(19): note: command-line arguments:  see previous definition of '_CRT_SECURE_NO_WARNINGS'
-d:\visual studio projects\visaocomputadorlib\visaocomputador\tp2.cpp(353): warning C4474: 'sprintf' : too many arguments passed for format string
-  d:\visual studio projects\visaocomputadorlib\visaocomputador\tp2.cpp(353): note: placeholders and their parameters expect 0 variadic arguments, but 1 were provided
   VisaoComputadorWin.vcxproj -> D:\Visual Studio Projects\VisaoComputadorLib\VisaoComputadorWin\x64\Debug\VisaoComputadorWin.exe
